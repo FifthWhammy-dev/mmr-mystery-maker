@@ -1,3 +1,18 @@
+Mystery Maker / Default Settings release 3.1
+Major changes
+- Double Archery Rewards is now on only when the Minigames category is active.
+- The All Loose Rupees option now also junks the Butler check, in addition to removing it from the hint list.
+  (The Rupees in Butler Race Items are still shuffled.)
+- Fairy Hunt now officially grants the Great Fairy's Mask as an additional starting item.
+Bug fixes
+- The Full Potsanity option now junks the Goron Race check instead of unshuffling it. It's still removed from
+  the hint list. (The pots in Goron Racetrack are still shuffled.)
+Document changes
+- Corrected advice on Tatl and Tael in the Entrances section to clarify that major area names in their dialogue
+  (like "Swamp" and "Canyon") currently don't help identify what's Blitz-junked in Blitz seeds.
+- Added Great Bay Temple to the list of Potsanity: Temples and Side Dungeons regions. (Seesaw Room Pot was
+  handled correctly in previous releases; this is only a document change.)
+
 Mystery Maker / Default Settings release 3.0a
 Settings changes
 - Skip Younger Beaver is back on in all three base jsons. Beaver Race 1 should now require only one race
