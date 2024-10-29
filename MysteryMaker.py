@@ -8,7 +8,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 
-MYSTERY_MAKER_VERSION = "v3.0"
+MYSTERY_MAKER_VERSION = "v3.1"
 
 def openOptionsGui():
     def guiStartRandomize(*args):
@@ -550,6 +550,7 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
         itemListString = AddStringToListString(itemListString,
                                                "---------1ffff-8000ffff-fdef7800-7fffffc---7f37ffe--1e7-fffc2cff-fffffeff-80000000-f041fff-ffb00183-c3003e00--------------")
         settings["OverrideHintPriorities"][0].remove("MaskScents")
+        junkListString = AddEntryToListString(junkListString, 2, "40000")
         gossipHintsTakenByAlways -= 1
         hardOptions += 1
     if catLooseRupees[0] != "No change":
@@ -584,7 +585,7 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
     if catPotsanity[0] == "All but fairies/owls shuffled":
         itemListString = AddStringToListString(itemListString,
                                                "-----60--c000000-----3-f03f0000-3c107ff-e0000000-20804fff-fffffe18-100--707d2801-f0f3e000-4e0004-e3c186-b3fdef3-dc000000------------")
-        itemListString = RemoveEntryFromListString(itemListString, 0, "40000")
+        junkListString = AddEntryToListString(junkListString, 0, "40000")
         settings["OverrideHintPriorities"][0].remove("ItemBottleGoronRace")
         settings["OverrideHintPriorities"][1].append("CollectableDekuShrineGreyBoulderRoomPot1")
         gossipHintsTakenByAlways -= 1
@@ -642,6 +643,7 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
         catMinigamesExtra = ["All three"]
         hardOptions += 1
     if catMinigames[0] != "No change":
+        settings["DoubleArcheryRewards"] = True
         nonzeroCategories += 1
         
     wgtsBombersNotebook = [80,10,10]
