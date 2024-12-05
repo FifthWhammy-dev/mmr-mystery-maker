@@ -7,13 +7,13 @@ The script uses hard-coded categories and weights, applying them to an input JSO
 To use:
 - Download the latest Mystery Maker release from the Releases section.
 - Extract MysteryMaker.exe and the .json files to the same folder as your MMR install. (You can run Mystery Maker elsewhere, but will have to manually select the base settings file and MMR.CLI.exe.)
-- Ensure your desired outputs are on in your MMR settings ("Patch .mmr" is recommended at minimum!), as that's how MMR.CLI.exe decides what to output.
+- Ensure your desired outputs are on in your MMR settings ("Patch .mmr" is recommended at minimum!), as that's how MMR.CLI.exe decides what to output. MMR will automatically apply your current outputs and cosmetic settings to seeds it generates; there's no need to manually save or create a new settings file.
 - Run MysteryMaker.exe and an options dialog will open. If it's in the same directory as MMR, you can just click Randomize in the options dialog to generate the seed.
 - When finished, check the "output" directory for your seed and Mystery spoiler.
 
-To try the included Remains Shuffle or Fairy Hunt settings, select "Mystery_Remains_Shuffle_base.json" or "Mystery_Fairy_Hunt_base.json" as your settings file!
+New to v4.0: Remains Shuffle and Fairy Hunt, alongside other new modes, are selected in Mystery Maker itself! There's only one base settings file now.
 
-Command-line operation is still available. Using any command-line option will bypass the options GUI and go straight to generation.
+Command-line operation is available for default seeds. Using any command-line option will bypass the options GUI and go straight to generation.
 
 Current options (and their command-line equivalents):
 
