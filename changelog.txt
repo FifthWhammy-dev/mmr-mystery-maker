@@ -1,3 +1,91 @@
+Mystery Maker / Default Settings release 4.0
+Major changes
+- Fairy checks from MMR 1.16 come to Mystery! Regional Gossip Fairies arrives as a new category, while
+  most pot fairies (and the one barrel fairy) are added to Potsanity and Crates & Barrels. Three foolish hints
+  are given again as well, but the Minigames category departs to make room.  See full details below.
+- New alternate modes options are now available in the Mystery Maker editor window itself!
+  As for v4.0, these include Remains Shuffle, Full Fairy Hunt, No Clock Town, No Post-Temple, and multiple
+  starting item variations.
+- The script now uses only one .json for all modes. Remains Shuffle and Full Fairy Hunt are set within the
+  Goal Mode tab--no need to load a separate settings file anymore!
+
+Category and settings changes
+- Seeds give 3 foolish hints again by default.
+- Songsanity and Long Quests cannot be active at the same time. (Songsanity is still rolled first.)
+  To partially compensate, Frog Choir's weight is increased to 40 (from 30),
+  though the appearance rate of Long Quests as a whole will still decrease as a result.
+- Minigames is now disabled in default settings (20% -> 0%). Double Archery Rewards is now always off.
+  Testing shows that Mystery seeds are a major step up in complexity, with increased incidence of DNFs even
+  among experienced standard runners with tens of hours in Mystery. Restoring the 3rd foolish gives players
+  additional guidance while encouraging more routing variety, especially since Mystery can put several new
+  regions into play.
+  Adding the 3rd foolish while preserving Gossip Stone space for other important hints requires adjustments to
+  be made elsewhere, and the other forced-hint categories are the most natural place to do that. Songsanity
+  and Long Quests are interesting enough to justify the hint slot, but the current Minigames checks are all
+  variants or expansions of existing standard checks, and those aren't worth the time or hint cost for Mystery
+  settings going forward.
+  Because Songsanity and Long Quests together would leave very little room for other categories to add hints
+  to Gossips, seeds will no longer have both at once. As a result, Baby Zoras is now guaranteed to have a song
+  when active.
+- The Gossip Fairies category returns, using the new Regional Gossip Fairies option. This option shuffles the
+  gossip fairies on all Gossip Stones *not* in Termina Field, Milk Road, or Romani Ranch. Its weight is 25%.
+  When active, the category adds Swamp Spider House Gossip Fairy as a sometimes hint.
+  The All Gossip Fairies option is not used in default settings.
+- Pot fairies are now included in Potsanity options as appropriate! The lone barrel fairy 
+  (GBT Entrance Room Barrel) is added to Crates & Barrels.
+  This adds 7 checks to Temples and West/East Dungeons and 15 to Full Potsanity.
+- Potsanity's Temples and Side Dungeons option has been renamed to Temples and West/East Dungeons.
+  It now shuffles all eligible pots in the four temples, plus the seven regions with dungeon-like interiors
+  to the west or east of Termina field. Those regions are Pirates' Fortress Sewer, Pirate's Fortress Interior,
+  Ocean Spider House, Ikana Graveyard, Secret Shrine, Beneath the Well, Ikana Castle. (Stone Tower is excluded;
+  it is neither a dungeon nor part of STT.)
+  Version 3 players: note that Ikana Graveyard (including Dampe's Basement) has been added
+  and Deku Palace has been removed.
+- Keaton Grass now uses a new active option: Odd Checks Only. This option shuffles checks 1, 3, 5, 7, 9 at each
+  location, reducing the check count from 27 to 15. The All Shuffled option is still available, but much rarer.
+  (75%/0%/25% -> 75%/20%/5%).
+  While Keaton Grass introducing logical implications for sword upgrades and Spin Attack Mastery is unique and
+  interesting, the NCT and MR checks were incredibly dense for the time, effort, and items required. Testing
+  showed that almost 20% of all Mystery seeds had a required item on an NCT or MR Keaton Grass check.
+  Similar to the Hit Spots and Tokensanity changes, this keeps the category in play while lessening its
+  tendency toward repetitive early progression.
+- When All Stray Fairies is active, the 60 temple Stray Fairies are now given as starting items. 
+  (Great Fairy Rewards are still junked.) This doesn't apply to Fairy Hunt.
+  This makes Chest Size Matches Contents more useful when all stray fairy checks are shuffled.
+- Keysanity weights are decreased. 
+  Boss Keys and Small Keys are now shuffled within their own temples at 20% each (formerly 30% for Boss Keys),
+  and shuffled within any temple at 15% each (formerly 20% each for both).
+  Boss Keys Shuffled Within Any Temple remains a hard option.
+  Keysanity, particularly Boss Keys, was strongly weighted compared to other categories, despite not adding any
+  checks and sometimes significantly lengthening the late game. This change helps bring Keysanity weights
+  into line with those of other categories and Boss Keys Within Any Temple's weight closer to those of the
+  other hard options.  
+- Shopsanity weights are adjusted to improve chances of the "corner" combinations of 
+  No Shopsanity + Random Prices and Full Shopsanity + No Price Changes.
+  Shopsanity's Randomize Purchase Price options is more likely for No Shopsanity or Late Shopsanity check
+  shuffles. Shuffle Purchase Prices is less likely for Full Shopsanity.
+    No Price Changes: 70%/50%/10% -> 65%/45%/25% for No/Late/Full check shuffles.
+     Shuffled Prices: 20%/35%/65% -> 20%/35%/50% for No/Late/Full check shuffles.
+       Random Prices: 10%/15%/25% -> 15%/20%/25% for No/Late/Full check shuffles.
+  This change is intended to improve the variety of Shopsanity option combinations. Of note, it brings
+  Full Shopsanity + No Price Changes' appearance rate from 2% to 5%, matching other "early bonanza" options
+  like All Hit Spots and All Keaton Grass.
+  Overall, seeds are very slightly more likely to have any price change option (46% -> 47%).
+
+Hint adjustments
+- New sometimes hints:
+  * Swamp Archery
+  * Woodfall Dark Room
+  * Mountain Smithy Day 2
+  * Ikana King (only when Songsanity is active)
+  * Stone Tower Wizzrobe (only when Potsanity is inactive)
+  * Swamp Spider House Gossip Fairy (with Regional Gossip Fairies)
+  * Kotake Mushroom Sale (with Photos/Sales/Small Favors)
+  * Curiosity Shop Purple Rupee (with Photos/Sales/Small Favors)
+
+Bug fixes
+- Corrected default Starting Boss Remains weights (70/25/10 -> 65/25/10).
+
 Mystery Maker / Default Settings release 3.1
 Major changes
 - Double Archery Rewards is now on only when the Minigames category is active.
