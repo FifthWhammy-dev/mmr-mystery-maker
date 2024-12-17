@@ -114,7 +114,12 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     hardOptionLimitBonus = False
     HARD_OPTIONS_LIMIT = 2
 
-    wgtsStartingBossRemains = [65,25,10,0,0]
+    if customModes["Main Density Mode"] == "Super":
+        HARD_OPTIONS_LIMIT = 3
+        GOSSIP_HINTS_LIMIT = 14
+        NONZERO_CATEGORIES_MINIMUM = 8
+    
+    wgtsStartingBossRemains = [65,25,10,0,0]    
     if (customModes["Goal Mode"] == "No Blitz"):
         wgtsStartingBossRemains = [100,0,0,0,0]
     if (customModes["Goal Mode"] == "Blitz 1"):
@@ -151,7 +156,10 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         settings["OverrideNumberOfNonRequiredGossipHints"] = 0
         gossipHintsTakenByAlways -= 6
                                                     
-    catSongsanity = random.choices(["No change","Mix songs with items"],[65,35])
+    wgtsSongsanity = [65,35]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsSongsanity = [50,50]
+    catSongsanity = random.choices(["No change","Mix songs with items"],wgtsSongsanity)
     if catSongsanity[0] == "Mix songs with items":
         settings["AddSongs"] = True
         itemListString = RemoveEntryFromListString(itemListString,3,"1")
@@ -163,6 +171,8 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsStartingSwordShield = [75,25,0,0,0]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsStartingSwordShield = [50,50,0,0,0]
     if (customModes["Start Mode"] == "Standard"):
         wgtsStartingSwordShield = [100,0,0,0,0]
     if (customModes["Start Mode"] == "Swordless"):
@@ -273,7 +283,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         startListString = AddEntryToListString(startListString,2,"2")
 
     wgtsFierceDeityAnywhere = [55,45]
-    if catStartingRandomItem[0] == "Fierce Deity's Mask":
+    if catStartingRandomItem[0] == "Fierce Deity's Mask" or customModes["Main Density Mode"] == "Super":        
         wgtsFierceDeityAnywhere = [0,100]
     if catStartingSwordShield[0] == "Cruel Start":
         wgtsFierceDeityAnywhere = [100,0]
@@ -281,19 +291,29 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     if catFierceDeityAnywhere[0] == "Active":
         settings["AllowFierceDeityAnywhere"] = True
 
+    wgtsShopsanityChecks = [60,20,20]
     wgtsShopsanityPrices = [65,20,15]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsShopsanityChecks = [30,40,30]
+        wgtsShopsanityPrices = [30,45,25]
     catShopsanityChecks = random.choices(["No change",
                                           "Late Shopsanity",
                                           "Full Shopsanity"],
-                                         [60,20,20])
+                                         wgtsShopsanityChecks)
     if catShopsanityChecks[0] == "Late Shopsanity":
         itemListString = AddStringToListString(itemListString,
                                                "-------------------------3--------3f000----")
-        wgtsShopsanityPrices = [45,35,20]
+        if customModes["Main Density Mode"] == "Super":
+            wgtsShopsanityPrices = [20,50,30]
+        else:
+            wgtsShopsanityPrices = [45,35,20]
     if catShopsanityChecks[0] == "Full Shopsanity":
         itemListString = AddStringToListString(itemListString,
                                                "-------------------------b03--------3ffff-80000000---")
-        wgtsShopsanityPrices = [25,50,25]
+        if customModes["Main Density Mode"] == "Super":
+            wgtsShopsanityPrices = [10,55,35]
+        else:
+            wgtsShopsanityPrices = [25,50,25]
 
     catShopsanityPrices = random.choices(["No change",
                                           "Shuffle purchase prices",
@@ -310,14 +330,20 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     if catShopsanityChecks[0] != "No change" or catShopsanityPrices[0] != "No change":
         nonzeroCategories += 1
 
-    catSoilsanity = random.choices(["No change","Shuffled"],[70,30])
+    wgtsSoilsanity = [70,30]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsSoilsanity = [40,60]
+    catSoilsanity = random.choices(["No change","Shuffled"],wgtsSoilsanity)
     if catSoilsanity[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
                                                "-----------7ff-f0000000-------------------------")
         settings["OverrideHintPriorities"][2].append("CollectableRomaniRanchSoftSoil1")
         nonzeroCategories += 1
 
-    catCowsanity = random.choices(["No change","Shuffled"],[70,30])
+    wgtsCowsanity = [70,30]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsCowsanity = [40,60]
+    catCowsanity = random.choices(["No change","Shuffled"],wgtsCowsanity)
     if catCowsanity[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
                                                "-----------------------------1f-e0000000-------")
@@ -325,6 +351,8 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsStrayFairies = [0,70,30]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsStrayFairies = [0,40,60]
     catStrayFairies = random.choices(["No change",
                                       "Most chest fairies + CT",
                                       "All stray fairies"],
@@ -356,6 +384,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
 
     wgtsEntrancesTemples = [55,45]
     wgtsEntrancesBossRooms = [70,30]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsEntrancesTemples = [25,75]
+        wgtsEntrancesBossRooms = [40,60]
     catEntrancesTemples = random.choices(["No change","Shuffled"], wgtsEntrancesTemples)
     if catEntrancesTemples[0] == "Shuffled":
         settings["RandomizeDungeonEntrances"] = True
@@ -367,6 +398,8 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsKeysanityBossKeys = [65,20,15,0,0]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsKeysanityBossKeys = [40,30,30,0,0]
     if hardOptions >= HARD_OPTIONS_LIMIT:
         wgtsKeysanityBossKeys[1] += wgtsKeysanityBossKeys[2]
         wgtsKeysanityBossKeys[2] = 0
@@ -388,12 +421,15 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         settings["OverrideNumberOfRequiredGossipHints"] += 1
         gossipHintsTakenByAlways += 1
 
+    wgtsKeysanitySmallKeys = [65,20,15,0,0]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsKeysanitySmallKeys = [40,30,30,0,0]
     catKeysanitySmallKeys = random.choices(["No change",
                                             "Shuffled within their temple",
                                             "Shuffled within any temple",
                                             "Shuffled within area",
                                             "Shuffled anywhere"],
-                                           [65,20,15,0,0])
+                                           wgtsKeysanitySmallKeys)
     if catKeysanitySmallKeys[0] == "Shuffled within their temple":
         settings["SmallKeyMode"] = "KeepWithinArea, KeepWithinTemples, KeepThroughTime"
     if catKeysanitySmallKeys[0] == "Shuffled within any temple":
@@ -408,15 +444,21 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     if catKeysanityBossKeys[0] != "No change" or catKeysanitySmallKeys[0] != "No change":
         nonzeroCategories += 1
 
+    wgtsScoopsanity = [75,25]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsScoopsanity = [50,50]
     catScoopsanity = random.choices(["No change","Shuffled with scoops"],
-                                       [75,25])
+                                       wgtsScoopsanity)
     if catScoopsanity[0] == "Shuffled with scoops":
         itemListString = AddStringToListString(itemListString,
                                                "---------------------------------fdc0000----")
         settings["OverrideHintPriorities"][1].append("BottleCatchBigPoe")
         nonzeroCategories += 1
 
-    catHitSpots = random.choices(["No change", "One Rupee each", "All Rupees"], [70,25,5])
+    wgtsHitSpots = [70,25,5]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsHitSpots = [40,45,15]
+    catHitSpots = random.choices(["No change", "One Rupee each", "All Rupees"], wgtsHitSpots)
     if catHitSpots[0] == "One Rupee each":
         itemListString = AddStringToListString(itemListString,
                                                "-------924924-92492492-49240000---8000000-------------------------")
@@ -426,7 +468,10 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     if catHitSpots[0] != "No change":
         nonzeroCategories += 1
 
-    catTokensanity = random.choices(["No change","One house","Both houses"], [80,15,5])
+    wgtsTokensanity = [80,15,5]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsTokensanity = [60,30,10]
+    catTokensanity = random.choices(["No change","One house","Both houses"], wgtsTokensanity)
     catTokensanityHouse = ["No change"]
     if catTokensanity[0] == "One house":
         catTokensanityHouse = random.choices(["SSH","OSH"],[1,1])
@@ -442,13 +487,19 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     if catTokensanity[0] != "No change":
         nonzeroCategories += 1
 
-    catCratesAndBarrels = random.choices(["No change","Shuffled"], [70,30])
+    wgtsCratesAndBarrels = [70,30]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsCratesAndBarrels = [40,60]
+    catCratesAndBarrels = random.choices(["No change","Shuffled"], wgtsCratesAndBarrels)
     if catCratesAndBarrels[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
                                                "---10000------------c0000-2000--3c200--30--1f078-8000008-10000100-20000000------------")
         nonzeroCategories += 1
 
-    catKeatonGrass = random.choices(["No change","Odd checks only","All shuffled"], [75,20,5])
+    wgtsKeatonGrass = [75,20,5]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsKeatonGrass = [50,35,15]
+    catKeatonGrass = random.choices(["No change","Odd checks only","All shuffled"], wgtsKeatonGrass)
     if catKeatonGrass[0] == "Odd checks only":
         itemListString = AddStringToListString(itemListString,
                                                "-----15-5aad5400-------------------------------")
@@ -458,7 +509,10 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                                                "-----1f-fffffc00-------------------------------")
         nonzeroCategories += 1
 
-    catGossipFairies = random.choices(["No change","Regional Gossips","All Termina Gossips"], [75,25,0])
+    wgtsGossipFairies = [75,25,0]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsGossipFairies = [50,50,0]
+    catGossipFairies = random.choices(["No change","Regional Gossips","All Termina Gossips"], wgtsGossipFairies)
     if catGossipFairies[0] == "Regional Gossips":
         itemListString = AddStringToListString(itemListString,
                                                "-100000-31f7400-----------------------------------")
@@ -469,7 +523,10 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                                                "-100000-ffffff00-----------------------------------")
         nonzeroCategories += 1
 
-    catButterflyAndWellFairies = random.choices(["No change","Shuffled"], [75,25])
+    wgtsButterflyAndWellFairies = [75,25]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsButterflyAndWellFairies = [50,50]
+    catButterflyAndWellFairies = random.choices(["No change","Shuffled"], wgtsButterflyAndWellFairies)
     if catButterflyAndWellFairies[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
                                                "1fe-1fe00000------------------------------------")
@@ -478,6 +535,8 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsLongQuests = [25,20,15,40,0]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsLongQuests = [0,30,20,50,0]
     if (customModes["No Post-Temple"] == True):
         wgtsLongQuests[0] += wgtsLongQuests[3]
         wgtsLongQuests[3] = 0
@@ -490,7 +549,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         wgtsLongQuests[4] = 0
     if hardOptions >= HARD_OPTIONS_LIMIT:
         wgtsLongQuests[4] = 0
-    if catSongsanity[0] == "Mix songs with items":
+    if catSongsanity[0] == "Mix songs with items" and customModes["Main Density Mode"] != "Super":
         wgtsLongQuests = [100,0,0,0,0]
     catLongQuests = random.choices(["No change",
                                     "Anju and Kafei",
@@ -521,6 +580,8 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsFrogs = [65,35]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsFrogs = [40,60]
     if hardOptions >= HARD_OPTIONS_LIMIT and (catLongQuests[0] == "Frog Choir" or catLongQuests[0] == "All Long Quests"):
         wgtsFrogs = [100,0]
     catFrogs = random.choices(["No change","Shuffled"], wgtsFrogs)
@@ -539,6 +600,8 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         catLongQuests[0] = "No change"
 
     wgtsLooseRupees = [60,10,10,10,10]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsLooseRupees = [25,15,15,15,30]
     if hardOptions >= HARD_OPTIONS_LIMIT:
         wgtsLooseRupees[3] += wgtsLooseRupees[4]
         wgtsLooseRupees[4] = 0
@@ -569,6 +632,8 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsSnowsanity = [85,15,0]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsSnowsanity = [70,30,0]
     if hardOptions >= HARD_OPTIONS_LIMIT:
         wgtsSnowsanity[1] += wgtsSnowsanity[2]
         wgtsSnowsanity[2] = 0
@@ -584,6 +649,8 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsPotsanity = [80,10,10]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsPotsanity = [50,20,30]
     if hardOptions >= HARD_OPTIONS_LIMIT:
         wgtsPotsanity[1] += wgtsPotsanity[2]
         wgtsPotsanity[2] = 0
@@ -611,6 +678,8 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsPhotosSales = [75,25]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsPhotosSales = [50,50]
     if gossipHintsTakenByAlways >= GOSSIP_HINTS_LIMIT:
         wgtsPhotosSales[0] += wgtsPhotosSales[1]
         wgtsPhotosSales[1] = 0
@@ -664,6 +733,8 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
         
     wgtsBombersNotebook = [80,10,10]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsBombersNotebook = [50,20,30]
     if hardOptions >= HARD_OPTIONS_LIMIT or gossipHintsTakenByAlways >= GOSSIP_HINTS_LIMIT:
         wgtsBombersNotebook[1] += wgtsBombersNotebook[2]
         wgtsBombersNotebook[2] = 0
@@ -757,13 +828,16 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         print("MMR Mystery Maker", MYSTERY_MAKER_VERSION,"-- Mystery Spoiler Log",file=spoiler_file)
         print("Base settings: ", FilenameOnly(inputFilename),file=spoiler_file)
         print("  Output file: ", outputFilename,file=spoiler_file)
-        if (customModes["Goal Mode"] != "Normal" or customModes["Start Mode"] != "Default" or customModes["No Clock Town"] == True or customModes["No Post-Temple"] == True):
+        if (customModes["Goal Mode"] != "Normal" or customModes["Start Mode"] != "Default" or customModes["No Clock Town"] == True or customModes["No Post-Temple"] == True or customModes["Main Density Mode"] != "Normal"):
             print(" ***       ALTERNATE MODES ACTIVE!       *** ",file=spoiler_file)
             if (customModes["Goal Mode"] != "Normal"):
                 print("       Goal Randomization: ", customModes["Goal Mode"],file=spoiler_file)
             if (customModes["Start Mode"] == "Standard" or customModes["Start Mode"] == "Swordless"):
                 print("      Start Randomization: ", customModes["Start Mode"],file=spoiler_file)
         print("=============================================",file=spoiler_file)
+        if customModes["Main Density Mode"] == "Super":
+            print(" ***        Super Mystery Active!        ***",file=spoiler_file)
+            print("",file=spoiler_file)
         print("                Goal Mode: ", catStartingBossRemains[0],file=spoiler_file)
         if (customModes["Start Mode"] == "Default"):
             print("Starting Sword and Shield: ", catStartingSwordShield[0],file=spoiler_file)
@@ -843,6 +917,7 @@ optionOutputCount = args.numberOfSettingsFiles
 optionDontMakeSeed = args.settingsOnly
 optionCustomModes = {"Goal Mode":"Normal",
                      "Start Mode":"Default",
+                     "Main Density Mode":"Normal",
                      "No Clock Town":False,
                      "No Post-Temple":True}
 

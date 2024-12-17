@@ -117,13 +117,19 @@ def openOptionsGui(version_string):
 
     densityNoCT = StringVar(value="0")
     densityNoPT = StringVar(value="0")
+    mainDensityMode = StringVar(value="Normal")
+    densityNormal_radio = ttk.Radiobutton(modeTabDensityMode, text="Normal (default)", variable=mainDensityMode, value="Normal")
+    densityLight_radio = ttk.Radiobutton(modeTabDensityMode, text="Light", variable=mainDensityMode, value="Light")
+    densitySuper_radio = ttk.Radiobutton(modeTabDensityMode, text="Super", variable=mainDensityMode, value="Super")
     densityNoCT_checkbutton = ttk.Checkbutton(modeTabDensityMode, text="No Clock Town", variable=densityNoCT)
     densityNoPT_checkbutton = ttk.Checkbutton(modeTabDensityMode, text="No Post-Temple", variable=densityNoPT)
-    densityNoCT_checkbutton.grid(column=1, row=1, sticky=(W,E))
-    densityNoPT_checkbutton.grid(column=1, row=2, sticky=(W,E))
+    densityNormal_radio.grid(column=1, row=1, sticky=(W,E))
+    densityLight_radio.grid(column=2, row=1, sticky=(W,E))
+    densitySuper_radio.grid(column=3, row=1, sticky=(W,E))
+    densityNoCT_checkbutton.grid(column=1, row=2, sticky=(W,E))
+    densityNoPT_checkbutton.grid(column=1, row=3, sticky=(W,E))
     densityNoCT_tip = Hovertip(densityNoCT_checkbutton, "All non-scoop checks in Clock Town regions, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nThe Bombers' Notebook category is disabled.\nEpona's Song is granted as an additional starting item; Baby Zoras is disabled.\nFrog Choir can only be active if Frogs are shuffled.")
     densityNoPT_tip = Hovertip(densityNoPT_checkbutton, "All post-temple checks, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nBottle: Deku Princess is never shuffled; other scoops are not affected.\nFrog Choir is disabled.")
-
 
     for child in mainframe.winfo_children(): 
         child.grid_configure(padx=5, pady=5)
@@ -136,6 +142,7 @@ def openOptionsGui(version_string):
     customModesSettings = dict()
     customModesSettings["Goal Mode"] = goalMode.get()
     customModesSettings["Start Mode"] = startMode.get()
+    customModesSettings["Main Density Mode"] = mainDensityMode.get()
     customModesSettings["No Clock Town"] = (densityNoCT.get() == "1")
     customModesSettings["No Post-Temple"] = (densityNoPT.get() == "1")
     
