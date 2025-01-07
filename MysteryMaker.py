@@ -119,20 +119,22 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         GOSSIP_HINTS_LIMIT = 14
         NONZERO_CATEGORIES_MINIMUM = 8
     
-    wgtsStartingBossRemains = [65,25,10,0,0]    
+    wgtsStartingBossRemains = [65,25,10,0,0,0]    
     if (customModes["Goal Mode"] == "No Blitz"):
-        wgtsStartingBossRemains = [100,0,0,0,0]
+        wgtsStartingBossRemains = [100,0,0,0,0,0]
     if (customModes["Goal Mode"] == "Blitz 1"):
-        wgtsStartingBossRemains = [0,100,0,0,0]
+        wgtsStartingBossRemains = [0,100,0,0,0,0]
     if (customModes["Goal Mode"] == "Blitz 2"):
-        wgtsStartingBossRemains = [0,0,100,0,0]
+        wgtsStartingBossRemains = [0,0,100,0,0,0]
     if (customModes["Goal Mode"] == "Remains Shuffle"):
-        wgtsStartingBossRemains = [0,0,0,100,0]
+        wgtsStartingBossRemains = [0,0,0,100,0,0]
+    if (customModes["Goal Mode"] == "Five Fairy Hunt"):
+        wgtsStartingBossRemains = [0,0,0,0,100,0]        
     if (customModes["Goal Mode"] == "Full Fairy Hunt"):
-        wgtsStartingBossRemains = [0,0,0,0,100]
+        wgtsStartingBossRemains = [0,0,0,0,0,100]
     if (customModes["Goal Mode"] == "Normal + Remains Shuffle"):
-        wgtsStartingBossRemains = [45,25,10,20,0]
-    catStartingBossRemains = random.choices(["Normal","Blitz 1","Blitz 2","Remains Shuffle","Full Fairy Hunt"], wgtsStartingBossRemains)
+        wgtsStartingBossRemains = [45,25,10,20,0,0]
+    catStartingBossRemains = random.choices(["Normal","Blitz 1","Blitz 2","Remains Shuffle","Five Fairy Hunt","Full Fairy Hunt"], wgtsStartingBossRemains)
     if catStartingBossRemains[0] == "Blitz 1":
         settings["BossRemainsMode"] = "Blitz1"
     if catStartingBossRemains[0] == "Blitz 2":
@@ -140,7 +142,12 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     if catStartingBossRemains[0] == "Remains Shuffle":
         itemListString = AddStringToListString(itemListString,
                                                "-----f00000--------------------------------")
-    if catStartingBossRemains[0] == "Full Fairy Hunt":
+    if catStartingBossRemains[0] == "Five Fairy Hunt":
+        startListString = AddStringToListString(startListString,
+                                                "7fe-ffc1ff8-3ff00000--")
+        settings["VictoryMode"] = "DirectToCredits, OneBossRemains"
+        itemListString = RemoveEntryFromListString(itemListString,3,"1")
+    if catStartingBossRemains[0] == "Five Fairy Hunt" or catStartingBossRemains[0] == "Full Fairy Hunt":
         settings["BossRemainsMode"] = "GreatFairyRewards"
         settings["StrayFairyMode"] = "Default"
         fairyHuntActive = True
@@ -249,7 +256,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     wgtsStartingRandomSong = [0,40,10,10,10,10,10,10,0]
     if catSongsanity[0] != "No change":
         wgtsStartingRandomSong[0] = 0
-    if customModes["No Clock Town"] == True:
+    if catStartingBossRemains[0] == "Five Fairy Hunt":
+        wgtsStartingRandomSong = [0,0,0,0,0,100,0,0,0]
+    if catStartingBossRemains[0] == "Five Fairy Hunt" or customModes["No Clock Town"] == True:
         wgtsStartingRandomSong[1] = 0
         startListString = AddEntryToListString(startListString,1,"8000000")
     catStartingRandomSong = random.choices(["No change",
@@ -387,6 +396,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     if customModes["Main Density Mode"] == "Super":
         wgtsEntrancesTemples = [25,75]
         wgtsEntrancesBossRooms = [40,60]
+    if catStartingBossRemains[0] == "Five Fairy Hunt":
+        wgtsEntrancesTemples = [0,100]
+        wgtsEntrancesBossRooms = [100,0]
     catEntrancesTemples = random.choices(["No change","Shuffled"], wgtsEntrancesTemples)
     if catEntrancesTemples[0] == "Shuffled":
         settings["RandomizeDungeonEntrances"] = True
@@ -400,6 +412,8 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     wgtsKeysanityBossKeys = [65,20,15,0,0]
     if customModes["Main Density Mode"] == "Super":
         wgtsKeysanityBossKeys = [40,30,30,0,0]
+    if catStartingBossRemains[0] == "Five Fairy Hunt":
+        wgtsKeysanityBossKeys = [100,0,0,0,0]
     if hardOptions >= HARD_OPTIONS_LIMIT:
         wgtsKeysanityBossKeys[1] += wgtsKeysanityBossKeys[2]
         wgtsKeysanityBossKeys[2] = 0
@@ -547,6 +561,10 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         wgtsLongQuests[0] += wgtsLongQuests[2]
         wgtsLongQuests[2] = 0
         wgtsLongQuests[4] = 0
+    if catStartingBossRemains[0] == "Five Fairy Hunt":
+        wgtsLongQuests[0] += wgtsLongQuests[2]
+        wgtsLongQuests[2] = 0
+        wgtsLongQuests[4] = 0
     if hardOptions >= HARD_OPTIONS_LIMIT:
         wgtsLongQuests[4] = 0
     if catSongsanity[0] == "Mix songs with items" and customModes["Main Density Mode"] != "Super":
@@ -665,9 +683,10 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         itemListString = AddStringToListString(itemListString,
                                                "--5d-cb507000--60--c000000-----3-f03f0000-3c107ff-e0000000-20804fff-fffffe18-100--707d2801-f0f3e000-4e0004-e3c186-b3fdef3-dc000000------------")
         if (customModes["No Post-Temple"] == True):
+            settings["OverrideHintPriorities"][1].append("CollectableDekuShrineGreyBoulderRoomPot1")
+        else:
             junkListString = AddEntryToListString(junkListString, 0, "40000")
             settings["OverrideHintPriorities"][0].remove("ItemBottleGoronRace")
-            settings["OverrideHintPriorities"][1].append("CollectableDekuShrineGreyBoulderRoomPot1")
             gossipHintsTakenByAlways -= 1
         hardOptions += 1
     if catPotsanity[0] != "No change":
@@ -845,8 +864,11 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
             print("               Start Mode: ", catStartingSwordShield[0],file=spoiler_file)
         if catStartingSwordShield[0] != "Cruel Start":
             print("     Starting Random Item: ", catStartingRandomItem[0],file=spoiler_file)
-        print("     Starting Random Song: ", catStartingRandomSong[0],file=spoiler_file)
-        if customModes["No Clock Town"] == True:
+        if catStartingBossRemains[0] == "Five Fairy Hunt":
+            print("            Starting Song: ", catStartingRandomSong[0],file=spoiler_file)
+        else:
+            print("     Starting Random Song: ", catStartingRandomSong[0],file=spoiler_file)
+        if customModes["No Clock Town"] == True or catStartingBossRemains[0] == "Five Fairy Hunt":
             print("      Extra Starting Song:  Epona's Song", file=spoiler_file)
         if catStartingSwordShield[0] != "Cruel Start":
             print("    Fierce Deity Anywhere: ", catFierceDeityAnywhere[0],file=spoiler_file)
@@ -864,8 +886,12 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         print("                Cowsanity: ", catCowsanity[0],file=spoiler_file)
         print("            Stray Fairies: ", catStrayFairies[0],file=spoiler_file)
         print("       Entrances: Temples: ", catEntrancesTemples[0],file=spoiler_file)
-        print("    Entrances: Boss Rooms: ", catEntrancesBossRooms[0],file=spoiler_file)
-        print("     Keysanity: Boss Keys: ", catKeysanityBossKeys[0],file=spoiler_file)
+        if catStartingBossRemains[0] == "Five Fairy Hunt":
+            print("    Entrances: Boss Rooms:  Disabled (by Five Fairy Hunt)", file=spoiler_file)
+            print("     Keysanity: Boss Keys:  Disabled (by Five Fairy Hunt)", file=spoiler_file)
+        else:
+            print("    Entrances: Boss Rooms: ", catEntrancesBossRooms[0],file=spoiler_file)
+            print("     Keysanity: Boss Keys: ", catKeysanityBossKeys[0],file=spoiler_file)
         print("    Keysanity: Small Keys: ", catKeysanitySmallKeys[0],file=spoiler_file)
         print("              Scoopsanity: ", catScoopsanity[0],file=spoiler_file)
         print("                Hit Spots: ", catHitSpots[0],file=spoiler_file)
