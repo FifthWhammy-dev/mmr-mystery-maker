@@ -23,6 +23,10 @@ def openOptionsGui(version_string):
     def browseForCommandLineExe(*args):
         mmrCommandLineExePath.set(filedialog.askopenfilename())
 
+    def updateModeTabs(*args):
+        goalLongGoal_combo.state(["!disabled"] if goalMode.get() == "Long Goal" else ["disabled"])
+        goalLongGoal_combo.selection_clear()
+
     guiWindow = Tk()
     guiWindow.title("MMR Mystery Maker " + version_string)
 
@@ -68,71 +72,129 @@ def openOptionsGui(version_string):
     modeTabStartMode.grid(column=0, row=0, sticky=(N,W,S,E))    
     modeTabDensityMode = ttk.Frame(modeTabs_notebook, padding="4 4 4 4")
     modeTabs_notebook.add(modeTabGoalMode, text="Goal Mode")
-    modeTabs_notebook.add(modeTabStartMode, text="Start Mode")
+    modeTabs_notebook.add(modeTabStartMode, text="Start Modes")
     modeTabs_notebook.add(modeTabDensityMode, text="Density Modes")
     modeTabs_notebook.grid(column=1, row=0, columnspan=3, sticky=(W, E))
 
+    # Goal Mode Pane
     goalMode = StringVar(value="Normal")
+    goalLongGoal = StringVar(value="Full Fairy Hunt")
+    goalDirectToCredits = StringVar(value="0")
+    goalMode.trace_add("write", updateModeTabs)
+    goalLongGoal.trace_add("write", updateModeTabs)
+    
     goalNormal_radio = ttk.Radiobutton(modeTabGoalMode, text="Normal (default)", variable=goalMode, value="Normal")
     goalNoBlitz_radio = ttk.Radiobutton(modeTabGoalMode, text="No Blitz", variable=goalMode, value="No Blitz")
     goalBlitz1_radio = ttk.Radiobutton(modeTabGoalMode, text="Blitz 1", width=20, variable=goalMode, value="Blitz 1")
     goalBlitz2_radio = ttk.Radiobutton(modeTabGoalMode, text="Blitz 2", variable=goalMode, value="Blitz 2")
     goalRS_radio = ttk.Radiobutton(modeTabGoalMode, text="Remains Shuffle", variable=goalMode, value="Remains Shuffle")
     goalNPRS_radio = ttk.Radiobutton(modeTabGoalMode, text="Normal + Remains Shuffle", variable=goalMode, value="Normal + Remains Shuffle")
-    goalTFH_radio = ttk.Radiobutton(modeTabGoalMode, text="Five Fairy Hunt", variable=goalMode, value="Five Fairy Hunt")
-    goalFFH_radio = ttk.Radiobutton(modeTabGoalMode, text="Full Fairy Hunt", variable=goalMode, value="Full Fairy Hunt")
+    goalFFH_radio = ttk.Radiobutton(modeTabGoalMode, text="Five Fairy Hunt", variable=goalMode, value="Five Fairy Hunt")
+    goalGB_radio = ttk.Radiobutton(modeTabGoalMode, text="Grab Bag", variable=goalMode, value="Grab Bag")
+    goalLongGoal_radio = ttk.Radiobutton(modeTabGoalMode, text="Long Goal:", variable=goalMode, value="Long Goal")    
+    goalLongGoal_combo = ttk.Combobox(modeTabGoalMode, textvariable=goalLongGoal)
+    goalLongGoal_combo["values"] = ("Full Fairy Hunt", "Mask Hunt", "Skull Tokens", "Hearts")
+    goalLongGoal_combo.state(["readonly"])
+    goalLongGoal_combo.state(["disabled"])
+    goalDirectToCredits_check = ttk.Checkbutton(modeTabGoalMode, text="Direct To Credits", variable=goalDirectToCredits)
+
     goalNormal_radio.grid(column=1, row=1, sticky=(W, E))
     goalNoBlitz_radio.grid(column=2, row=1, sticky=(W, E))
     goalBlitz1_radio.grid(column=3, row=1, sticky=(W, E))
     goalBlitz2_radio.grid(column=4, row=1, sticky=(W, E))
     goalRS_radio.grid(column=1, row=2, sticky=(W, E))
     goalNPRS_radio.grid(column=2, row=2, sticky=(W, E))
-    goalTFH_radio.grid(column=1, row=3, sticky=(W, E))
-    goalFFH_radio.grid(column=1, row=4, sticky=(W, E))
+    goalFFH_radio.grid(column=1, row=3, sticky=(W, E))
+    goalGB_radio.grid(column=2, row=3, sticky=(W, E))
+    goalLongGoal_radio.grid(column=1, row=4, sticky=(W, E))
+    goalLongGoal_combo.grid(column=2, row=4, sticky=(W, E))
+    goalDirectToCredits_check.grid(column=1, row=5, sticky=(W, E))
+    
     goalNormal_tip = Hovertip(goalNormal_radio, "Remains on bosses. May start with one or two remains,\nwith corresponding temples and post-temples junked.\nDefault weights are 65/25/10 for 0/1/2 starting remains.")
     goalNoBlitz_tip = Hovertip(goalNoBlitz_radio, "Remains on bosses. Always start without any remains.")
     goalBlitz1_tip = Hovertip(goalBlitz1_radio, "Remains on bosses. Always start with one remains;\nits temple and post-temple checks are junked.")
     goalBlitz2_tip = Hovertip(goalBlitz2_radio, "Remains on bosses. Always start with two remains;\ntheir temple and post-temple checks are junked.")
     goalRS_tip = Hovertip(goalRS_radio, "Remains shuffled anywhere. C-Up at clock tower door for region hints.")
-    goalNPRS_tip = Hovertip(goalNPRS_radio, "Choose any normal goal mode (wgt 45/25/10)\nor Remains Shuffle (wgt 20).")
-    goalTFH_tip = Hovertip(goalTFH_radio, "Remains on Great Fairy Rewards.\nAll Stray Fairies shuffled and five Stray Fairies of each color are placed:\nfind and turn in one set to win immediately!\nAlways start with Epona, Lullaby, and the other 40 fairies.\nSkull Kid Song is junked, and Baby Zoras are disabled.\nTemple locations always shuffled. Boss Keys and Boss Rooms never shuffled.\nFairy Fountains hint fairy regions. No WotHs, no foolishes.")
-    goalFFH_tip = Hovertip(goalFFH_radio, "Remains on Great Fairy Rewards.\nAll Stray Fairies always shuffled: find and turn in all 60, then beat Majora!\nFairy Fountains hint fairy regions. No WotHs, no foolishes.")
+    goalNPRS_tip = Hovertip(goalNPRS_radio, "Choose any normal Remains on Bosses goal mode (45/25/10)\nor Remains Shuffle (20).")
+    goalFFH_tip = Hovertip(goalFFH_radio, "Remains on Great Fairy Rewards.\nAll Stray Fairies shuffled and five Stray Fairies of each color are placed:\nfind and turn in one set to win immediately!\nAlways start with Epona, Lullaby, Great Fairy's Mask, and the other 40 fairies.\nSkull Kid Song is junked, and Baby Zoras are disabled.\nTemple locations always shuffled. Boss Keys and Boss Rooms never shuffled.\nFairy Fountains hint fairy regions. No WotHs, no foolishes.")
+    goalGB_tip = Hovertip(goalGB_radio, "Choose one of Remains on Bosses, Remains Shuffle, or Five Fairy Hunt (equal weights).\nFor Remains on Bosses, No Blitz, Blitz 1, and Blitz 2 are all equally likely.")
+    goalLongGoal_tip = Hovertip(goalLongGoal_radio, "Choose a long victory mode from the drop-down box.\nComplete the chosen win condition before fighting Majora.\n(Hover over the drop-down box for specifics.)")
+    goalLongGoalCombo_tip = Hovertip(goalLongGoal_combo, "Full Fairy Hunt: Find all four boss remains on Great Fairy Rewards. All Stray Fairies are shuffled.\nMask Hunt: Find all shuffled masks. Moon access only requires one remains. Start with Oath; Skull Kid's Song is junked.\nSkull Tokens: Find all 60 shuffled skull tokens.\nHearts: Find all shuffled Heart Containers and Pieces of Heart.")
+    goalDirectToCredits_tip = Hovertip(goalDirectToCredits_check, "Win immediately upon collecting all required remains or\nwin condition items without needing to use Oath and fight Majora.\n(This is always on in Five Fairy Hunt.)")
 
     startMode = StringVar(value="Default")
-    startDefault_radio = ttk.Radiobutton(modeTabStartMode, text="Default Start", variable=startMode, value="Default")
-    startGenerous_radio = ttk.Radiobutton(modeTabStartMode, text="Generous Start", variable=startMode, value="Generous")
-    startStandard_radio = ttk.Radiobutton(modeTabStartMode, text="Standard Start", variable=startMode, value="Standard")
-    startSwordless_radio = ttk.Radiobutton(modeTabStartMode, text="Swordless Start", variable=startMode, value="Swordless")
-    startFragile_radio = ttk.Radiobutton(modeTabStartMode, text="Fragile Start", variable=startMode, value="Fragile")
-    startCruel_radio = ttk.Radiobutton(modeTabStartMode, text="Cruel Start", variable=startMode, value="Cruel")
-    startDefault_radio.grid(column=1, row=1, sticky=(W,E))
-    startGenerous_radio.grid(column=1, row=2, sticky=(W,E))
-    startStandard_radio.grid(column=2, row=2, sticky=(W,E))
-    startSwordless_radio.grid(column=1, row=3, sticky=(W,E))
-    startFragile_radio.grid(column=2, row=3, sticky=(W,E))
-    startCruel_radio.grid(column=3, row=3, sticky=(W,E))
-    startDefault_tip = Hovertip(startDefault_radio, "Occasionally start without Kokiri Sword or Hero's Shield (25%, by default).")
-    startGenerous_tip = Hovertip(startGenerous_radio, "Always start with Razor Sword and Hero's Shield,\nplus Spin Attack Mastery and Double Defense.")
-    startStandard_tip = Hovertip(startStandard_radio, "Always start with Kokiri Sword and Hero's Shield.")
-    startSwordless_tip = Hovertip(startSwordless_radio, "Always start without Kokiri Sword and Hero's Shield.")
-    startFragile_tip = Hovertip(startFragile_radio, "Always start without Kokiri Sword and Hero's Shield, and with only one heart.\nFierce Deity's Mask and Great Fairy's Sword are removed from the Starting Random Item pool.\nCrit Wiggle is disabled.")
-    startCruel_tip = Hovertip(startCruel_radio, "Always start without Kokiri Sword and Hero's Shield, and with only one heart.\nStarting Random Item is disabled.\nFierce Deity's Mask is not shuffled.\nLink takes double damage!")
-
+    startDifficultyMode = StringVar(value="Default")
+    startRandomItemMode = StringVar(value="Any (Default)")
+    startFDAnywhereMode = StringVar(value="Sometimes (Default)")
+    
+    startDifficulty_label = ttk.Label(modeTabStartMode, text="Start Difficulty:    ")
+    startDifficulty_combo = ttk.Combobox(modeTabStartMode, textvariable=startDifficultyMode)
+    startDifficulty_combo["values"] = ("Strong", "Kokiri", "Default", "Swordless", "Fragile", "Cruel")
+    startDifficulty_combo.state(["readonly"])
+    startRandomItem_label = ttk.Label(modeTabStartMode, text="Starting Random Item:    ")
+    startRandomItem_combo = ttk.Combobox(modeTabStartMode, textvariable=startRandomItemMode, width=25)
+    startRandomItem_combo["values"] = ("Off",
+                                       "Any (Default)",
+                                       "Any Transformation Mask",
+                                       "Any Non-Transformation",
+                                       "Deku Mask",
+                                       "Goron Mask",
+                                       "Zora Mask",
+                                       "Fierce Deity's Mask",
+                                       "Bow",
+                                       "Hookshot",
+                                       "Bomb Bag",
+                                       "Blast Mask",
+                                       "Adult's Wallet",
+                                       "Empty Bottle (Dampe's)",
+                                       "Bunny Hood",
+                                       "Great Fairy's Sword")
+    startRandomItem_combo.state(["readonly"])
+    startFDAnywhere_label = ttk.Label(modeTabStartMode, text="FD Anywhere:    ")
+    startFDAnywhere_combo = ttk.Combobox(modeTabStartMode, textvariable=startFDAnywhereMode, width=25)
+    startFDAnywhere_combo["values"] = ("Off", "Only When Starting", "Sometimes (Default)", "Always")
+    
+    startDifficulty_label.grid(column=1, row=1, sticky=(W,E))
+    startDifficulty_combo.grid(column=2, row=1, sticky=(W,E))
+    startRandomItem_label.grid(column=1, row=2, sticky=(W,E))
+    startRandomItem_combo.grid(column=2, row=2, sticky=(W,E))
+    startFDAnywhere_label.grid(column=1, row=3, sticky=(W,E))
+    startFDAnywhere_combo.grid(column=2, row=3, sticky=(W,E))
+    startDifficulty_tip = Hovertip(startDifficulty_combo, "Choose a starting difficulty mode.\nHigher difficulties change more than just starting items!\nStrong: Razor Sword, Hero's Shield, Spin Attack Mastery, and Double Defense.\nKokiri: Kokiri Sword and Hero's Shield.\nDefault: 75% chance of Kokiri Sword and Hero's Shield.\nSwordless: No Kokiri Sword or Hero's Shield.\nFragile: No sword at all, no shield, one heart. No Crit Wiggle.\nCruel: No sword, no shield, one heart. No starting random item. Fierce Deity's Mask is not shuffled. Link takes double damage!")
+    startRandomItem_tip = Hovertip(startRandomItem_combo, "Choose a starting random item mode, or guarantee a specific starting item.\n(When randomized, Bomb Bag, Blast Mask, Bunny Hood, and Great Fairy's Sword each\nhave half the weight of other items.)\nOff: Do not give a starting random item.\nAny: Randomly choose any item on the list.\nAny Transformation Mask: Randomly choose any transformation mask, including Fierce Deity's Mask.\nAny Non-Transformation: Randomly choose anything but Deku, Goron, Zora, or Fierce Deity.")
+    startFDAnywhere_tip = Hovertip(startFDAnywhere_combo, "Choose a Fierce Deity's Mask Anywhere mode.\n(Remember that FD can be required in logic when FD Anywhere is active!\nConsult the Mystery Settings Document or base .json for added tricks.)\nOff: FD Anywhere is never on.\nOnly When Starting: FD Anywhere is only on when starting with Fierce Deity's Mask.\nSometimes: FD Anywhere is always on when starting with FD, and sometimes on otherwise (45%, by default).\nAlways: FD Anywhere is always on.")
+  
+    mainDensityMode = StringVar(value="Normal")
     densityNoCT = StringVar(value="0")
     densityNoPT = StringVar(value="0")
-    mainDensityMode = StringVar(value="Normal")
+    densityMapCompassMode = StringVar(value="0")
+    densityBossKeysMode = StringVar(value="Default")
+    
     densityNormal_radio = ttk.Radiobutton(modeTabDensityMode, text="Normal (default)", variable=mainDensityMode, value="Normal")
-    densityLight_radio = ttk.Radiobutton(modeTabDensityMode, text="Light", variable=mainDensityMode, value="Light")
-    densitySuper_radio = ttk.Radiobutton(modeTabDensityMode, text="Super", variable=mainDensityMode, value="Super")
-    densityNoCT_checkbutton = ttk.Checkbutton(modeTabDensityMode, text="No Clock Town", variable=densityNoCT)
-    densityNoPT_checkbutton = ttk.Checkbutton(modeTabDensityMode, text="No Post-Temple", variable=densityNoPT)
+    densityLight_radio = ttk.Radiobutton(modeTabDensityMode, text="Light Mystery", variable=mainDensityMode, value="Light")
+    densitySuper_radio = ttk.Radiobutton(modeTabDensityMode, text="Super Mystery", variable=mainDensityMode, value="Super")
+    densityNoCT_check = ttk.Checkbutton(modeTabDensityMode, text="No Clock Town", variable=densityNoCT)
+    densityNoPT_check = ttk.Checkbutton(modeTabDensityMode, text="No Post-Temple", variable=densityNoPT)
+    densityMapCompass_check = ttk.Checkbutton(modeTabDensityMode, text="Map and Compass Hints", variable=densityMapCompassMode)
+    densityBossKeys_label = ttk.Label(modeTabDensityMode, text="Boss Keys:    ")
+    densityBossKeys_combo = ttk.Combobox(modeTabDensityMode, textvariable=densityBossKeysMode, width=25)
+    densityBossKeys_combo["values"] = ("Off", "Default", "Always Active (Either Option)", "Always Shuffle Within Their Temple", "Always Shuffle Within Any Temple")
+
     densityNormal_radio.grid(column=1, row=1, sticky=(W,E))
     densityLight_radio.grid(column=2, row=1, sticky=(W,E))
     densitySuper_radio.grid(column=3, row=1, sticky=(W,E))
-    densityNoCT_checkbutton.grid(column=1, row=2, sticky=(W,E))
-    densityNoPT_checkbutton.grid(column=1, row=3, sticky=(W,E))
-    densityNoCT_tip = Hovertip(densityNoCT_checkbutton, "All non-scoop checks in Clock Town regions, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nThe Bombers' Notebook category is disabled.\nEpona's Song is granted as an additional starting item; Skull Kid Song is always junked.\nBaby Zoras is disabled. Frog Choir can only be active if Frogs are shuffled.")
-    densityNoPT_tip = Hovertip(densityNoPT_checkbutton, "All post-temple checks, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nBottle: Deku Princess is never shuffled; other scoops are not affected.\nFrog Choir is disabled.")
+    densityNoCT_check.grid(column=1, row=2, sticky=(W,E))
+    densityNoPT_check.grid(column=1, row=3, sticky=(W,E))
+    densityMapCompass_check.grid(column=1, row=4, sticky=(W,E))
+    densityBossKeys_label.grid(column=1, row=5, sticky=(W,E))
+    densityBossKeys_combo.grid(column=2, row=5, sticky=(W,E))
+    densityNormal_tip = Hovertip(densityNormal_radio, "Baseline appearance rates for all categories. See the Category Weights Table for specifics.\nGossip major hint limit (WotHs + foolishes + major always hints) is 12.\nHard option limit is 2.\nActive category minimum is 5.\n(Hard options are Boss Keys Within Any Temple, Frogs with Frog Choir,\nAll Loose Rupees, Full Potsanity, and Full Bombers' Notebook.)")
+    densityLight_tip = Hovertip(densityLight_radio, "Excludes certain mystery options with harder or high-quantity checks.\nNo hard options.\nNo Boss Keys, boss room entrance shuffles, Scoopsanity, Shopsanity price randomization,\nfull Hit Spots, full Keaton Grass, or full Tokensanity.\nNo post-temple checks. 1 extra WotH hint.\nMap and Compass Hints is on. No swordless start (by default).\nActive category minimum decreased to 4.")
+    densitySuper_tip = Hovertip(densitySuper_radio,"Dramatically increased appearance rates for all categories!\nSongsanity and Long Quests can both be active.\nGossip major hint limit (WotHs + foolishes + major always hints) increased to 14.\nHard option limit increased to 3.\nActive category minimum increased to 8.")
+    densityNoCT_tip = Hovertip(densityNoCT_check, "All non-scoop checks in Clock Town regions, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nThe Bombers' Notebook category is disabled.\nEpona's Song is granted as an additional starting item; Skull Kid Song is always junked.\nBaby Zoras is disabled. Frog Choir can only be active if Frogs are shuffled.")
+    densityNoPT_tip = Hovertip(densityNoPT_check, "All post-temple checks, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nBottle: Deku Princess is never shuffled; other scoops are not affected.\nFrog Choir is disabled.")
+    densityMapCompass_tip = Hovertip(densityMapCompass_check, "The Entrances category also shuffles Maps and Compasses\nalongside temple and boss room entrances (respectively).\nThey are placed exclusively in the overworld and will reveal\ntheir corresponding temple or boss entrance shuffle when found.")
+    densityBossKeys_tip = Hovertip(densityBossKeys_combo, "Choose a Boss Keys option instead of using the customary Keysanity: Boss Keys roll.\nIf anything but Default is used, Always Shuffle Within Any Temple won't count against the hard option limit.\nRemember that WotH/Foolish hints ignore Boss Keys in Mystery!\nOff: Boss Keys don't appear. Boss doors are always open.\nDefault: Any other option, at random (65/20/15).\nAlways Active (Either Option): Either active option (20/15).\nAlways Shuffle Within Their Temple: Boss Keys are on any check in their own temple.\nAlways Shuffle Within Any Temple: Boss Keys are on any check in any temple.")
 
     for child in mainframe.winfo_children(): 
         child.grid_configure(padx=5, pady=5)
@@ -145,9 +207,11 @@ def openOptionsGui(version_string):
     customModesSettings = dict()
     customModesSettings["Goal Mode"] = goalMode.get()
     customModesSettings["Start Mode"] = startMode.get()
+    customModesSettings["Random Item Mode"] = startRandomItemMode.get()
     customModesSettings["Main Density Mode"] = mainDensityMode.get()
     customModesSettings["No Clock Town"] = (densityNoCT.get() == "1")
     customModesSettings["No Post-Temple"] = (densityNoPT.get() == "1")
+
     
     return [(windowForceClosed.get() == "1"),
             baseSettingsFilePath.get(),

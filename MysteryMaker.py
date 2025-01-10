@@ -180,17 +180,17 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     wgtsStartingSwordShield = [75,25,0,0,0]
     if customModes["Main Density Mode"] == "Super":
         wgtsStartingSwordShield = [50,50,0,0,0]
-    if (customModes["Start Mode"] == "Standard"):
+    if (customModes["Start Mode"] == "Kokiri"):
         wgtsStartingSwordShield = [100,0,0,0,0]
     if (customModes["Start Mode"] == "Swordless"):
         wgtsStartingSwordShield = [0,100,0,0,0]
-    if (customModes["Start Mode"] == "Generous"):
+    if (customModes["Start Mode"] == "Strong"):
         wgtsStartingSwordShield = [0,0,100,0,0]
     if (customModes["Start Mode"] == "Fragile"):
         wgtsStartingSwordShield = [0,0,0,100,0]
     if (customModes["Start Mode"] == "Cruel"):
         wgtsStartingSwordShield = [0,0,0,0,100]
-    catStartingSwordShield = random.choices(["No change","No sword or shield","Generous Start","Fragile Start","Cruel Start"],wgtsStartingSwordShield)
+    catStartingSwordShield = random.choices(["No change","No sword or shield","Strong Start","Fragile Start","Cruel Start"],wgtsStartingSwordShield)
     if catStartingSwordShield[0] == "No sword or shield":
         itemListString = AddEntryToListString(itemListString,7,"4000000")
         itemListString = AddEntryToListString(itemListString,7,"2000000")
@@ -205,10 +205,41 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         if (settings["DamageMode"] == "Default"):
             settings["DamageMode"] = "Double"
 
+    print(customModes["Random Item Mode"])
+    catStartingRandomItem = 0
     wgtsStartingRandomItem = [0,10,10,10,10,10,10,5,5,10,10,5,5,0]
+    if customModes["Random Item Mode"] == "Any Transformation Mask":
+        wgtsStartingRandomItem = [0,10,10,10,10,0,0,0,0,0,0,0,0,0]
+    if customModes["Random Item Mode"] == "Any Non-Transformation":
+        wgtsStartingRandomItem = [0,0,0,0,0,10,10,5,5,10,10,5,5,0]
+    if customModes["Random Item Mode"] == "Deku Mask":
+        wgtsStartingRandomItem = [0,1,0,0,0,0,0,0,0,0,0,0,0,0]
+    if customModes["Random Item Mode"] == "Goron Mask":
+        wgtsStartingRandomItem = [0,0,1,0,0,0,0,0,0,0,0,0,0,0]
+    if customModes["Random Item Mode"] == "Zora Mask":
+        wgtsStartingRandomItem = [0,0,0,1,0,0,0,0,0,0,0,0,0,0]
+    if customModes["Random Item Mode"] == "Fierce Deity's Mask":
+        wgtsStartingRandomItem = [0,0,0,0,1,0,0,0,0,0,0,0,0,0]
+    if customModes["Random Item Mode"] == "Bow":
+        wgtsStartingRandomItem = [0,0,0,0,0,1,0,0,0,0,0,0,0,0]
+    if customModes["Random Item Mode"] == "Hookshot":
+        wgtsStartingRandomItem = [0,0,0,0,0,0,1,0,0,0,0,0,0,0]
+    if customModes["Random Item Mode"] == "Bomb Bag":
+        wgtsStartingRandomItem = [0,0,0,0,0,0,0,1,0,0,0,0,0,0]
+    if customModes["Random Item Mode"] == "Blast Mask":
+        wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,1,0,0,0,0,0]
+    if customModes["Random Item Mode"] == "Empty Bottle (Dampe's)":
+        wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,1,0,0,0,0]
+    if customModes["Random Item Mode"] == "Great Fairy's Sword":
+        wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,0,1,0,0,0]
+    if customModes["Random Item Mode"] == "Adult's Wallet":
+        wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,0,0,1,0,0]
+    if customModes["Random Item Mode"] == "Bunny Hood":
+        wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,0,0,0,1,0]
     if catStartingSwordShield[0] == "Fragile Start":
-        wgtsStartingRandomItem = [0,10,10,10,0,10,10,5,5,10,10,5,0,0]
-    if catStartingSwordShield[0] == "Cruel Start":
+        wgtsStartingRandomItem[4] = 0
+        wgtsStartingRandomItem[12] = 0
+    if catStartingSwordShield[0] == "Cruel Start" or customModes["Random Item Mode"] == "Off":
         wgtsStartingRandomItem = [100,0,0,0,0,0,0,0,0,0,0,0,0,0]
     catStartingRandomItem = random.choices(["No change",
                                             "Deku Mask",
@@ -224,7 +255,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                                             "Bunny Hood",
                                             "Great Fairy's Sword",
                                             "Magic"],
-                                           wgtsStartingRandomItem)
+                                            wgtsStartingRandomItem)  
     if catStartingRandomItem[0] == "Deku Mask":
         startListString = AddEntryToListString(startListString,0,"1")
     if catStartingRandomItem[0] == "Goron Mask":
@@ -943,6 +974,7 @@ optionOutputCount = args.numberOfSettingsFiles
 optionDontMakeSeed = args.settingsOnly
 optionCustomModes = {"Goal Mode":"Normal",
                      "Start Mode":"Default",
+                     "Random Item Mode":"Any (Default)",
                      "Main Density Mode":"Normal",
                      "No Clock Town":False,
                      "No Post-Temple":True}
