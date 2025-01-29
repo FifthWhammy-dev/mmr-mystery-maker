@@ -1,3 +1,138 @@
+Mystery Maker / Default Settings release 4.1
+This minor release adjusts the baseline Mystery settings and FD logic, and also provides updated guidance
+for competitive Mystery racing.
+
+Major changes
+- New mode options, including new win conditions and density options.
+  These can be selected manually in the Mystery Maker GUI.
+  - Five Fairy Hunt: Four sets of five fairies are shuffled--turn in any one set! Which one will you pick!
+    A new spin on the novel 1.16 win condition that aims to keep the fun of Fairy Hunt without the super-long
+    completion times.
+  - Light Mystery: This density mode excludes many of the largest and most confounding mystery options
+    while granting an extra WotH hint and making sure that you'll still see some new checks.
+    Mystery newcomers in particular may appreciate this mode.
+  - Super Mystery: This density mode dramatically increases almost all category weights. If you thought
+    the default weights were too tame...this is the mode you've been waiting for. Intended for Mystery veterans,
+    thrill-seekers, and anyone else who wants to jump into Mystery's deep end.
+  - And more, including "long goals" like Mask Hunt and Hearts! See below.
+- Suggested racing rules, mainly discussing Fierce Deity's Mask Anywhere, are now included in the Mystery
+  settings document. The list of logical FD tricks has been slightly adjusted.
+- Minor changes to baseline categories and settings (shuffling CT Stray Fairy with All Stray Fairies,
+  fixed trick names for 1.16).
+
+Category and settings changes
+- Clock Town Stray Fairy is now only shuffled when All Stray Fairies is on.
+  This both provides an in-world tell for the All Stray Fairies setting and keeps Clock Town Stray Fairy from
+  becoming another side quest item when All Stray Fairies is off.
+- In both Five Fairy Hunt and Full Fairy Hunt, all Stray Fairy checks are now always shuffled and unjunked.
+  (Previous Mystery 1.16 versions had a chance to junk the loose Stray Fairies in this situation.)
+  This both simplifies the handling of All Stray Fairies in Fairy Hunt settings and consistently increases
+  WFT/SHT/GBT density to improve the likelihood of dungeon play in Five Fairy Hunt.
+- The list of enabled logical FD tricks in Mystery settings is now as follows:
+  - Straw Roof as FD
+  - Big Octo Skip as FD
+  - Path to Snowhead as FD
+  - Path to Snowhead Pillar as FD
+  - Climb Stone Tower as FD
+  Skull Kid with FD and Powder Keg Challenge Access as FD are removed from the list; besides the logic inherent
+  to the Fierce Deity's Mask Anywhere setting, Mystery limits itself to only including a small additional list
+  of easier FD jumps in logic, and those tricks are not jumps. (The removed tricks are still legal.)
+  Note that despite their broad value and reasonable execution difficulty, Iceless Ikana and GBT FD tricks are
+  not logically enabled in Mystery 1.16 for item placement purposes. (They are broadly legal; see below.)
+
+Suggested racing rules updates
+- Apply the standard racing ruleset for all Mystery races. For instance, tricks involving out-of-bounds
+  are banned in Mystery races just as they are in Standard (whether they involve FD or not).
+- Any trick on the "Racing Banned Tricks" list of MMR 1.16.0.12's casual logic file is
+  banned. FD tricks on this list include Ranch Tingle as FD, FD Jump into Ranch, 
+  Pirates' Fortress Upper Chest as FD, and Goron Racetrack Access as FD.
+- Powder Keg Challenge Access as FD is legal, but not in logic.
+- Other FD tricks that don't break the standard racing ruleset are legal, but not in logic. This includes
+  both GBT Green Pump Room Early in FD and Ikana Canyon Access as FD, which were previously
+  informally banned in Mystery 1.16.
+- Consult the Mystery Settings document for further discussion.
+  
+Mode updates and script changes
+- New Goal Mode options, some of which are classified as "Long Goals" due to the extra time they'll require:
+  * Five Fairy Hunt, a new Fairy Hunt variant intended to be closer to typical Mystery seeds in terms of
+    length and completion time.
+    - All Stray Fairies is always on. Five Stray Fairies of each color are placed on checks. Start
+      with the other 40. Complete and turn in any one set to win immediately! (No Majora.)
+    - Fairy Fountains hint the locations of their stray fairies. No WotHs, no foolishes.
+    - Always start with both Epona's Song and Goron Lullaby, to help with fountain access.
+      Skull Kid Song is junked and Baby Zoras can't appear.
+    - Since Lullaby is given for free, temple entrances are always shuffled. But boss rooms are never shuffled
+      and Boss Keys are always off.
+    - Start with the Great Fairy's Mask. Detect Stray Fairies is on.
+  * Grab Bag, which evenly chooses any one of the normal-length Mystery goal modes (Remains on Bosses, Remains
+    Shuffle, and Five Fairy Hunt) at random. For Remains on Bosses, Normal, Blitz 1, and Blitz 2 are all equally
+    likely. All Grab Bag options are intended to have similar completion times (at the high end--Remains Shuffle
+    and Five Fairy Hunt may be shorter if their key items are placed early) so players can try the mode without
+    being surprised with a super-long win condition.
+  * Mask Hunt, which requires collecting all 24 masks before defeating Majora.
+    - Start with Oath to Order as an additional song. Skull Kid Song is junked and Baby Zoras can't appear.
+    - Only one remains is required to access the moon.
+      Gossip Stones on the moon trials hint the location of every non-transformation mask.
+      Note that moon checks are never in play in Mystery.
+    - No WotHs, no foolishes.
+  * Skull Tokens, which requires collecting all 60 shuffled Gold Skulltula tokens before defeating Majora.
+    - Double Tokensanity is always on.
+    - Spider Houses hint the locations of their tokens. No WotHs, no foolishes.
+  * Hearts, which requires collecting all Heart Containers and Heart Pieces before defeating Majora.
+    - All checks with Heart Pieces are shuffled and junked at minimum. This includes those from the moon trials
+      and extra minigames, which are never shuffled otherwise.
+    - No WotHs, no foolishes.
+- New Goal Mode toggle: Direct To Credits. When on, collecting all win condition items
+  (remains for Remains on Bosses, Remains Shuffle, Full Fairy Hunt; masks, tokens, or hearts for the
+  corresponding long goals) wins the game immediately, without needing to access the moon and defeat Majora.
+  This lets you skip Oath to Order and may let you skip remains in long goal seeds.
+  Direct To Credits is always on for Five Fairy Hunt, regardless of this setting.
+- The Start Modes tab has been expanded (and fittingly pluralized).
+  * Start Difficulty puts all the starting item modes from Mystery v4.0 in one drop-down box. Generous
+    is renamed to Strong, and Standard is renamed to Kokiri, but all choices otherwise function as they did
+    in v4.0.
+  * Starting Random Item allows selecting a specific item (or subset of items, like Transformation Masks) 
+    to start with, or turning off the item entirely. Useful for practicing specific starts, most notably FD.
+  * FD Anywhere allows you to change when FD Anywhere is enabled. Normally, Mystery enables FD Anywhere whenever
+    you start with FD or 45% of the time otherwise; this option can guarantee or forbid FD Anywhere entirely.
+- Two new major Density Modes, which change how Mystery categories work and how often they appear:
+  * Light Mystery, which prevents some of the trickiest and broadest category options from appearing,
+    while not reducing the rates of the remaining options. Intended for a less imposing Mystery experience
+    (that is still recognizably Mystery). Those coming from MMR Scrubs might enjoy combining this with 
+    Strong Start and Blitz 1.
+    - Gain 1 additional WotH hint, for a total of 4 (or 5, if Songsanity is active).
+    - All post-temple checks are junked. This frees up hint space.
+    - No swordless start (unless manually overruled by the Start Difficulty mode option).
+    - Boss Keys, Boss Room Entrances, Scoopsanity, and Randomize Purchase Prices are never on.
+      (Shuffle Purchase Prices can still occur.)
+    - The four remaining "hard options"--Frogs with Choir, All Loose Rupees, Full Potsanity, and Full
+      Bombers' Notebook--cannot appear. Their lower-density versions can still appear.
+    - No Full Hit Spots, Full Keaton Grass, or Double Tokensanity. The lower-density options for these
+      categories can still appear.
+    - If Temple Entrances is on, the four dungeon maps are shuffled and placed throughout the overworld.
+      They will hint a temple location when found.
+  * Super Mystery, which greatly increases category weights--many checks now appear twice as often, with some
+    hard options appearing at triple the usual rate! For those wanting even more Mystery in each seed. Set
+    aside more time to complete these, especially if you miss a crucial check.
+    - Categories are much more likely to appear.
+    - Songsanity and Long Quests can both be active at once.
+    - The hard option limit is now 3 (instead of 2).
+    - Up to 14 major hints (WotHs, foolishes, major always hints) can now appear on Gossips (instead of 12).
+    - Each seed must include at least 8 categories (instead of 5). But be prepared for many more.
+- New Density Modes toggle: Map and Compass Hints. When on, temple and boss room entrance shuffles also
+  shuffle their temples' maps and compasses (respectively) throughout the overworld. The maps and compasses
+  will hint their entrances when found.
+- New Density Modes drop-down: Boss Keys. Allows Boss Keys to be disabled or guaranteed in a seed, including
+  setting a specific shuffle mode. If Boss Keys are guaranteed this way, Boss Keys Within Any Temple won't
+  count against the hard option limit.
+- A "Reset Modes" button is added in the GUI to return all new options to default.
+
+Bug fixes
+- Fixed trick entries that are differently handled or named in 1.16 ("WFT 2nd Floor Skip", "Lensless Walking",
+  "Lensless Walls/Ceilings", "Exit Ocean Spider House Without Goron")
+- Fixed Full Potsanity's handling of Goron Race and the Butler Race Dual Pot hint, no matter the status of the
+  No Post-Temple mode.
+
 Mystery Maker / Default Settings release 4.0
 Major changes
 - Fairy checks from MMR 1.16 come to Mystery! Regional Gossip Fairies arrives as a new category, while

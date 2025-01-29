@@ -50,6 +50,14 @@ def openOptionsGui(version_string):
     
     def updateModeTabs(*args):
         goalLongGoal_combo.state(["!disabled"] if goalMode.get() == "Long Goal" else ["disabled"])
+        
+        if goalMode.get() == "Five Fairy Hunt":
+            densityBossKeysMode.set("Off")
+            densityBossKeys_combo.state(["disabled"])
+        else:
+            if mainDensityMode.get() != "Light":
+                densityBossKeys_combo.state(["!disabled"])        
+        
         if mainDensityMode.get() == "Light":
             densityBossKeysMode.set("Off")
             densityBossKeys_combo.state(["disabled"])
@@ -58,14 +66,20 @@ def openOptionsGui(version_string):
             densityMapCompassMode.set("1")
             densityMapCompass_check.state(["disabled"])
         else:
-            densityBossKeys_combo.state(["!disabled"])
+            if goalMode.get() != "Five Fairy Hunt":
+                densityBossKeys_combo.state(["!disabled"])
             densityNoPT_check.state(["!disabled"])
             densityMapCompass_check.state(["!disabled"])
+        
         if startDifficultyMode.get() == "Cruel":
             startRandomItemMode.set("Off")
             startRandomItem_combo.state(["disabled"])
+            startFDAnywhereMode.set("Off")
+            startFDAnywhere_combo.state(["disabled"])
         else:
             startRandomItem_combo.state(["!disabled"])
+            startFDAnywhere_combo.state(["!disabled"])
+        
         if checkDefaults():
             resetButton.state(["disabled"])
         else:
@@ -171,7 +185,7 @@ def openOptionsGui(version_string):
     goalFFH_tip = Hovertip(goalFFH_radio, "Remains on Great Fairy Rewards.\nAll Stray Fairies shuffled and five Stray Fairies of each color are placed:\nfind and turn in one set to win immediately!\nAlways start with Epona, Lullaby, Great Fairy's Mask, and the other 40 fairies.\nSkull Kid Song is junked, and Baby Zoras are disabled.\nTemple locations always shuffled. Boss Keys and Boss Rooms never shuffled.\nFairy Fountains hint fairy regions. No WotHs, no foolishes.")
     goalGB_tip = Hovertip(goalGB_radio, "Choose one of Remains on Bosses, Remains Shuffle, or Five Fairy Hunt (equal weights).\nFor Remains on Bosses, No Blitz, Blitz 1, and Blitz 2 are all equally likely.")
     goalLongGoal_tip = Hovertip(goalLongGoal_radio, "Choose a long victory mode from the drop-down box.\nComplete the chosen win condition before fighting Majora.\n(Hover over the drop-down box for specifics.)\nEvery long victory mode gives no WotH or foolish hints.")
-    goalLongGoalCombo_tip = Hovertip(goalLongGoal_combo, "Full Fairy Hunt: Find all four boss remains on Great Fairy Rewards. All Stray Fairies are shuffled.\nMask Hunt: Find all shuffled masks. Moon access only requires one remains. Start with Oath; Skull Kid's Song is junked.\nSkull Tokens: Find all 60 shuffled skull tokens.\nHearts: Find all shuffled Heart Containers and Pieces of Heart.")
+    goalLongGoalCombo_tip = Hovertip(goalLongGoal_combo, "Full Fairy Hunt: Find all four boss remains on Great Fairy Rewards. All Stray Fairies are shuffled.\nMask Hunt: Find all shuffled masks. Moon access only requires one remains. Start with Oath also; Skull Kid's Song is junked.\nSkull Tokens: Find all 60 shuffled skull tokens.\nHearts: Find all shuffled Heart Containers and Pieces of Heart.")
     goalDirectToCredits_tip = Hovertip(goalDirectToCredits_check, "Win immediately upon collecting all required remains or\nwin condition items without needing to use Oath and fight Majora.\n(This is always on in Five Fairy Hunt.)")
 
     # Start Modes pane
@@ -248,9 +262,9 @@ def openOptionsGui(version_string):
     densityBossKeys_label.grid(column=1, row=5, sticky=(W,E))
     densityBossKeys_combo.grid(column=2, row=5, sticky=(W,E))
     densityNormal_tip = Hovertip(densityNormal_radio, "Baseline appearance rates for all categories. See the Category Weights Table for specifics.\nGossip major hint limit (WotHs + foolishes + major always hints) is 12.\nHard option limit is 2.\nActive category minimum is 5.\n(Hard options are Boss Keys Within Any Temple, Frogs with Frog Choir,\nAll Loose Rupees, Full Potsanity, and Full Bombers' Notebook.)")
-    densityLight_tip = Hovertip(densityLight_radio, "Excludes certain mystery options with harder or high-quantity checks.\nNo hard options.\nNo Boss Keys, Boss Rooms, Scoopsanity, Shopsanity price randomization,\nfull Hit Spots, full Keaton Grass, or full Tokensanity.\nNo post-temple checks. 1 extra WotH hint.\nMap and Compass Hints is on. No swordless start (by default).\nActive category minimum decreased to 4.")
+    densityLight_tip = Hovertip(densityLight_radio, "Excludes certain mystery options with harder or high-quantity checks.\nNo hard options.\nNo Boss Keys, Boss Rooms, Scoopsanity, Shopsanity price randomization,\nfull Hit Spots, full Keaton Grass, or full Tokensanity.\nNo post-temple checks. 1 extra WotH hint.\nMap and Compass Hints is on. No swordless start (by default).")
     densitySuper_tip = Hovertip(densitySuper_radio,"Dramatically increased appearance rates for all categories!\nSongsanity and Long Quests can both be active.\nGossip major hint limit (WotHs + foolishes + major always hints) increased to 14.\nHard option limit increased to 3.\nActive category minimum increased to 8.")
-    densityNoCT_tip = Hovertip(densityNoCT_check, "All non-scoop checks in Clock Town regions, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nThe Bombers' Notebook category is disabled.\nEpona's Song is granted as an additional starting item; Skull Kid Song is always junked.\nBaby Zoras is disabled. Frog Choir can only be active if Frogs are shuffled.")
+    densityNoCT_tip = Hovertip(densityNoCT_check, "All non-scoop checks in Clock Town regions, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nThe Bombers' Notebook category is disabled.\nEpona's Song is granted as an additional starting song; Skull Kid Song is always junked.\nBaby Zoras is disabled. Frog Choir can only be active if Frogs are shuffled.")
     densityNoPT_tip = Hovertip(densityNoPT_check, "All post-temple checks, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nBottle: Deku Princess is never shuffled; other scoops are not affected.\nFrog Choir is disabled.")
     densityMapCompass_tip = Hovertip(densityMapCompass_check, "The Entrances category also shuffles temples' Maps and Compasses\nalongside temple and boss room entrances (respectively).\nThey are placed exclusively in the overworld and will reveal\ntheir corresponding temple or boss entrance shuffle when found.")
     densityBossKeys_tip = Hovertip(densityBossKeys_combo, "Choose a Boss Keys option instead of using the customary Keysanity: Boss Keys roll.\nIf anything but Default is used, Always Within Any Temple won't count against the hard option limit.\nRemember that WotH/Foolish hints ignore Boss Keys in Mystery!\nOff: Boss Keys don't appear. Boss doors are always open.\nDefault: Any other option, at random (65/20/15).\nAlways Active (Either Option): Either active option (20/15).\nAlways Within Their Temple: Boss Keys are on any check in their own temple.\nAlways Within Any Temple: Boss Keys are on any check in any temple.")
@@ -265,7 +279,10 @@ def openOptionsGui(version_string):
     guiWindow.mainloop()
     customModesSettings = dict()
     customModesSettings["Goal Mode"] = goalMode.get()
-    customModesSettings["Long Goal"] = goalLongGoal.get()
+    if goalMode.get() == "Long Goal":
+        customModesSettings["Long Goal"] = goalLongGoal.get()
+    else:
+        customModesSettings["Long Goal"] = "None"
     customModesSettings["Direct to Credits"] = (goalDirectToCredits.get() == "1")
     customModesSettings["Start Mode"] = startDifficultyMode.get()
     customModesSettings["Random Item Mode"] = startRandomItemMode.get()
