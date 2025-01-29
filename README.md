@@ -1,6 +1,6 @@
 MMR Mystery Maker is a Python script (and now standalone .exe, thanks to [PyInstaller](https://pyinstaller.org/en/stable/index.html)) that generates semi-random "Mystery" settings files for [Majora's Mask Randomizer v1.16.0.12](https://github.com/ZoeyZolotova/mm-rando).
 
-See the [Mystery Settings Document](https://docs.google.com/document/d/1_He7M9gkYJOkawxZrNsQRtjTyxZLWPAh6xXqBG3HED8/edit?usp=sharing) and the [Category Weights and Hints spreadsheet](https://docs.google.com/spreadsheets/d/1_A8OfnPPWA50BEr5A9p914NYrWza_nx0yJ-HKc5V7D0/edit?usp=sharing) to learn more about Mystery settings.
+See the [Mystery Settings Document](https://docs.google.com/document/d/1A7LkYW5kmAPjbrKt99wTnF31VdX_l6XmRrBLkyCqg3g/edit?usp=sharing) and the [Category Weights and Hints spreadsheet](https://docs.google.com/spreadsheets/d/1LYj62Ep9iYkWqUcvvsmXB6LUQ1DZeLEeHxPsHpyHNVI/edit?usp=sharing) to learn more about Mystery settings.
 
 The script uses hard-coded categories and weights, applying them to an input JSON file to generate a new settings file. By default, the script then calls MMR.CLI.exe to generate a new seed using the settings.
 
@@ -11,7 +11,7 @@ To use:
 - Run MysteryMaker.exe and an options dialog will open. If it's in the same directory as MMR, you can just click Randomize in the options dialog to generate the seed.
 - When finished, check the "output" directory for your seed and Mystery spoiler.
 
-New to v4.0: Remains Shuffle and Fairy Hunt, alongside other new modes, are selected in Mystery Maker itself! There's only one base settings file now.
+New to v4.1: Many new modes are all selected in Mystery Maker itself! There's only one base settings file now.
 
 Command-line operation is available for default seeds. Using any command-line option will bypass the options GUI and go straight to generation.
 
