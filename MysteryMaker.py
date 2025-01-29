@@ -299,14 +299,14 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         wgtsStartingRandomItem = [0,0,0,0,0,0,0,1,0,0,0,0,0,0]
     if customModes["Random Item Mode"] == "Blast Mask":
         wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,1,0,0,0,0,0]
-    if customModes["Random Item Mode"] == "Empty Bottle (Dampe's)":
-        wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,1,0,0,0,0]
-    if customModes["Random Item Mode"] == "Great Fairy's Sword":
-        wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,0,1,0,0,0]
     if customModes["Random Item Mode"] == "Adult's Wallet":
-        wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,0,0,1,0,0]
+        wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,1,0,0,0,0]
+    if customModes["Random Item Mode"] == "Empty Bottle (Dampe's)":
+        wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,0,1,0,0,0]
     if customModes["Random Item Mode"] == "Bunny Hood":
-        wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,0,0,0,1,0]
+        wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,0,0,1,0,0]
+    if customModes["Random Item Mode"] == "Great Fairy's Sword":
+        wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,0,0,0,1,0]    
     if catStartingSwordShield[0] == "Cruel Start" or customModes["Random Item Mode"] == "Off":
         wgtsStartingRandomItem = [100,0,0,0,0,0,0,0,0,0,0,0,0,0]
     catStartingRandomItem = random.choices(["None",
