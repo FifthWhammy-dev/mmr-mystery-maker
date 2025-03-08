@@ -28,6 +28,9 @@ def openOptionsGui(version_string):
         densityNoPT.set("0")
         densityMapCompassMode.set("0")
         densityBossKeysMode.set("Default")
+        densityPotsanityMode.set("Default")
+        densityScoopsanityMode.set("Default")
+        densityUnscrambledEggsMode.set("0")
         resetButton.state(["disabled"])
 
     def browseForBaseSettingsFile(*args):
@@ -46,7 +49,10 @@ def openOptionsGui(version_string):
                 densityNoCT.get() == "0" and
                 densityNoPT.get() == "0" and
                 densityMapCompassMode.get() == "0" and
-                densityBossKeysMode.get() == "Default")
+                densityBossKeysMode.get() == "Default" and
+                densityPotsanityMode.get() == "Default" and
+                densityScoopsanityMode.get() == "Default" and
+                densityUnscrambledEggsMode.get() == "0")
     
     def updateModeTabs(*args):
         goalLongGoal_combo.state(["!disabled"] if goalMode.get() == "Long Goal" else ["disabled"])
@@ -61,6 +67,8 @@ def openOptionsGui(version_string):
         if mainDensityMode.get() == "Light":
             densityBossKeysMode.set("Off")
             densityBossKeys_combo.state(["disabled"])
+            densityScoopsanityMode.set("Off")
+            densityScoopsanity_combo.state(["disabled"])
             densityNoPT.set("1")
             densityNoPT_check.state(["disabled"])
             densityMapCompassMode.set("1")
@@ -68,6 +76,7 @@ def openOptionsGui(version_string):
         else:
             if goalMode.get() != "Five Fairy Hunt":
                 densityBossKeys_combo.state(["!disabled"])
+            densityScoopsanity_combo.state(["!disabled"])
             densityNoPT_check.state(["!disabled"])
             densityMapCompass_check.state(["!disabled"])
         
@@ -240,6 +249,9 @@ def openOptionsGui(version_string):
     densityNoPT = StringVar(value="0")
     densityMapCompassMode = StringVar(value="0")
     densityBossKeysMode = StringVar(value="Default")
+    densityPotsanityMode = StringVar(value="Default")
+    densityScoopsanityMode = StringVar(value="Default")
+    densityUnscrambledEggsMode = StringVar(value="0")
     mainDensityMode.trace_add("write", updateModeTabs)
     
     densityNormal_radio = ttk.Radiobutton(modeTabDensityMode, text="Normal (default)", variable=mainDensityMode, value="Normal")
@@ -249,9 +261,18 @@ def openOptionsGui(version_string):
     densityNoPT_check = ttk.Checkbutton(modeTabDensityMode, text="No Post-Temple", variable=densityNoPT)
     densityMapCompass_check = ttk.Checkbutton(modeTabDensityMode, text="Map and Compass Hints", variable=densityMapCompassMode)
     densityBossKeys_label = ttk.Label(modeTabDensityMode, text="Boss Keys:    ")
+    densityPotsanity_label = ttk.Label(modeTabDensityMode, text="Potsanity:    ")
+    densityScoopsanity_label = ttk.Label(modeTabDensityMode, text="Scoopsanity:  ")
     densityBossKeys_combo = ttk.Combobox(modeTabDensityMode, textvariable=densityBossKeysMode, width=25)
     densityBossKeys_combo["values"] = ("Off", "Default", "Always Active (Either Option)", "Always Within Their Temple", "Always Within Any Temple")
     densityBossKeys_combo.state(["readonly"])
+    densityPotsanity_combo = ttk.Combobox(modeTabDensityMode, textvariable=densityPotsanityMode, width=25)
+    densityPotsanity_combo["values"] = ("Off", "Default", "Always Active (Either Option)", "Temples and W/E Dungeons", "Full Potsanity")
+    densityPotsanity_combo.state(["readonly"])
+    densityScoopsanity_combo = ttk.Combobox(modeTabDensityMode, textvariable=densityScoopsanityMode, width=25)
+    densityScoopsanity_combo["values"] = ("Off", "Default", "On")
+    densityScoopsanity_combo.state(["readonly"])
+    densityUnscrambledEggs_check = ttk.Checkbutton(modeTabDensityMode, text="Vanilla Eggs for Baby Zoras", variable=densityUnscrambledEggsMode)
 
     densityNormal_radio.grid(column=1, row=1, sticky=(W,E))
     densityLight_radio.grid(column=2, row=1, sticky=(W,E))
@@ -261,14 +282,22 @@ def openOptionsGui(version_string):
     densityMapCompass_check.grid(column=1, row=4, sticky=(W,E))
     densityBossKeys_label.grid(column=1, row=5, sticky=(W,E))
     densityBossKeys_combo.grid(column=2, row=5, sticky=(W,E))
+    densityPotsanity_label.grid(column=1, row=6, sticky=(W,E))
+    densityPotsanity_combo.grid(column=2, row=6, sticky=(W,E))
+    densityScoopsanity_label.grid(column=1, row=7, sticky=(W,E))
+    densityScoopsanity_combo.grid(column=2, row=7, sticky=(W,E))
+    densityUnscrambledEggs_check.grid(column=3, row=7, sticky=(W,E))
+
     densityNormal_tip = Hovertip(densityNormal_radio, "Baseline appearance rates for all categories. See the Category Weights Table for specifics.\nGossip major hint limit (WotHs + foolishes + major always hints) is 12.\nHard option limit is 2.\nActive category minimum is 5.\n(Hard options are Boss Keys Within Any Temple, Frogs with Frog Choir,\nAll Loose Rupees, Full Potsanity, and Full Bombers' Notebook.)")
     densityLight_tip = Hovertip(densityLight_radio, "Excludes certain mystery options with harder or high-quantity checks.\nNo hard options.\nNo Boss Keys, Boss Rooms, Scoopsanity, Shopsanity price randomization,\nfull Hit Spots, full Keaton Grass, or full Tokensanity.\nNo post-temple checks. 1 extra WotH hint.\nMap and Compass Hints is on. No swordless start (by default).")
     densitySuper_tip = Hovertip(densitySuper_radio,"Dramatically increased appearance rates for all categories!\nSongsanity and Long Quests can both be active.\nGossip major hint limit (WotHs + foolishes + major always hints) increased to 14.\nHard option limit increased to 3.\nActive category minimum increased to 8.")
     densityNoCT_tip = Hovertip(densityNoCT_check, "All non-scoop checks in Clock Town regions, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nThe Bombers' Notebook category is disabled.\nEpona's Song is granted as an additional starting song; Skull Kid Song is always junked.\nBaby Zoras is disabled. Frog Choir can only be active if Frogs are shuffled.")
     densityNoPT_tip = Hovertip(densityNoPT_check, "All post-temple checks, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nBottle: Deku Princess is never shuffled; other scoops are not affected.\nFrog Choir is disabled.")
     densityMapCompass_tip = Hovertip(densityMapCompass_check, "The Entrances category also shuffles temples' Maps and Compasses\nalongside temple and boss room entrances (respectively).\nThey are placed exclusively in the overworld and will reveal\ntheir corresponding temple or boss entrance shuffle when found.")
-    densityBossKeys_tip = Hovertip(densityBossKeys_combo, "Choose a Boss Keys option instead of using the customary Keysanity: Boss Keys roll.\nIf anything but Default is used, Always Within Any Temple won't count against the hard option limit.\nRemember that WotH/Foolish hints ignore Boss Keys in Mystery!\nOff: Boss Keys don't appear. Boss doors are always open.\nDefault: Any other option, at random (65/20/15).\nAlways Active (Either Option): Either active option (20/15).\nAlways Within Their Temple: Boss Keys are on any check in their own temple.\nAlways Within Any Temple: Boss Keys are on any check in any temple.")
-
+    densityBossKeys_tip = Hovertip(densityBossKeys_combo, "Choose a Boss Keys option instead of using the customary random roll for the category.\nIf anything but Default is used, Always Within Any Temple won't count against the hard option limit.\nRemember that WotH/Foolish hints ignore Boss Keys in Mystery!\nAlways Off: Boss Keys don't appear. Boss doors are always open.\nDefault: Use the default Mystery category roll.\nAlways Active (Either Option): Either active option.\nAlways Within Their Temple: Boss Keys are on any check in their own temple.\nAlways Within Any Temple: Boss Keys are on any check in any temple.")
+    densityPotsanity_tip = Hovertip(densityPotsanity_combo, "Choose a Potsanity option instead of using the customary random roll for the category.\nIf anything but Default is used, Full Potsanity won't count against the hard option limit.\nOff: Pot contents won't be shuffled.\nDefault: Use the default Mystery category roll.\nAlways Active (Either Option): Either active option.\nTemples and West/East Dungeons: Shuffle pot contents in WFT, SHT, GBT, Pirates' Fortress,\nOcean Spider House, Ikana Graveyard, Secret Shrine, Beneath the Well, and Ikana Castle.\nFull Potsanity: Shuffle pot contents, except those by owls. Goron Race is junked.")
+    densityScoopsanity_tip = Hovertip(densityScoopsanity_combo, "Choose a Scoopsanity option instead of using the customary random roll for the category.\nOff: Scoops won't be shuffled.\nDefault: Use the default Mystery category roll.\nOn: Scoops, except for bugs, are shuffled.")
+    densityUnscrambledEggs_tip = Hovertip(densityUnscrambledEggs_check, "Excludes Zora Eggs from the Scoopsanity shuffle when Baby Zoras is active.")
     for child in mainframe.winfo_children(): 
         child.grid_configure(padx=5, pady=5)
 
@@ -292,7 +321,9 @@ def openOptionsGui(version_string):
     customModesSettings["No Post-Temple"] = (densityNoPT.get() == "1")
     customModesSettings["Map and Compass Hints"] = (densityMapCompassMode.get() == "1")
     customModesSettings["Boss Keys"] = densityBossKeysMode.get()
-
+    customModesSettings["Potsanity"] = densityPotsanityMode.get()
+    customModesSettings["Scoopsanity"] = densityScoopsanityMode.get()
+    customModesSettings["Vanilla Eggs for Baby Zoras"] = (densityUnscrambledEggsMode.get() == "1")
     
     return [(windowForceClosed.get() == "1"),
             baseSettingsFilePath.get(),

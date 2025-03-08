@@ -6,7 +6,7 @@ import os
 import sys
 from mysteryutils.MysteryMakerGUI import openOptionsGui
 
-MYSTERY_MAKER_VERSION = "v4.1"
+MYSTERY_MAKER_VERSION = "v4.1.1"
 
 MODE_DEFAULTS = {"Goal Mode":"Normal",
                  "Long Goal":"None",
@@ -18,7 +18,10 @@ MODE_DEFAULTS = {"Goal Mode":"Normal",
                  "No Clock Town":False,
                  "No Post-Temple":False,
                  "Map and Compass Hints":False,
-                 "Boss Keys":"Default"}
+                 "Boss Keys":"Default",
+                 "Potsanity":"Default",
+                 "Scoopsanity":"Default",
+                 "Vanilla Eggs for Baby Zoras":False}
 
 def CheckForCustom(modeSettings):
     for mode in modeSettings:
@@ -525,20 +528,23 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
 
     wgtsKeysanityBossKeys = [65,20,15,0,0]
     if customModes["Main Density Mode"] == "Light":
-        wgtsKeysanityBossKeys = [40,30,30,0,0]
+        wgtsKeysanityBossKeys = [100,0,0,0,0]
     if customModes["Main Density Mode"] == "Super":
         wgtsKeysanityBossKeys = [40,30,30,0,0]
     if customModes["Boss Keys"] == "Off":
         wgtsKeysanityBossKeys = [100,0,0,0,0]
     if customModes["Boss Keys"] == "Always Active (Either Option)":
-        wgtsKeysanityBossKeys = [0,20,15,0,0]
+        if customModes["Main Density Mode"] != "Light":
+            wgtsKeysanityBossKeys[0] = 0
+        wgtsKeysanityBossKeys[3] = 0
+        wgtsKeysanityBossKeys[4] = 0
     if customModes["Boss Keys"] == "Always Within Their Temple":
         wgtsKeysanityBossKeys = [0,100,0,0,0]
     if customModes["Boss Keys"] == "Always Within Any Temple":
         wgtsKeysanityBossKeys = [0,0,100,0,0]
     if catStartingBossRemains[0] == "Five Fairy Hunt":
         wgtsKeysanityBossKeys = [100,0,0,0,0]
-    if hardOptions >= HARD_OPTIONS_LIMIT and customModes["Boss Keys"] != "Default":
+    if hardOptions >= HARD_OPTIONS_LIMIT and customModes["Boss Keys"] == "Default":
         wgtsKeysanityBossKeys[1] += wgtsKeysanityBossKeys[2]
         wgtsKeysanityBossKeys[2] = 0
     catKeysanityBossKeys = random.choices(["---",
@@ -551,7 +557,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         settings["BossKeyMode"] = "KeepWithinArea, KeepWithinTemples, KeepThroughTime"
     if catKeysanityBossKeys[0] == "Shuffled within any temple":
         settings["BossKeyMode"] = "KeepWithinTemples, KeepThroughTime"
-        if customModes["Boss Keys"] != "Default":
+        if customModes["Boss Keys"] == "Default":
             hardOptions += 1
     if catKeysanityBossKeys[0] == "Shuffled within area":
         settings["BossKeyMode"] = "KeepWithinArea, KeepThroughTime"
@@ -588,6 +594,10 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         wgtsScoopsanity = [100,0]
     if customModes["Main Density Mode"] == "Super":
         wgtsScoopsanity = [50,50]
+    if customModes["Scoopsanity"] == "Off":
+        wgtsScoopsanity = [100,0]
+    if customModes["Scoopsanity"] == "On":
+        wgtsScoopsanity = [0,100]
     catScoopsanity = random.choices(["---","Shuffled with scoops"],
                                        wgtsScoopsanity)
     if catScoopsanity[0] == "Shuffled with scoops":
@@ -723,6 +733,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                 itemListString = RemoveEntryFromListString(itemListString,3,"4")
             else:
                 itemListString = RemoveEntryFromListString(itemListString,3,"1")
+        if catScoopsanity[0] == "Shuffled with scoops" and customModes["Vanilla Eggs for Baby Zoras"]:
+            itemListString = RemoveEntryFromListString(itemListString,4,"4000000")
+            catScoopsanity[0] = "Shuffled with scoops (unscrambled eggs)"
     if catLongQuests[0] == "Frog Choir" or catLongQuests[0] == "All Long Quests":
         junkListString = RemoveEntryFromListString(junkListString,1,"8000000")
         settings["OverrideHintPriorities"][0].append("HeartPieceChoir")
@@ -804,7 +817,15 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     wgtsPotsanity = [80,10,10]
     if customModes["Main Density Mode"] == "Super":
         wgtsPotsanity = [50,20,30]
-    if hardOptions >= HARD_OPTIONS_LIMIT:
+    if customModes["Potsanity"] == "Off":
+        wgtsPotsanity = [100,0,0]
+    if customModes["Potsanity"] == "Always Active (Either Option)":
+        wgtsPotsanity[0] = 0
+    if customModes["Potsanity"] == "Temples and W/E Dungeons":
+        wgtsPotsanity = [0,100,0]
+    if customModes["Potsanity"] == "Full Potsanity":
+        wgtsPotsanity = [0,0,100]
+    if hardOptions >= HARD_OPTIONS_LIMIT and customModes["Potsanity"] == "Default":
         wgtsPotsanity[1] += wgtsPotsanity[2]
         wgtsPotsanity[2] = 0
     catPotsanity = random.choices(["---",
@@ -822,7 +843,8 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         if (customModes["No Post-Temple"] == False):
             settings["OverrideHintPriorities"][1].append("CollectableDekuShrineGreyBoulderRoomPot1")
             gossipHintsTakenByAlways -= 1
-        hardOptions += 1
+        if customModes["Potsanity"] == "Default":
+            hardOptions += 1
     if catPotsanity[0] != "---":
         if ("ChestWellLeftPurpleRupee" in settings["OverrideHintPriorities"][2]):
             settings["OverrideHintPriorities"][2].remove("ChestWellLeftPurpleRupee")
@@ -952,9 +974,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
 
     if (customModes["No Post-Temple"] == True):
         itemListString = RemoveStringFromListString(itemListString,
-                                                    "-c000000-30000-100000--1fc1f-f0000000--------1c0-806-ff-ffffe008-1ff-fffff000---80003-c0000000--------206--80000--40040-4c000000-40000")
+                                                    "-c000000-30000-100000--1fc1f-f0000000---------806--8-1ff-fffff000---80003-c0000000--------206--80000--40040-4c000000-40000")
         junkListString = RemoveStringFromListString(junkListString,
-                                                    "-c000000-30000-100000--1fc1f-f0000000--------1c0-806-ff-ffffe008-1ff-fffff000---80003-c0000000--------206--80000--40040-4c000000-40000")
+                                                    "-c000000-30000-100000--1fc1f-f0000000---------806--8-1ff-fffff000---80003-c0000000--------206--80000--40040-4c000000-40000")
         itemListString = AddStringToListString(itemListString,
                                                "-----------------------------------40040-4c000000-40000")
         junkListString = AddStringToListString(junkListString,
@@ -1021,6 +1043,12 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                 print("    Map and Compass Hints: ", customModes["Map and Compass Hints"],file=spoiler_file)
             if (customModes["Boss Keys"] != "Default"):
                 print("                Boss Keys: ", customModes["Boss Keys"],file=spoiler_file)
+            if (customModes["Potsanity"] != "Default"):
+                print("                Potsanity: ", customModes["Potsanity"],file=spoiler_file)
+            if (customModes["Scoopsanity"] != "Default"):
+                print("              Scoopsanity: ", customModes["Scoopsanity"],file=spoiler_file)
+            if (customModes["Vanilla Eggs for Baby Zoras"]):
+                print("Vanilla Eggs + Baby Zoras: ", customModes["Vanilla Eggs for Baby Zoras"],file=spoiler_file)
         print("=============================================",file=spoiler_file)
         if customModes["Main Density Mode"] == "Light":
             print(" ***        Light Mystery Active!        ***",file=spoiler_file)

@@ -1,3 +1,30 @@
+Mystery Maker / Default Settings release 4.1.1
+This minor release fixes bugs and adds the ability to manually set the Potsanity and Scoopsanity categories.
+Besides fixing one bug that could rarely impact the core settings (namely, Boss Keys Within Any Temple
+not being counted as a hard option in v4.1), no other core settings changes have been made.
+
+Mode updates and script changes
+- New Density Modes drop-downs: Potsanity and Scoopsanity. Similar to the Boss Keys Density Mode,
+  these can be used to modify or replace the corresponding random category rolls.
+  If Potsanity is set to anything but "Default", Full Potsanity will not count against the hard option limit.
+- New Density Modes toggle: Vanilla Eggs for Baby Zoras. When on, Scoopsanity won't shuffle Zora Eggs when
+  Baby Zoras is also active.
+- When manually setting Potsanity or Boss Keys to be always active with Super Mystery on, Super Mystery's 
+  weights will still be used for the active options. Relatedly, manually guaranteeing Potsanity can cause
+  Full Potsanity to be active in a Light Mystery seed.
+
+Bug fixes
+- Fixed Boss Keys Within Any Temple not being counted as a hard option by the v4.1 default settings.
+- Removed the Goron Racetrack pots from the list of checks affected by the No Post-Temple custom mode option,
+  as the Goron Racetrack pots are logically available pre-temple. This matches MMR's Blitz handling.
+  This does not apply to Butler and the Butler Race rupees, since pre-temple access to Butler Race, even if
+  possible, is never in logic in Mystery.
+- Added dividers to this changelog, and corrected the v4.1 changelog to clarify that the Clock Town Stray Fairy
+  change in v4.1 only prevented it from becoming a *shuffled* side quest item when All Stray Fairies isn't active.
+  An unshuffled Clock Town Stray Fairy can still be required in the core settings.
+
+----------
+
 Mystery Maker / Default Settings release 4.1
 This minor release adjusts the baseline Mystery settings and FD logic, and also provides updated guidance
 for competitive Mystery racing.
@@ -23,7 +50,7 @@ Major changes
 Category and settings changes
 - Clock Town Stray Fairy is now only shuffled when All Stray Fairies is on.
   This both provides an in-world tell for the All Stray Fairies setting and keeps Clock Town Stray Fairy from
-  becoming another side quest item when All Stray Fairies is off.
+  becoming another shuffled side quest item when All Stray Fairies is off.
 - In both Five Fairy Hunt and Full Fairy Hunt, all Stray Fairy checks are now always shuffled and unjunked.
   (Previous Mystery 1.16 versions had a chance to junk the loose Stray Fairies in this situation.)
   This both simplifies the handling of All Stray Fairies in Fairy Hunt settings and consistently increases
@@ -133,6 +160,8 @@ Bug fixes
 - Fixed Full Potsanity's handling of Goron Race and the Butler Race Dual Pot hint, no matter the status of the
   No Post-Temple mode.
 
+----------
+
 Mystery Maker / Default Settings release 4.0
 Major changes
 - Fairy checks from MMR 1.16 come to Mystery! Regional Gossip Fairies arrives as a new category, while
@@ -221,6 +250,8 @@ Hint adjustments
 Bug fixes
 - Corrected default Starting Boss Remains weights (70/25/10 -> 65/25/10).
 
+----------
+
 Mystery Maker / Default Settings release 3.1
 Major changes
 - Double Archery Rewards is now on only when the Minigames category is active.
@@ -236,10 +267,14 @@ Document changes
 - Added Great Bay Temple to the list of Potsanity: Temples and Side Dungeons regions. (Seesaw Room Pot was
   handled correctly in previous releases; this is only a document change.)
 
+----------
+
 Mystery Maker / Default Settings release 3.0a
 Settings changes
 - Skip Younger Beaver is back on in all three base jsons. Beaver Race 1 should now require only one race
   again, as intended.
+
+----------
 
 Mystery Maker / Default Settings release 3.0
 Major changes
@@ -428,6 +463,8 @@ Bug fixes
 - Added Cow Beneath the Well (tier 2 / minor always) when Cowsanity is active.
 - Fixed handling of absolute paths for base settings files.
 
+----------
+
 Mystery Maker / Default Settings release 2.3
 Major changes
 - The Fairy Hunt settings file now enables Detect Stray Fairies (shimmering GF Mask).
@@ -442,15 +479,21 @@ Script changes
 - The script now accounts for the input settings' WotH and Foolish counts when determining how many
   Gossip Stone hint slots are free for extra always hints.
 
+----------
+
 Mystery Maker / Default Settings release 2.2
 Bug fixes
 - Removed Pirates' Fortress Barrel Maze Egg Pot 1 and 2 from Crates and Barrels, as intended.
+
+----------
 
 Mystery Maker / Default Settings release 2.1
 Major changes
 - Updated base settings files for MMR v1.16.0.10 compatibility.
   * For default Mystery and Remains Shuffle, Oath and Boss Remains hints are enabled.
   * For Fairy Hunt, Fairy and Skull hints are enabled.
+
+----------
 
 Mystery Maker / Default Settings release 2.0
 
