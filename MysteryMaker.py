@@ -6,7 +6,7 @@ import os
 import sys
 from mysteryutils.MysteryMakerGUI import openOptionsGui
 
-MYSTERY_MAKER_VERSION = "v4.1.1"
+MYSTERY_MAKER_VERSION = "v4.1.2"
 
 MODE_DEFAULTS = {"Goal Mode":"Normal",
                  "Long Goal":"None",
@@ -983,15 +983,15 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                                                "-----------------------------------40040-4c000000-40000")
 
     if catStartingBossRemains[0] == "Hearts":
-        shuffleAndJunkHearts = "------------------------------1e0000------110e0000-"
+        shuffleAndJunkHearts = "------------------------------1e0000------110f0000-"
         if catMinigames[0] == "All shuffled":
-            shuffleAndJunkHearts = "------------------------------1e0000-------"
+            shuffleAndJunkHearts = "------------------------------1e0000------10000-"
         elif catMinigamesExtra[0] == "DPG Three Days":
-            shuffleAndJunkHearts = "------------------------------1e0000------c0000-"
+            shuffleAndJunkHearts = "------------------------------1e0000------d0000-"
         elif catMinigamesExtra[0] == "H&D Three Days":
-            shuffleAndJunkHearts = "------------------------------1e0000------60000-"
+            shuffleAndJunkHearts = "------------------------------1e0000------70000-"
         elif catMinigamesExtra[0] == "Town Archery 50":
-            shuffleAndJunkHearts = "------------------------------1e0000------a0000-"
+            shuffleAndJunkHearts = "------------------------------1e0000------b0000-"
         itemListString = AddStringToListString(itemListString, shuffleAndJunkHearts)                                               
         junkListString = AddStringToListString(junkListString, shuffleAndJunkHearts)                                                   
 

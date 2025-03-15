@@ -1,3 +1,23 @@
+Mystery Maker / Default Settings release 4.1.2
+This minor release removes the Keaton Quiz check from the Mystery core settings in preparation for the upcoming 
+Mystery Settings Tournament.
+
+Default settings changes
+- The Keaton Quiz check (which provides a Piece of Heart in vanilla) is no longer randomized in Mystery.
+  With Update NPC Text on, two of the thirty correct Keaton Quiz answers are updated to match the items placed
+  on two specific checks: Romani's Game and Milk Bar Chateau. This could provide highly valuable information for
+  runners, particularly in the case of non-Songsanity Romani's Game. Since quiz questions are randomly selected,
+  there is no guarantee that all runners would gain reasonable access to the hint in a racing situation.
+  Furthermore, the quiz hints cannot be individually disabled, and the remaining Update NPC Text hints are vital
+  to providing sufficient hinting for Mystery players.
+  Therefore, to promote competitive fairness, Keaton Quiz is removed from the check pool of the Mystery
+  core settings to prevent one or some runners from getting a "free" hint. Since Keaton Quiz was a standard check,
+  this does not impact any Mystery categories, only the base settings file.
+
+Mode updates and script changes
+- When the Hearts goal mode is manually selected, Keaton Quiz is shuffled and junked to ensure that all 
+  Pieces of Heart are shuffled.
+
 Mystery Maker / Default Settings release 4.1.1
 This minor release fixes bugs and adds the ability to manually set the Potsanity and Scoopsanity categories.
 Besides fixing one bug that could rarely impact the core settings (namely, Boss Keys Within Any Temple
