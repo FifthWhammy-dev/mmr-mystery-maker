@@ -1,3 +1,31 @@
+Mystery Maker release 4.2
+This minor release tweaks the Mystery core settings for the Mystery Season 2 tournament finals by special
+request of finalists PixelShake and KTBean. Good luck to both runners!
+
+Core settings changes
+- The Entrances: Boss Rooms category (aka "Boss ER") is fully disabled in Mystery.
+  This is due to a crash bug involving normal STT Eyegore while Gyorg is shuffled into STT. The bug has been
+  observed and reproduced multiple times in MMR 1.16.0.12, including in a Season 2 tournament race.
+- No Blitz is now the default goal mode.
+- The active category minimum has been increased to 8 (up from 5). The category weights themselves have not
+  changed; just as before, Mystery Maker will reroll insufficient settings files automatically.
+
+Mode updates and script changes
+- Added a "No Blitz 2" goal mode. When selected, this will provide Blitz 1 seeds 15% of the time and full
+  four-remains seeds otherwise.
+- Added a "Category Minimum" spinbox to the Density Modes tab. This allows the active category minimum to
+  be adjusted anywhere from 0 to 14. Mystery Maker rerolls until the minimum is met, so the highest minimums
+  might take some time to meet depending on your computer! Enabling Super Mystery for high minimums may
+  save some effort.
+- Super Mystery no longer modifies the category minimum. Light Mystery caps the category minimum at 8.
+- Mystery Maker will cancel generation and exit if it fails to meet the category minimum 10000 times in a row.
+  Even with the highest allowed minimum of 14, this should be very rare.
+
+Bug fixes
+- Fixed the "Reset Modes" button failing to recognize changes to most density modes if no other modes had 
+  been changed first.
+- Fixed the Potsanity tooltip to clarify that all temples have shuffleable pots.
+
 Mystery Maker / Default Settings release 4.1.2
 This minor release removes the Keaton Quiz check from the Mystery core settings in preparation for the upcoming 
 Mystery Settings Tournament.

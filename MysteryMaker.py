@@ -6,15 +6,16 @@ import os
 import sys
 from mysteryutils.MysteryMakerGUI import openOptionsGui
 
-MYSTERY_MAKER_VERSION = "v4.1.2"
+MYSTERY_MAKER_VERSION = "v4.2"
 
-MODE_DEFAULTS = {"Goal Mode":"Normal",
+MODE_DEFAULTS = {"Goal Mode":"No Blitz",
                  "Long Goal":"None",
                  "Direct to Credits":False,
                  "Start Mode":"Default",
                  "Random Item Mode":"Any (Default)",
                  "FD Anywhere Mode":"Sometimes (Default)",
                  "Main Density Mode":"Normal",
+                 "Category Minimum":8,
                  "No Clock Town":False,
                  "No Post-Temple":False,
                  "Map and Compass Hints":False,
@@ -128,7 +129,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         gossipHintsTakenByAlways -= 3
 
     nonzeroCategories = 0
-    NONZERO_CATEGORIES_MINIMUM = 5
+    NONZERO_CATEGORIES_MINIMUM = customModes["Category Minimum"]
 
     hardOptions = 0
     HARD_OPTIONS_LIMIT = 2
@@ -137,10 +138,11 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         HARD_OPTIONS_LIMIT = 0
         settings["OverrideNumberOfRequiredGossipHints"] += 1
         gossipHintsTakenByAlways += 1
+        if NONZERO_CATEGORIES_MINIMUM > 8:
+            NONZERO_CATEGORIES_MINIMUM = 8
     if customModes["Main Density Mode"] == "Super":
         HARD_OPTIONS_LIMIT = 3
         GOSSIP_HINTS_LIMIT = 14
-        NONZERO_CATEGORIES_MINIMUM = 8
     
     wgtsStartingBossRemains = [65,25,10,0,0,0,0,0,0]    
     if (customModes["Goal Mode"] == "No Blitz"):
@@ -152,7 +154,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     if (customModes["Goal Mode"] == "Remains Shuffle"):
         wgtsStartingBossRemains = [0,0,0,100,0,0,0,0,0]
     if (customModes["Goal Mode"] == "Five Fairy Hunt"):
-        wgtsStartingBossRemains = [0,0,0,0,100,0,0,0,0]        
+        wgtsStartingBossRemains = [0,0,0,0,100,0,0,0,0]
+    if (customModes["Goal Mode"] == "No Blitz 2"):
+        wgtsStartingBossRemains = [85,15,0,0,0,0,0,0,0]
     if (customModes["Goal Mode"] == "Normal + Remains Shuffle"):
         wgtsStartingBossRemains = [45,25,10,20,0,0,0,0,0]
     if (customModes["Goal Mode"] == "Grab Bag"):
@@ -502,12 +506,13 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                                                    "ffff-ffffffff-fff00000--")            
 
     wgtsEntrancesTemples = [55,45]
-    wgtsEntrancesBossRooms = [70,30]
+    wgtsEntrancesBossRooms = [100,0]
+    # wgtsEntrancesBossRooms = [70,30]
     if customModes["Main Density Mode"] == "Light":
         wgtsEntrancesBossRooms = [100,0]
     if customModes["Main Density Mode"] == "Super":
         wgtsEntrancesTemples = [25,75]
-        wgtsEntrancesBossRooms = [40,60]
+        #wgtsEntrancesBossRooms = [40,60]
     if catStartingBossRemains[0] == "Five Fairy Hunt":
         wgtsEntrancesTemples = [0,100]
         wgtsEntrancesBossRooms = [100,0]
@@ -1023,7 +1028,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         print("  Output file: ", outputFilename,file=spoiler_file)
         if (CheckForCustom(customModes)):
             print(" ***       ALTERNATE MODES ACTIVE!       *** ",file=spoiler_file)
-            if (customModes["Goal Mode"] != "Normal"):
+            if (customModes["Goal Mode"] != "No Blitz"):
                 print("                Goal Mode: ", customModes["Goal Mode"],file=spoiler_file)
             if (customModes["Direct to Credits"] or customModes["Goal Mode"] == "Five Fairy Hunt"):
                 print("                            (Direct to Credits is on)", file=spoiler_file)
@@ -1035,6 +1040,8 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                 print("         FD Anywhere Mode: ", customModes["FD Anywhere Mode"],file=spoiler_file)
             if (customModes["Main Density Mode"] != "Normal"):
                 print("        Main Density Mode: ", customModes["Main Density Mode"],file=spoiler_file)
+            if (NONZERO_CATEGORIES_MINIMUM != 8):
+                print("         Category Minimum: ", NONZERO_CATEGORIES_MINIMUM,file=spoiler_file)
             if (customModes["No Clock Town"]):
                 print("            No Clock Town: ", customModes["No Clock Town"],file=spoiler_file)
             if (customModes["No Post-Temple"]):
@@ -1088,12 +1095,10 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         print("               Soilsanity: ", catSoilsanity[0],file=spoiler_file)
         print("                Cowsanity: ", catCowsanity[0],file=spoiler_file)
         print("            Stray Fairies: ", catStrayFairies[0],file=spoiler_file)
-        print("       Entrances: Temples: ", catEntrancesTemples[0],file=spoiler_file)
+        print("        Dungeon Entrances: ", catEntrancesTemples[0],file=spoiler_file)
         if catStartingBossRemains[0] == "Five Fairy Hunt":
-            print("    Entrances: Boss Rooms:  Disabled (by Five Fairy Hunt)", file=spoiler_file)
             print("     Keysanity: Boss Keys:  Disabled (by Five Fairy Hunt)", file=spoiler_file)
         else:
-            print("    Entrances: Boss Rooms: ", catEntrancesBossRooms[0],file=spoiler_file)
             print("     Keysanity: Boss Keys: ", catKeysanityBossKeys[0],file=spoiler_file)
         print("    Keysanity: Small Keys: ", catKeysanitySmallKeys[0],file=spoiler_file)
         print("              Scoopsanity: ", catScoopsanity[0],file=spoiler_file)
@@ -1158,8 +1163,14 @@ if (len(sys.argv) == 1):
 
 for i in range(optionOutputCount):
     resultFilename = ''
+    consecutiveFailures = 0
     while (resultFilename == ''):
         resultFilename = GenerateMysterySettings(optionSettingsFile,optionCustomModes,(str)(i+1))
+        if (resultFilename == ''):
+            consecutiveFailures += 1
+            if (consecutiveFailures >= 10000):
+                print ("Exiting, couldn't meet category minimum after 10000 attempts")
+                sys.exit()
     if (optionDontMakeSeed == False):
         mmrcl = optionRandomizerExe + " -outputpatch -spoiler -settings " + resultFilename
         subprocess.call(mmrcl)

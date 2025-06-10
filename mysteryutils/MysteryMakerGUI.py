@@ -18,12 +18,13 @@ def openOptionsGui(version_string):
         guiWindow.destroy()
 
     def guiResetModes(*args):
-        goalMode.set("Normal")
+        goalMode.set("No Blitz")
         goalDirectToCredits.set("0")
         startDifficultyMode.set("Default")
         startRandomItemMode.set("Any (Default)")
         startFDAnywhereMode.set("Sometimes (Default)")
         mainDensityMode.set("Normal")
+        densityCategoryMinimum.set("8")
         densityNoCT.set("0")
         densityNoPT.set("0")
         densityMapCompassMode.set("0")
@@ -40,12 +41,13 @@ def openOptionsGui(version_string):
         mmrCommandLineExePath.set(filedialog.askopenfilename())
 
     def checkDefaults(*args):
-        return (goalMode.get() == "Normal" and
+        return (goalMode.get() == "No Blitz" and
                 goalDirectToCredits.get() == "0" and
                 startDifficultyMode.get() == "Default" and
                 startRandomItemMode.get() == "Any (Default)" and
                 startFDAnywhereMode.get() == "Sometimes (Default)" and
                 mainDensityMode.get() == "Normal" and
+                densityCategoryMinimum.get() == "8" and
                 densityNoCT.get() == "0" and
                 densityNoPT.get() == "0" and
                 densityMapCompassMode.get() == "0" and
@@ -115,7 +117,7 @@ def openOptionsGui(version_string):
     mmrCommandLineExePath_tip = Hovertip(mmrCommandLineExePath_entry, "The MMR command-line executable that makes playable seed files.\nChanging this should only be needed if you didn't install\nMystery Maker in the same folder as MMR.")
 
     numberToGenerate = StringVar(value="1")
-    numberToGenerate_spinbox = ttk.Spinbox(mainframe, width=5, from_=1, to=100,textvariable=numberToGenerate)
+    numberToGenerate_spinbox = ttk.Spinbox(mainframe, width=5, from_=1, to=100, textvariable=numberToGenerate)
     numberToGenerate_spinbox.grid(column=2, row=4, sticky=W)
     numberToGenerate_tip = Hovertip(numberToGenerate_spinbox, "Setting this above 1 will create many settings/seeds at once, one at a time.")
 
@@ -151,16 +153,17 @@ def openOptionsGui(version_string):
     modeTabs_notebook.grid(column=1, row=1, columnspan=3, sticky=(W, E))
 
     # Goal Mode pane
-    goalMode = StringVar(value="Normal")
+    goalMode = StringVar(value="No Blitz")
     goalLongGoal = StringVar(value="Full Fairy Hunt")
     goalDirectToCredits = StringVar(value="0")
     goalMode.trace_add("write", updateModeTabs)
     goalLongGoal.trace_add("write", updateModeTabs)
     goalDirectToCredits.trace_add("write", updateModeTabs)
 
-    goalNormal_radio = ttk.Radiobutton(modeTabGoalMode, text="Normal (default)", variable=goalMode, value="Normal")
-    goalNoBlitz_radio = ttk.Radiobutton(modeTabGoalMode, text="No Blitz", variable=goalMode, value="No Blitz")
-    goalBlitz1_radio = ttk.Radiobutton(modeTabGoalMode, text="Blitz 1", width=20, variable=goalMode, value="Blitz 1")
+    goalNormal_radio = ttk.Radiobutton(modeTabGoalMode, text="Two to Four Remains", variable=goalMode, value="Two to Four Remains")
+    goalNoBlitz_radio = ttk.Radiobutton(modeTabGoalMode, text="No Blitz (default)", variable=goalMode, value="No Blitz")
+    goalNoBlitz2_radio = ttk.Radiobutton(modeTabGoalMode, text="No Blitz 2", width=15, variable=goalMode, value="No Blitz 2")
+    goalBlitz1_radio = ttk.Radiobutton(modeTabGoalMode, text="Blitz 1", width=15, variable=goalMode, value="Blitz 1")
     goalBlitz2_radio = ttk.Radiobutton(modeTabGoalMode, text="Blitz 2", variable=goalMode, value="Blitz 2")
     goalRS_radio = ttk.Radiobutton(modeTabGoalMode, text="Remains Shuffle", variable=goalMode, value="Remains Shuffle")
     goalNPRS_radio = ttk.Radiobutton(modeTabGoalMode, text="Normal + Remains Shuffle", variable=goalMode, value="Normal + Remains Shuffle")
@@ -175,8 +178,9 @@ def openOptionsGui(version_string):
 
     goalNormal_radio.grid(column=1, row=1, sticky=(W, E))
     goalNoBlitz_radio.grid(column=2, row=1, sticky=(W, E))
-    goalBlitz1_radio.grid(column=3, row=1, sticky=(W, E))
-    goalBlitz2_radio.grid(column=4, row=1, sticky=(W, E))
+    goalNoBlitz2_radio.grid(column=3, row=1, sticky=(W, E))
+    goalBlitz1_radio.grid(column=4, row=1, sticky=(W, E))
+    goalBlitz2_radio.grid(column=5, row=1, sticky=(W, E))
     goalRS_radio.grid(column=1, row=2, sticky=(W, E))
     goalNPRS_radio.grid(column=2, row=2, sticky=(W, E))
     goalFFH_radio.grid(column=1, row=3, sticky=(W, E))
@@ -187,6 +191,7 @@ def openOptionsGui(version_string):
     
     goalNormal_tip = Hovertip(goalNormal_radio, "Remains on bosses. May start with one or two remains,\nwith corresponding temples and post-temples junked.\nDefault weights are 65/25/10 for 0/1/2 starting remains.")
     goalNoBlitz_tip = Hovertip(goalNoBlitz_radio, "Remains on bosses. Always start without any remains.")
+    goalNoBlitz2_tip = Hovertip(goalNoBlitz2_radio, "Remains on bosses. May start with one remains,\nwith corresponding temples and post-temples junked.\nDefault weights are 85/15 for 0/1 starting remains.")
     goalBlitz1_tip = Hovertip(goalBlitz1_radio, "Remains on bosses. Always start with one remains;\nits temple and post-temple checks are junked.")
     goalBlitz2_tip = Hovertip(goalBlitz2_radio, "Remains on bosses. Always start with two remains;\ntheir temple and post-temple checks are junked.")
     goalRS_tip = Hovertip(goalRS_radio, "Remains shuffled anywhere. C-Up at clock tower door for region hints.")
@@ -245,6 +250,7 @@ def openOptionsGui(version_string):
   
     # Density Modes pane
     mainDensityMode = StringVar(value="Normal")
+    densityCategoryMinimum = StringVar(value="8")
     densityNoCT = StringVar(value="0")
     densityNoPT = StringVar(value="0")
     densityMapCompassMode = StringVar(value="0")
@@ -253,10 +259,21 @@ def openOptionsGui(version_string):
     densityScoopsanityMode = StringVar(value="Default")
     densityUnscrambledEggsMode = StringVar(value="0")
     mainDensityMode.trace_add("write", updateModeTabs)
+    densityCategoryMinimum.trace_add("write", updateModeTabs)
+    densityNoCT.trace_add("write", updateModeTabs)
+    densityNoPT.trace_add("write", updateModeTabs)
+    densityMapCompassMode.trace_add("write", updateModeTabs)
+    densityBossKeysMode.trace_add("write", updateModeTabs)
+    densityPotsanityMode.trace_add("write", updateModeTabs)
+    densityScoopsanityMode.trace_add("write", updateModeTabs)
+    densityUnscrambledEggsMode.trace_add("write", updateModeTabs)
     
     densityNormal_radio = ttk.Radiobutton(modeTabDensityMode, text="Normal (default)", variable=mainDensityMode, value="Normal")
     densityLight_radio = ttk.Radiobutton(modeTabDensityMode, text="Light Mystery", variable=mainDensityMode, value="Light")
     densitySuper_radio = ttk.Radiobutton(modeTabDensityMode, text="Super Mystery", variable=mainDensityMode, value="Super")
+    densityCategoryMinimum_label = ttk.Label(modeTabDensityMode, text="Category Minimum: ")
+    densityCategoryMinimum_spinbox = ttk.Spinbox(modeTabDensityMode, width=3, from_=0, to=14, textvariable=densityCategoryMinimum)
+    densityCategoryMinimum_spinbox.state(["readonly"])
     densityNoCT_check = ttk.Checkbutton(modeTabDensityMode, text="No Clock Town", variable=densityNoCT)
     densityNoPT_check = ttk.Checkbutton(modeTabDensityMode, text="No Post-Temple", variable=densityNoPT)
     densityMapCompass_check = ttk.Checkbutton(modeTabDensityMode, text="Map and Compass Hints", variable=densityMapCompassMode)
@@ -277,25 +294,28 @@ def openOptionsGui(version_string):
     densityNormal_radio.grid(column=1, row=1, sticky=(W,E))
     densityLight_radio.grid(column=2, row=1, sticky=(W,E))
     densitySuper_radio.grid(column=3, row=1, sticky=(W,E))
-    densityNoCT_check.grid(column=1, row=2, sticky=(W,E))
-    densityNoPT_check.grid(column=1, row=3, sticky=(W,E))
-    densityMapCompass_check.grid(column=1, row=4, sticky=(W,E))
-    densityBossKeys_label.grid(column=1, row=5, sticky=(W,E))
-    densityBossKeys_combo.grid(column=2, row=5, sticky=(W,E))
-    densityPotsanity_label.grid(column=1, row=6, sticky=(W,E))
-    densityPotsanity_combo.grid(column=2, row=6, sticky=(W,E))
-    densityScoopsanity_label.grid(column=1, row=7, sticky=(W,E))
-    densityScoopsanity_combo.grid(column=2, row=7, sticky=(W,E))
-    densityUnscrambledEggs_check.grid(column=3, row=7, sticky=(W,E))
+    densityCategoryMinimum_label.grid(column=1, row=2, sticky=(W,E))
+    densityCategoryMinimum_spinbox.grid(column=2, row=2, sticky=(W))
+    densityNoCT_check.grid(column=1, row=3, sticky=(W,E))
+    densityNoPT_check.grid(column=2, row=3, sticky=(W,E))
+    densityMapCompass_check.grid(column=3, row=3, sticky=(W,E))
+    densityBossKeys_label.grid(column=1, row=4, sticky=(W,E))
+    densityBossKeys_combo.grid(column=2, row=4, sticky=(W,E))
+    densityPotsanity_label.grid(column=1, row=5, sticky=(W,E))
+    densityPotsanity_combo.grid(column=2, row=5, sticky=(W,E))
+    densityScoopsanity_label.grid(column=1, row=6, sticky=(W,E))
+    densityScoopsanity_combo.grid(column=2, row=6, sticky=(W,E))
+    densityUnscrambledEggs_check.grid(column=3, row=6, sticky=(W,E))
 
-    densityNormal_tip = Hovertip(densityNormal_radio, "Baseline appearance rates for all categories. See the Category Weights Table for specifics.\nGossip major hint limit (WotHs + foolishes + major always hints) is 12.\nHard option limit is 2.\nActive category minimum is 5.\n(Hard options are Boss Keys Within Any Temple, Frogs with Frog Choir,\nAll Loose Rupees, Full Potsanity, and Full Bombers' Notebook.)")
-    densityLight_tip = Hovertip(densityLight_radio, "Excludes certain mystery options with harder or high-quantity checks.\nNo hard options.\nNo Boss Keys, Boss Rooms, Scoopsanity, Shopsanity price randomization,\nfull Hit Spots, full Keaton Grass, or full Tokensanity.\nNo post-temple checks. 1 extra WotH hint.\nMap and Compass Hints is on. No swordless start (by default).")
-    densitySuper_tip = Hovertip(densitySuper_radio,"Dramatically increased appearance rates for all categories!\nSongsanity and Long Quests can both be active.\nGossip major hint limit (WotHs + foolishes + major always hints) increased to 14.\nHard option limit increased to 3.\nActive category minimum increased to 8.")
+    densityNormal_tip = Hovertip(densityNormal_radio, "Baseline appearance rates for all categories. See the Category Weights Table for specifics.\nGossip major hint limit (WotHs + foolishes + major always hints) is 12.\nHard option limit is 2.\n(Hard options are Boss Keys Within Any Temple, Frogs with Frog Choir,\nAll Loose Rupees, Full Potsanity, and Full Bombers' Notebook.)")
+    densityLight_tip = Hovertip(densityLight_radio, "Excludes certain mystery options with harder or high-quantity checks.\nNo hard options.\nNo Boss Keys, Boss Rooms, Scoopsanity, Shopsanity price randomization,\nfull Hit Spots, full Keaton Grass, or full Tokensanity.\nNo post-temple checks. 1 extra WotH hint.\nMap and Compass Hints is on. No swordless start (by default).\nActive category minimum cannot exceed 8.")
+    densitySuper_tip = Hovertip(densitySuper_radio,"Dramatically increased appearance rates for all categories!\nSongsanity and Long Quests can both be active.\nGossip major hint limit (WotHs + foolishes + major always hints) increased to 14.\nHard option limit increased to 3.")
+    densityCategoryMinimum_tip = Hovertip(densityCategoryMinimum_spinbox,"Modifies the minimum number of active categories.\nMystery Maker will reroll until this minimum is met.\nFor Light Mystery, values above 8 are set to 8.")
     densityNoCT_tip = Hovertip(densityNoCT_check, "All non-scoop checks in Clock Town regions, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nThe Bombers' Notebook category is disabled.\nEpona's Song is granted as an additional starting song; Skull Kid Song is always junked.\nBaby Zoras is disabled. Frog Choir can only be active if Frogs are shuffled.")
     densityNoPT_tip = Hovertip(densityNoPT_check, "All post-temple checks, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nBottle: Deku Princess is never shuffled; other scoops are not affected.\nFrog Choir is disabled.")
     densityMapCompass_tip = Hovertip(densityMapCompass_check, "The Entrances category also shuffles temples' Maps and Compasses\nalongside temple and boss room entrances (respectively).\nThey are placed exclusively in the overworld and will reveal\ntheir corresponding temple or boss entrance shuffle when found.")
     densityBossKeys_tip = Hovertip(densityBossKeys_combo, "Choose a Boss Keys option instead of using the customary random roll for the category.\nIf anything but Default is used, Always Within Any Temple won't count against the hard option limit.\nRemember that WotH/Foolish hints ignore Boss Keys in Mystery!\nAlways Off: Boss Keys don't appear. Boss doors are always open.\nDefault: Use the default Mystery category roll.\nAlways Active (Either Option): Either active option.\nAlways Within Their Temple: Boss Keys are on any check in their own temple.\nAlways Within Any Temple: Boss Keys are on any check in any temple.")
-    densityPotsanity_tip = Hovertip(densityPotsanity_combo, "Choose a Potsanity option instead of using the customary random roll for the category.\nIf anything but Default is used, Full Potsanity won't count against the hard option limit.\nOff: Pot contents won't be shuffled.\nDefault: Use the default Mystery category roll.\nAlways Active (Either Option): Either active option.\nTemples and West/East Dungeons: Shuffle pot contents in WFT, SHT, GBT, Pirates' Fortress,\nOcean Spider House, Ikana Graveyard, Secret Shrine, Beneath the Well, and Ikana Castle.\nFull Potsanity: Shuffle pot contents, except those by owls. Goron Race is junked.")
+    densityPotsanity_tip = Hovertip(densityPotsanity_combo, "Choose a Potsanity option instead of using the customary random roll for the category.\nIf anything but Default is used, Full Potsanity won't count against the hard option limit.\nOff: Pot contents won't be shuffled.\nDefault: Use the default Mystery category roll.\nAlways Active (Either Option): Either active option.\nTemples and West/East Dungeons: Shuffle pot contents in temples, Pirates' Fortress,\nOcean Spider House, Ikana Graveyard, Secret Shrine, Beneath the Well, and Ikana Castle.\nFull Potsanity: Shuffle pot contents, except those by owls. Goron Race is junked.")
     densityScoopsanity_tip = Hovertip(densityScoopsanity_combo, "Choose a Scoopsanity option instead of using the customary random roll for the category.\nOff: Scoops won't be shuffled.\nDefault: Use the default Mystery category roll.\nOn: Scoops, except for bugs, are shuffled.")
     densityUnscrambledEggs_tip = Hovertip(densityUnscrambledEggs_check, "Excludes Zora Eggs from the Scoopsanity shuffle when Baby Zoras is active.")
     for child in mainframe.winfo_children(): 
@@ -317,6 +337,7 @@ def openOptionsGui(version_string):
     customModesSettings["Random Item Mode"] = startRandomItemMode.get()
     customModesSettings["FD Anywhere Mode"] = startFDAnywhereMode.get()
     customModesSettings["Main Density Mode"] = mainDensityMode.get()
+    customModesSettings["Category Minimum"] = int(densityCategoryMinimum.get())
     customModesSettings["No Clock Town"] = (densityNoCT.get() == "1")
     customModesSettings["No Post-Temple"] = (densityNoPT.get() == "1")
     customModesSettings["Map and Compass Hints"] = (densityMapCompassMode.get() == "1")
