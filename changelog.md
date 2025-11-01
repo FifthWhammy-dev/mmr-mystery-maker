@@ -76,10 +76,7 @@ Mystery core settings are built from the Modern MMR settings preset's check pool
 ### Other Setup Categories
 *Unless otherwise stated, any weight increase for an active option is accompanied by an equal decrease to the "off" option. In Mystery core settings, all weights for any given set of options add up to 100.*
 - **Starting Boss Remains**
-  - Blitz 1 weight is decreased from 25 -> 15.
-  - Blitz 2 is removed from core settings (10 -> 0).
-  - When Blitz is active and Dungeon Entrances are shuffled, Dungeon Maps are shuffled throughout the overworld and will each hint an entrance shuffle.
-  - When Blitz is active and The Moon is in play (via the Moon Oath song layout), moon access requires one more remains than what Link starts with. For instance, in Blitz 1, Remains for Moon Access is set to 2, not 1. 
+  - Removed in core settings. All core settings seeds will start with zero remains and require all four to fight Majora.
 - **Starting Random Song**
   - Epona's Song weight is increased from 40 -> 60.
   - Any Other Non-Oath Song weight is decreased from 60 -> 40, with all six being equally favored. (The generator implementation is changed here slightly to prevent specifying individual fractional weights.)
@@ -89,8 +86,6 @@ Mystery core settings are built from the Modern MMR settings preset's check pool
   - Active weight is increased from 45 -> 50.
 - **Dungeon Setup: Small Keys**
   - Ice Arrow Chest is now promoted to a sometimes hint by *both* active options, not just Small Keys Within Any Temple.
-
-*Blitz 2 resulted in a couple of absurdly fast seeds throughout the Season 2 tourney. In the interest of helping provide runners with properly filling seeds for racing, Blitz 2 leaves the core settings going forward. Blitz 1 stays for now (in part to test how it plays with the rest of Version 5, in part to give players the occasional brief breather throughout the non-competitive testing period) but is much less likely. Since Fisherman Game leaving the hint list eliminates the ability to fully deduce the blitz-junked dungeon via always hints, Map and Compass Hints with overworld-shuffled maps are made available in Blitz 1 to compensate. Also, Moon Oath will require two remains for moon access in Blitz 1 to prevent immediate moon access.*
 
 *In Version 5, Epona's Song is made more likely to promote more early possibilities for progression, as even in Mystery non-Epona starts can occasionally feel constrained. Non-Epona starts will remain, however, as part of Mystery's remit is to explore possibilities that other common settings don't. It's hoped that the increased category weights and minimum will help provide more options in non-Epona.*
 

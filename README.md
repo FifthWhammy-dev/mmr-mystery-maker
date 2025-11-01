@@ -3,7 +3,7 @@
 ## About 
 MMR Mystery Maker is a Python script (and now standalone .exe, thanks to [PyInstaller](https://pyinstaller.org/en/stable/index.html)) that generates semi-random "Mystery" settings files for [Majora's Mask Randomizer v1.16.0.12](https://github.com/ZoeyZolotova/mm-rando).
 
-As of 10/31/2025, Version 5 is out! See the [Mystery Settings Document](https://docs.google.com/document/d/1dE8sGvqqCVpu1xFw0wbJEtmz9iw2lk4TTsj5TI5fGog/edit?usp=sharing) and the [Category Weights and Hints spreadsheet](https://docs.google.com/spreadsheets/d/1goxZVZM_ZacD_irUTGQpy7-2kOM2f7C7VEZNTcqnVos/edit?usp=sharing) to learn more about of the Mystery settings. See the **changelog.md** file for patch notes on the core settings, plus a listing of new generator options.
+As of 10/31/2025, Version 5 is out! See the [Mystery Settings Document](https://docs.google.com/document/d/1dE8sGvqqCVpu1xFw0wbJEtmz9iw2lk4TTsj5TI5fGog/edit?usp=sharing) and the [Category Weights and Hints spreadsheet](https://docs.google.com/spreadsheets/d/1goxZVZM_ZacD_irUTGQpy7-2kOM2f7C7VEZNTcqnVos/edit?usp=sharing) to learn more about of the Mystery settings. See the [changelog.md](https://github.com/FifthWhammy-dev/mmr-mystery-maker/blob/main/changelog.md) file for patch notes on the core settings, plus a listing of new generator options.
 
 The Mystery Maker script uses hard-coded categories and weights, applying them to an input JSON file to generate a new settings file. By default, the script then calls MMR.CLI.exe to generate a new seed using the settings.
 
