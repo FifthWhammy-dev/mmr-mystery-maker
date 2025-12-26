@@ -58,7 +58,9 @@
       "Day 2 Grave Without Lens of Truth",
       "Ikana Castle Invisible Platform Without Lens of Truth",
       "Ikana Canyon Iceless as FD",
-      "Climb Stone Tower with One Transformation"
+      "Climb Stone Tower with One Transformation",
+      "Ranch Tingle as FD",
+      "FD Jump into Ranch"
     ],
     "AddSongs": false,
     "RandomizeDungeonEntrances": false,
@@ -106,7 +108,7 @@
     "FreeGaroHints": true,
     "ClearHints": true,
     "ClearGaroHints": true,
-    "ImportanceCount": true,
+    "ImportanceCount": false,
     "ImportanceCountGaro": false,
     "TolerantGossipStones": true,
     "HintsIndicateImportance": true,
@@ -139,7 +141,6 @@
         "ItemWellCowMilk",
         "CollectibleStrayFairySnowhead2",
         "CollectableDekuShrineGreyBoulderRoomPot1",
-        "CollectableRomaniRanchSoftSoil1",
         "NotebookEscapeFromSakonSHideout",
         "FrogGreatBayTemple"
       ],
@@ -173,7 +174,8 @@
         "NotebookPromiseKamaro",
         "NotebookSaveInvisibleSoldier",
         "CollectableSwampSpiderHouseTreeRoomGossipFairy1",
-        "FrogWoodfallTemple"
+        "FrogWoodfallTemple",
+        "CollectableRomaniRanchSoftSoil1"
       ]
     ],
     "OverrideImportanceIndicatorTiers": [

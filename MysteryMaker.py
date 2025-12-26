@@ -6,7 +6,7 @@ import os
 import sys
 from mysteryutils.MysteryMakerGUI import openOptionsGui
 
-MYSTERY_MAKER_VERSION = "v5.0"
+MYSTERY_MAKER_VERSION = "v5.1"
 
 MODE_DEFAULTS = {"Goal Mode":"No Blitz",
                  "Long Goal":"None",
@@ -22,16 +22,19 @@ MODE_DEFAULTS = {"Goal Mode":"No Blitz",
                  "Boss Keys":"Off (Default)",
                  "Small Keys":"Sometimes (Default)",
                  "Main Density Mode":"Normal",
-                 "Category Minimum":6,
+                 "Category Minimum":7,
                  "No Clock Town":False,
                  "No Post-Temple":False,
                  "Map and Compass Hints":False,
                  "Potsanity":"Default",
                  "Scoopsanity":"Default",
                  "Vanilla Eggs for Baby Zoras":True,
-                 "Stubborn Princess":False,
+                 "Stubborn Princess":True,
+                 "No Frog Choir":False,
+                 "Stubborn Seahorse":False,
                  "No Iceless FD Logic":False,
-                 "No Importance Count":False,
+                 "No Milk Road FD Logic":False,
+                 "Importance Count":False,
                  "Sun's Song":False}
 
 def CheckForCustom(modeSettings):
@@ -554,13 +557,15 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     if catKeysanityBossKeys[0] == "Shuffled anywhere":
         settings["BossKeyMode"] = "KeepThroughTime"
 
-    wgtsKeysanitySmallKeys = [65,20,15,0,0]
+    wgtsKeysanitySmallKeys = [60,0,40,0,0]
+    if customModes["Main Density Mode"] == "Light":
+        wgtsKeysanitySmallKeys = [80,0,20,0,0]
     if customModes["Main Density Mode"] == "Super":
-        wgtsKeysanitySmallKeys = [40,30,30,0,0]
+        wgtsKeysanitySmallKeys = [40,0,60,0,0]
     if customModes["Small Keys"] == "Off":
         wgtsKeysanitySmallKeys = [100,0,0,0,0]
     if customModes["Small Keys"] == "Sometimes (Default)":
-        wgtsKeysanitySmallKeys = [65,20,15,0,0]
+        wgtsKeysanitySmallKeys = [60,0,40,0,0]
     if customModes["Small Keys"] == "Always Within Their Temple":
         wgtsKeysanitySmallKeys = [0,100,0,0,0]
     if customModes["Small Keys"] == "Always Within Any Temple":
@@ -633,7 +638,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     if catShopsanityChecks[0] != "---" or catShopsanityPrices[0] != "---":
         nonzeroCategories += 1
 
-    wgtsSoilsanity = [60,40]
+    wgtsSoilsanity = [55,45]
     if customModes["Main Density Mode"] == "Light":
         wgtsSoilsanity = [70,30]
     if customModes["Main Density Mode"] == "Super":
@@ -645,7 +650,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         # settings["OverrideHintPriorities"][2].append("CollectableRomaniRanchSoftSoil1")           # sometimes hint Ranch Day 1 Soil (redundant)
         nonzeroCategories += 1
 
-    wgtsCowsanity = [60,40]
+    wgtsCowsanity = [55,45]
     if customModes["Main Density Mode"] == "Light":
         wgtsCowsanity = [70,30]
     if customModes["Main Density Mode"] == "Super":
@@ -657,7 +662,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         # settings["OverrideHintPriorities"][2].append("ItemWellCowMilk")                           # sometimes hint Cow Beneath the Well (redundant)
         nonzeroCategories += 1
 
-    wgtsStrayFairies = [0,70,30]
+    wgtsStrayFairies = [0,55,45]
     if customModes["Main Density Mode"] == "Super":
         wgtsStrayFairies = [0,40,60]
     if (catStartingBossRemains[0] == "Five Fairy Hunt" or catStartingBossRemains[0] == "Full Fairy Hunt"):
@@ -682,7 +687,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
             startListString = AddStringToListString(startListString,
                                                    "ffff-ffffffff-fff00000--")            
 
-    wgtsScoopsanity = [70,30]
+    wgtsScoopsanity = [65,35]
     if customModes["Main Density Mode"] == "Light":
         wgtsScoopsanity = [75,25]
     if customModes["Main Density Mode"] == "Super":
@@ -702,7 +707,8 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
             catScoopsanity[0] = "Shuffled (no eggs)"
         if customModes["Stubborn Princess"]:
             itemListString = RemoveEntryFromListString(itemListString,4,"80000")                # Unshuffle Deku Princess
-            catScoopsanity[0] = catScoopsanity[0] + " (no Princess)"
+        else:    
+            catScoopsanity[0] = catScoopsanity[0] + " (with Princess)"
         nonzeroCategories += 1
 
     wgtsHitSpots = [65,35,0]
@@ -720,7 +726,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     if catHitSpots[0] != "---":
         nonzeroCategories += 1
 
-    wgtsTokensanity = [75,20,5]
+    wgtsTokensanity = [75,25,5]
     if customModes["Main Density Mode"] == "Light":
         wgtsTokensanity = [85,15,0]
     if customModes["Main Density Mode"] == "Super":
@@ -747,7 +753,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     if catTokensanity[0] != "---":
         nonzeroCategories += 1
 
-    wgtsCratesAndBarrels = [60,40]
+    wgtsCratesAndBarrels = [55,45]
     if customModes["Main Density Mode"] == "Light":
         wgtsCratesAndBarrels = [70,30]
     if customModes["Main Density Mode"] == "Super":
@@ -758,7 +764,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                                                "---10000------------c0000-2000--3c200--30--1f078-8000008-10000100-20000000------------") # Crates and barrels [25, 7r]
         nonzeroCategories += 1
 
-    wgtsKeatonGrass = [75,20,5]
+    wgtsKeatonGrass = [70,25,5]
     if customModes["Main Density Mode"] == "Light":
         wgtsKeatonGrass = [75,25,0]
     if customModes["Main Density Mode"] == "Super":
@@ -773,7 +779,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                                                "-----1f-fffffc00-------------------------------")   # All Keaton Grass [27, 3r]
         nonzeroCategories += 1
 
-    wgtsButterflyAndWellFairies = [65,35]
+    wgtsButterflyAndWellFairies = [60,40]
     if customModes["Main Density Mode"] == "Light":
         wgtsButterflyAndWellFairies = [75,25]
     if customModes["Main Density Mode"] == "Super":
@@ -786,17 +792,17 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
             settings["OverrideHintPriorities"][3].remove("ChestWellLeftPurpleRupee")                # unhint Well Left Side Chest
         nonzeroCategories += 1
 
-    wgtsGossipFairies = [60,40,0,0]
+    wgtsGossipFairies = [55,0,45,0]
     if customModes["Main Density Mode"] == "Light":
-        wgtsGossipFairies = [75,25,0,0]
+        wgtsGossipFairies = [75,0,45,0]
     if customModes["Main Density Mode"] == "Super":
-        wgtsGossipFairies = [35,65,0,0]
-    catGossipFairies = random.choices(["---","Regional Gossips","Regional Gossips S2","All Termina Gossips"], wgtsGossipFairies)
-    if catGossipFairies[0] == "Regional Gossips":
+        wgtsGossipFairies = [35,0,65,0]
+    catGossipFairies = random.choices(["---","Regional Gossips (no roads)","Regional Gossips","All Termina Gossips"], wgtsGossipFairies)
+    if catGossipFairies[0] == "Regional Gossips (no roads)":
         itemListString = AddStringToListString(itemListString,
                                                "-100000-3037400-----------------------------------")        # Regional Gossips [9, 6r]
         nonzeroCategories += 1
-    if catGossipFairies[0] == "Regional Gossips S2":
+    if catGossipFairies[0] == "Regional Gossips":
         itemListString = AddStringToListString(itemListString,
                                                "-100000-31f7400-----------------------------------")        # Regional Gossips S2 (including Road/Path/Road) [12, 9r]
         #settings["OverrideHintPriorities"][3].append("CollectableSwampSpiderHouseTreeRoomGossipFairy1")    # Backup hint SSH Gossip Fairy (redundant)
@@ -806,7 +812,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                                                "-100000-ffffff00-----------------------------------")       # All Gossips [25, 12r]
         nonzeroCategories += 1
 
-    wgtsFrogs = [80,20]
+    wgtsFrogs = [75,25]
     if customModes["Main Density Mode"] == "Super":
         wgtsFrogs = [50,50]
     #if hardOptions >= HARD_OPTIONS_LIMIT and (catLongQuests[0] == "Frog Choir" or catLongQuests[0] == "All Long Quests"):
@@ -817,13 +823,14 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                                                "1-e0000000------------------------------------")    # Frogs [4, 4r]
         #settings["OverrideHintPriorities"][2].append("FrogGreatBayTemple")                         # sometimes hint GBT Frog (redundant)
         #settings["OverrideHintPriorities"][3].append("FrogWoodfallTemple")                         # backup hint WFT Frog (redundant)
-        junkListString = RemoveEntryFromListString(junkListString,1,"8000000")                      # unjunk Frog Choir
-        settings["OverrideHintPriorities"][1].append("HeartPieceChoir")                             # always hint Frog Choir
-        junkListString = AddStringToListString(junkListString,
-                                               "-----------------------------------80000--20000") # junk Ranch Defense checks (not ribbons yet)
+        if not customModes["No Frog Choir"]:
+            junkListString = RemoveEntryFromListString(junkListString,1,"8000000")                      # unjunk Frog Choir
+            settings["OverrideHintPriorities"][1].append("HeartPieceChoir")                             # always hint Frog Choir
+            junkListString = AddStringToListString(junkListString,
+                                                    "-----------------------------------80000--20000") # junk Ranch Defense checks (not ribbons yet)
         nonzeroCategories += 1
 
-    wgtsLooseRupeesOverworld = [55,15,20,10]
+    wgtsLooseRupeesOverworld = [50,15,20,15]
     if customModes["Main Density Mode"] == "Light":
         wgtsLooseRupeesOverworld = [70,10,10,10]
     if customModes["Main Density Mode"] == "Super":
@@ -846,11 +853,11 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
             settings["OverrideHintPriorities"][1].remove("MaskScents")                              # unhint Butler
             junkListString = AddEntryToListString(junkListString, 2, "40000")                       # junk Butler
     
-    wgtsLooseRupeesTemple = [50,30,10,10]
+    wgtsLooseRupeesTemple = [40,35,0,25]
     if customModes["Main Density Mode"] == "Light":
-        wgtsLooseRupeesTemple = [60,20,10,10]
+        wgtsLooseRupeesTemple = [60,20,0,20]
     if customModes["Main Density Mode"] == "Super":
-        wgtsLooseRupeesTemple = [25,30,15,30]
+        wgtsLooseRupeesTemple = [20,35,0,45]
     catLooseRupeesTemple = random.choices(["---",                                     
                                      "Temple Red",
                                      "Temple Red and Blue",
@@ -869,11 +876,11 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     if catLooseRupeesOverworld[0] != "---" or catLooseRupeesTemple[0] != "---":
         nonzeroCategories += 1
 
-    wgtsSnowsanity = [85,0,15,0]
+    wgtsSnowsanity = [65,15,20,0]
     if customModes["Main Density Mode"] == "Light":
         wgtsSnowsanity = [90,0,10,0]
     if customModes["Main Density Mode"] == "Super":
-        wgtsSnowsanity = [70,0,30,0]
+        wgtsSnowsanity = [40,30,30,0]
     #if hardOptions >= HARD_OPTIONS_LIMIT:
     #    wgtsSnowsanity[1] += wgtsSnowsanity[2]
     #    wgtsSnowsanity[2] = 0
@@ -891,55 +898,54 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     if catSnowsanity[0] != "---":
         nonzeroCategories += 1
 
-    #                         0  1  2  A C S N W E T
-    wgtsPotsanityOverworld = [40,30,25,5,0,0,0,0,0,0]
+    #                         0  1 2  A C S N W  E 
+    wgtsPotsanityOverworld = [40,0,20,5,5,5,5,10,10]
+    catPotsanityOverworld = 0
     if customModes["Main Density Mode"] == "Light":
-        wgtsPotsanityOverworld = [50,40,10,0,0,0,0,0,0,0]
+        wgtsPotsanityOverworld = [54,0,0,0,8,8,8,16,16]
     if customModes["Main Density Mode"] == "Super":
-        wgtsPotsanityOverworld = [20,20,40,20,0,0,0,0,0,0]
+        wgtsPotsanityOverworld = [4,0,30,5,8,8,8,16,16]
     if customModes["Potsanity"] == "Off":
-        wgtsPotsanityOverworld = [100,0,0,0,0,0,0,0,0,0]
+        wgtsPotsanityOverworld = [100,0,0,0,0,0,0,0,0]
     if customModes["Potsanity"] == "Central Pots":
-        wgtsPotsanityOverworld = [0,0,0,0,100,0,0,0,0,0]
+        wgtsPotsanityOverworld = [0,0,0,0,100,0,0,0,0]
     if customModes["Potsanity"] == "South Pots":
-        wgtsPotsanityOverworld = [0,0,0,0,0,100,0,0,0,0]
+        wgtsPotsanityOverworld = [0,0,0,0,0,100,0,0,0]
     if customModes["Potsanity"] == "North Pots":
-        wgtsPotsanityOverworld = [0,0,0,0,0,0,100,0,0,0]
+        wgtsPotsanityOverworld = [0,0,0,0,0,0,100,0,0]
     if customModes["Potsanity"] == "West Pots":
-        wgtsPotsanityOverworld = [0,0,0,0,0,0,0,100,0,0]
+        wgtsPotsanityOverworld = [0,0,0,0,0,0,0,100,0]
     if customModes["Potsanity"] == "East Pots":
-        wgtsPotsanityOverworld = [0,0,0,0,0,0,0,0,100,0]
-    if customModes["Potsanity"] == "Temple Pots":
-        wgtsPotsanityOverworld = [0,0,0,0,0,0,0,0,0,100]
+        wgtsPotsanityOverworld = [0,0,0,0,0,0,0,0,100]
     if customModes["Potsanity"] == "Any One Group":
-        wgtsPotsanityOverworld = [0,100,0,0,0,0,0,0,0,0]
+        catPotsanityOverworld = ["One group"]
     if customModes["Potsanity"] == "Any Two Groups":
-        wgtsPotsanityOverworld = [0,0,100,0,0,0,0,0,0,0]
+        catPotsanityOverworld = ["Two groups"]
     if customModes["Potsanity"] == "Full Potsanity":
         wgtsPotsanityOverworld = [0,0,0,100,0,0,0,0,0,0]
-    catPotsanity = random.choices(["---",
-                                            "One group",
-                                            "Two groups",
-                                            "All groups",
-                                            "Central pots",
-                                            "South pots",
-                                            "North pots",
-                                            "West pots",
-                                            "East pots",
-                                            "Temple pots"],
-                                            wgtsPotsanityOverworld)
-    wgtsPODirectionRoll = [1,1,1,2,2,3]
+    if catPotsanityOverworld == 0:
+        catPotsanityOverworld = random.choices(["---",
+                                       "One group",
+                                       "Two groups",
+                                       "All groups",
+                                       "Central pots",
+                                       "South pots",
+                                       "North pots",
+                                       "West pots",
+                                       "East pots"],
+                                       wgtsPotsanityOverworld)
+    wgtsPODirectionRoll = wgtsPotsanityOverworld[4:9]
     PODirectionsToRoll = 0
-    POEligibleDirections = ["Central","South","North","West","East","Temple"]
+    POEligibleDirections = ["Central","South","North","West","East"]
     PORolledDirections = []
-    if catPotsanity[0] == "All groups":
+    if catPotsanityOverworld[0] == "All groups":
         PORolledDirections = POEligibleDirections                                                                                                               # Total [146, 23r]!
-    elif catPotsanity[0].endswith(" pots"):
-        PORolledDirections = [catPotsanity[0].removesuffix(" pots")]
-    elif catPotsanity[0] != "---":
-        if catPotsanity[0] == "One group":
+    elif catPotsanityOverworld[0].endswith(" pots"):
+        PORolledDirections = [catPotsanityOverworld[0].removesuffix(" pots")]
+    elif catPotsanityOverworld[0] != "---":
+        if catPotsanityOverworld[0] == "One group":
             PODirectionsToRoll = 1
-        if catPotsanity[0] == "Two groups":
+        if catPotsanityOverworld[0] == "Two groups":
             PODirectionsToRoll = 2
         for roll in range(PODirectionsToRoll):
             rolledDirection = random.choices(POEligibleDirections, wgtsPODirectionRoll)[0]
@@ -960,22 +966,41 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         settings["OverrideHintPriorities"][1].remove("ItemBottleGoronRace")     # unhint Goron Race
     if "West" in PORolledDirections:
         itemListString = AddStringToListString(itemListString,
-                                               "-----60--c000000-----2-f0000-3c00000------10000--4-e00006-fc0f0-------------")                                  # West [30, 6r]
+                                               "-----60--c000000-----2-f0000-3c00000------10000--4-e00006-fc0f0-------------")                                  # West [28, 6r], after...
+        itemListString = RemoveStringFromListString(itemListString,
+                                                    "-----60--------------------------------") # remove OSH Mask Room Pots 1 and 2
     if "East" in PORolledDirections:
         itemListString = AddStringToListString(itemListString,
                                                "--5-c2007000---------1-f0300000-10000-e0000000-804000----2801-f0000000---3301e00-------------")                 # East [36, 4r]
         if ("ChestWellLeftPurpleRupee" in settings["OverrideHintPriorities"][3]):
             settings["OverrideHintPriorities"][3].remove("ChestWellLeftPurpleRupee")    # unhint Well Left Path Chest
+    
     if "Temple" in PORolledDirections:
         itemListString = AddStringToListString(itemListString,
                                                "--48-8000000------------------f00000-60000--8000000-------------")                                              # Temple pots [10, 4r]
         if ("CollectibleStrayFairyStoneTower7" in settings["OverrideHintPriorities"][3]):
             settings["OverrideHintPriorities"][3].remove("CollectibleStrayFairyStoneTower7")    # unhint Stone Tower Wizzrobe
 
-    if catPotsanity[0] != "---":
+    wgtsPotsanityTemple = [50,50]
+    if customModes["Main Density Mode"] == "Light":
+        wgtsPotsanityTemple = [75,25]
+    if customModes["Main Density Mode"] == "Super":
+        wgtsPotsanityTemple = [25,75]
+    if customModes["Potsanity"] == "Full Potsanity" or catPotsanityOverworld[0] == "All groups":
+        wgtsPotsanityTemple = [0,100]
+    if customModes["Potsanity"] == "Off":
+        wgtsPotsanityTemple = [100,0]
+    catPotsanityTemple = random.choices(["---","Shuffled"], wgtsPotsanityTemple)
+    if catPotsanityTemple[0] == "Shuffled":
+        itemListString = AddStringToListString(itemListString,
+                                               "--48-8000000------------------f00000-60000--8000000-------------")                                              # Temple pots [10, 4r]
+        if ("CollectibleStrayFairyStoneTower7" in settings["OverrideHintPriorities"][3]):
+            settings["OverrideHintPriorities"][3].remove("CollectibleStrayFairyStoneTower7")    # unhint Stone Tower Wizzrobe
+
+    if catPotsanityOverworld[0] != "---" or catPotsanityTemple[0] != "---":
         nonzeroCategories += 1
 
-    wgtsPhotosSales = [65,35]
+    wgtsPhotosSales = [60,40]
     if customModes["Main Density Mode"] == "Light":
         wgtsPhotosSales = [75,25]
     if customModes["Main Density Mode"] == "Super":
@@ -990,9 +1015,11 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         #settings["OverrideHintPriorities"][3].append("MundaneItemKotakeMushroomSaleRedRupee")   # backup hint Kotake Mushroom Sale (redundant)
         #settings["OverrideHintPriorities"][3].append("MundaneItemCuriosityShopPurpleRupee")     # backup hint Curiosity Shop Purple Rupee (redundant)
     #    gossipHintsTakenByAlways += 1
+        if customModes["Stubborn Seahorse"]:
+            itemListString = RemoveEntryFromListString(itemListString,12,"800000")  # Fisherman Pictograph (Seahorse)
         nonzeroCategories += 1
        
-    wgtsBombersNotebook = [80,10,15]
+    wgtsBombersNotebook = [75,10,15]
     if customModes["Main Density Mode"] == "Light":
         wgtsBombersNotebook = [80,20,0]
     if customModes["Main Density Mode"] == "Super":
@@ -1039,7 +1066,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         #    gossipHintsTakenByAlways += 1
         #    hardOptions += 1
         
-        if catFrogs[0] == "Shuffled":
+        if catFrogs[0] == "Shuffled" and not customModes["No Frog Choir"]:
             junkListString = AddStringToListString(junkListString,
                                                    "----600000---------------------------------") # junk Ranch Defense ribbons if Frogs is on
     if catBombersNotebook[0] != "---":
@@ -1098,8 +1125,12 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         settings["EnabledTricks"].remove("GBT Map Chest Room Jumps as FD")
         settings["EnabledTricks"].remove("Ikana Canyon Iceless as FD")
     
-    if (customModes["No Importance Count"]):
-        settings["ImportanceCount"] = False
+    if (customModes["No Milk Road FD Logic"]):
+        settings["EnabledTricks"].remove("Ranch Tingle as FD")
+        settings["EnabledTricks"].remove("FD Jump into Ranch")
+
+    if (customModes["Importance Count"]):
+        settings["ImportanceCount"] = True
     
     if (customModes["Sun's Song"]):
         settings["EnableSunsSong"] = True
@@ -1169,12 +1200,18 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                 print("         Scoopsanity Mode: ", customModes["Scoopsanity"],file=spoiler_file)
             if (customModes["Vanilla Eggs for Baby Zoras"] != True):
                 print("Vanilla Eggs + Baby Zoras: ", customModes["Vanilla Eggs for Baby Zoras"],file=spoiler_file)
-            if (customModes["Stubborn Princess"]):
+            if (customModes["Stubborn Princess"] != True):
                 print("        Stubborn Princess: ", customModes["Stubborn Princess"],file=spoiler_file)
+            if (customModes["No Frog Choir"]):
+                print("            No Frog Choir: ", customModes["No Frog Choir"],file=spoiler_file)
+            if (customModes["Stubborn Seahorse"]):
+                print("        Stubborn Seahorse: ", customModes["Stubborn Seahorse"],file=spoiler_file)
             if (customModes["No Iceless FD Logic"]):
                 print("      No Iceless FD Logic: ", customModes["No Iceless FD Logic"],file=spoiler_file)
-            if (customModes["No Importance Count"]):
-                print("      No Importance Count: ", customModes["No Importance Count"],file=spoiler_file)
+            if (customModes["No Milk Road FD Logic"]):
+                print("    No Milk Road FD Logic: ", customModes["No Iceless FD Logic"],file=spoiler_file)
+            if (customModes["Importance Count"]):
+                print("         Importance Count: ", customModes["Importance Count"],file=spoiler_file)
             if (customModes["Sun's Song"]):
                 print("               Sun's Song: ", customModes["Sun's Song"],file=spoiler_file)
         print("=============================================",file=spoiler_file)
@@ -1238,14 +1275,18 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         print("             Keaton Grass: ", catKeatonGrass[0],file=spoiler_file)
         print("           Gossip Fairies: ", catGossipFairies[0],file=spoiler_file)
         print("   Butterfly/Well Fairies: ", catButterflyAndWellFairies[0],file=spoiler_file)
-        print("          Frogs and Choir: ", catFrogs[0],file=spoiler_file)
+        if customModes["No Frog Choir"] or customModes["No Post-Temple"]:
+            print("         Frogs (no Choir): ", catFrogs[0],file=spoiler_file)
+        else:
+            print("          Frogs and Choir: ", catFrogs[0],file=spoiler_file)
         print("  Loose Rupees: Overworld: ", catLooseRupeesOverworld[0],file=spoiler_file)
         print("    Loose Rupees: Temples: ", catLooseRupeesTemple[0],file=spoiler_file)
         print("               Snowsanity: ", catSnowsanity[0],file=spoiler_file)
-        if catPotsanity[0] == "---" or catPotsanity[0] == "All groups":
-            print("                Potsanity: ", catPotsanity[0],file=spoiler_file)
+        if catPotsanityOverworld[0] == "One group" or catPotsanityOverworld[0] == "Two groups":
+            print("     Potsanity: Overworld: ", catPotsanityOverworld[0], "--", PORolledDirections,file=spoiler_file)
         else:
-            print("                Potsanity: ", catPotsanity[0], "--", PORolledDirections,file=spoiler_file)
+            print("     Potsanity: Overworld:", catPotsanityOverworld[0],file=spoiler_file)
+        print("       Potsanity: Temples: ", catPotsanityTemple[0],file=spoiler_file)
         print("Photos/Sales/Small Favors: ", catPhotosSales[0],file=spoiler_file)
         if customModes["No Clock Town"] == True:
             print("        Bombers' Notebook:  --- (disabled by No Clock Town)", file=spoiler_file)

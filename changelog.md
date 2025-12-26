@@ -1,7 +1,145 @@
-# Mystery Maker Changelog
 This changelog, covering Mystery Maker releases from Version 5.0 onward, is Markdown-formatted for better readability. Preceding Mystery Maker releases are discussed in the plaintext changelog.txt.
 
-## Mystery Maker release 5.0
+# Mystery Maker release 5.1
+This minor Mystery Maker release begins implementing saving and loading of the various options in the Mystery Maker program! For this release, all mode options can be saved or loaded into .yml files this way. Custom weights support for individual categories is planned for Version 6.
+
+Additionally, this release makes core settings changes in response to Version 5 feedback and testing. Overall, Version 5.1 seeks to further increase the amount of Mystery activity in the average seed. Some of the changes are more experimental: in particular, **two Milk Road FD tricks are legal and in logic** in this release!
+
+Version 6 is expected early next year (mid-to-late January 2026). It is slated to include custom weights support and further balance adjustments. It will be the last planned major release of the current development period. 
+
+*This schedule is subject to change if a new version of MMR releases! Supporting new MMR features is a priority for Mystery whenever feasible.*
+
+## Core Settings Changes
+
+### Logic and Tricks
+- **FD Jump into Ranch** and **Ranch Tingle as FD** are now ***legal and in logic***! 
+
+These are *special exceptions* to the [MMR Tournament Ruleset Trick List](https://pastebin.com/7nJML4vA), which continues to govern Mystery racing in all *other* respects.
+
+*In light of Iceless FD Logic in v5.0 and the continued increases to category appearance rates in v5.1, the time is right to consider FD as a song item. FD Jump into Ranch is reasonable to execute and offers an alternative to the static-hinted Keg.  Ranch Tingle as FD is a natural pairing.*
+
+### Hints
+- **Importance Count** is disabled.
+
+*For the final portion of this testing period, I'd like to examine how seeds play without Importance Count. As we've seen, IC is not without downsides: in other settings some IC hints have proven confusing and frustrating to read by even the most dedicated students of MMR logic, and Mystery's deeper possibilities can exacerbate that difficulty. Spider Houses and the central regions have been particular offenders in Mystery testing.*
+
+*While the decision is not final for Version 6--especially if a new MMR release arrives featuring Zoey's discussed changes to the item importance algorithm--this matter deserves a closer look.*
+
+### Category Organization
+- The active category minimum is now **7 out of 17 main categories**, increased from 6 in v5.0.
+
+*Version 5 seeds maintained very reasonable completion times. There's room for a little more in the core settings. Some category weights are also being increased further to match.*
+
+### Song Layout
+- **Moon Oath is slightly more likely; Traditional is slightly less likely.** (Moon Oath weight 30 -> 35; Traditional weight 25 -> 20)
+
+*As a significant new addition to Mystery--and to modern competitive MMR as a whole!--Moon Oath gets the privilege of being featured a little more often.*
+
+### Dungeon Setup: Small Keys
+- **Whenever Small Keys are shuffled, they are shuffled among all temples.** Small Keys being shuffled is overall slightly more likely.  
+  - Small Keys Within Any Temple weight is increased (15 -> 40).
+  - Small Keys Within Own Temple is removed from core settings (20 -> 0).
+
+*Small Keys Within Own Temple guarantees that go-moding SHT and STT are more awkward. The Within Any Temple variant is the more interesting shuffle of the two and sticking with only that shuffle also reduces tracking and deduction complexity. Shuffling in the overworld was considered, but Small Keys is one of the few Mystery shuffles that strongly encourages dungeon play and preserving that was preferred.*
+
+### Scoopsanity
+- **The Deku Princess is no longer shuffled.**
+- Active weight is increased from 30 -> 35.
+
+*Scoopsanity as a category is one of the most criticized, in Mystery and elsewhere. The Deku Princess getting stuck in her bottle is a hassle for Mystery runners. So much so, that runners have been afraid to engage with the category at all during test seeds for fear that they would lose access to their only bottle and be forced to cycle. (As Scoopsanity is not guaranteed, savescumming before scooping is often impractical in a racing context.) And bottle space is indeed a hot commodity in the Mystery early game, thanks to soils, mundanes, and existing standard checks. Version 5's weight increases only heighten that demand.*
+
+*Considering this, as well as the increased rate of Overworld Red Rupees (affecting two checks in Butler Race), the Deku Princess may be better off staying put.*
+
+### Regional Gossip Fairies
+- **The Gossip Fairies in Road to Southern Swamp, Path to Mountain Village, and Road to Ikana are back in this shuffle. This reverts the category to its Season 2 form.** Documentation will present this as "all Gossip Fairies in South, North, West, and East Termina, plus any regions connecting them to Termina Field."
+- Active weight is increased from 40 -> 45.
+
+*In v5.0 the RtSS, PtMV, and RtI gossip fairies were removed to align Regional Gossip Fairies with the "Central" definition used by new Potsanity (and MMR's area shuffles, incidentally, though those aren't used in Mystery itself). However, this exclusion did diminish both the category itself and those three regions, so it's being reverted here. Hopefully the explanation should alleviate any confusion about the non-perfect overlap with Central Pots.*
+
+### Snowballs
+- **Added a new shuffle option: Any-day Large Snowballs.** A total of 16 qualifying snowballs can be found in Goron Village, Path to Snowhead (winter only), and Snowhead. Weight is 15.
+- Any-day Snowballs weight is increased (15 -> 20).
+
+*Apart from Shopsanity and North Pots, the northern regions mostly lost out on Version 5's many weight increases. A boost to North's most prominent category may help it hold its own relative to Termina's other areas. As Any-day Snowballs is a large shuffle, introducing a new shuffle of a smaller subset should help the category appear more often as a whole without giving North* too *much at once. Any-day Large Snowballs seems like the most straightforward choice.*
+
+### Potsanity
+- **Oceanside Spider House Mask Room Pots 1 and 2 are now considered supply pots, like owl pots. They are no longer shuffled at all in Mystery.**
+
+*One side effect of Mystery's extra shuffles is that the player will have to search for supplies that would have been static in other settings. Some examples include Red and Blue Potions (Shopsanity) and Milk (Cowsanity), but supply drops from pots are perhaps most numerous, so much so that owl pots get a special exemption from shuffling. In exchange, the player is expected to use those owl pots as necessary.*
+
+*However, Ocean Spider House Chest's code input is a special case where the player can come prepared with 30 arrows, but still be especially inconvenienced by a West Pots shuffle if their brute-force attempt takes more than that. Since these are racing settings, guaranteeing the two 10-arrow refills in that room's pots limits the impact of unfortunate RNG for OSH Chest, as even the worst-case OSH Chest attempt can still be completed using 49 arrows.*
+
+- **While still functioning similarly to Version 5, Potsanity is now divided into two separate "Overworld" and "Temple" rolls (like Loose Rupees). Temple Pots can now be shuffled at the same time as two other overworld pot groups and all pots are more likely to appear than they were in Version 5.** Details below:
+  - Overworld Pots
+    - Off (weight 40)
+    - Central (weight 5)
+    - South (weight 5)
+    - North (weight 5)
+    - West (weight 10)
+    - East (weight 10)
+    - Two of the above (weight 20) -- this picks two different groups from the five above, using their listed weights.
+    - Full Potsanity (weight 5) -- all of the above, plus guaranteed Temple Pots
+  - Temple Pots -- *always on in Full Potsanity*
+    - Off (weight 50)
+    - On (weight 50)
+
+*This change allows the "two overworld pot groups" option to be based fully on the familiar Mystery weights system and more clearly presented in the Category Weights and Hints spreadsheet. It also significantly boosts Temple Pots and modestly boosts the overworld groups. Potsanity still counts as only one active category toward the minimum if both Overworld and Temple Pots are in play.*
+
+### Other Main Categories
+- **Soilsanity**
+  - Active weight is increased from 40 -> 45.
+  - Ranch Day 1 Soil is again a backup hint instead of a sometimes hint.
+- **Cowsanity**
+  - Active weight is increased from 40 -> 45.
+- **Stray Fairies**
+  - Active weight is increased from 30 -> 45.
+- **Tokensanity**
+  - One House weight is increased from 20 -> 25.
+- **Crates and Barrels**
+  - Active weight is increased from 40 -> 45.
+- **Keaton Grass**
+  - Odd Checks Only weight is increased from 20 -> 25.
+- **Butterfly and Well Fairies**
+  - Active weight is increased from 35 -> 40.
+- **Frogs**
+  - Active weight is increased from 20 -> 25.
+- **Loose Rupees: Overworld**
+  - Overworld Red, Blue, and Green weight is increased from 10 -> 15.
+- **Loose Rupees: Temple**
+  - Temple Red and Blue is removed (10 -> 0). Its weight is combined into Temple Red, Blue, and Green.
+  - Temple Red weight is increased from 30 -> 35.
+  - Temple Red, Blue, and Green weight is increased from 10 -> 25.
+- **Photos, Sales, and Small Favors (aka Mundane)**
+  - Active weight is increased from 35 -> 40.
+- Shopsanity, Hit Spots, and Bombers' Notebook are unchanged.
+
+*More weight boosts, to increase activity in every seed and more naturally support higher active category counts. One finding of Version 5 was that dungeons could use some additional help, so the temple-centric categories receive the biggest boosts this release.*
+
+*Notably, with Overworld Greens going from 10 -> 15, every check in Mystery save for Baby Zoras has an effective weight of at least 15. This corresponds to appearing in roughly one in seven seeds, as opposed to Mystery S2's baseline of one in ten.*
+
+## Generator Option Changes
+- Modified the Potsanity Density Modes combobox to control **Overworld Pots**. Its "Off" and "Full Potsanity" choices will affect Temple Pots; the others will not.
+- Inverted the "Never Shuffles Princess" Density Modes checkbox. It is now **Shuffles Princess**, which causes Scoopsanity to shuffle the Deku Princess. Bottle: Deku Princess will be on the backup hint list.
+- New Density Modes checkbox: **No Frog Choir**. Prevents Frogs from replacing Ranch Defense with Frog Choir. (Frog Choir will stay junked.)
+- New Density Modes checkbox: **No Shuffling Seahorse**. Prevents Photos, Sales, and Small Favors from shuffling the Seahorse.
+- Inverted the "No Importance Count" Extra Modes checkbox. It is now **Importance Count**, which enables Importance Count.
+- New Extra Modes checkbox: **No Milk Road FD Logic**. Removes FD Jump into Ranch and Ranch Tingle as FD from the trick list.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+# Mystery Maker release 5.0
 This major Mystery Maker release evolves the core Mystery settings in response to this year's Mystery Season 2 Tournament and to ongoing MMR community feedback. The goal is to present new challenges, address some sore spots in the Version 4 generator, and keep Mystery exciting, enjoyable, and accessible.
 
 Version 5 presents new core settings to enable wider testing in advance of a potential Mystery Season 3 tournament next year. These are *not* planned to be the final Season 3 settings. Further refinements to the core settings and generator options are expected.
