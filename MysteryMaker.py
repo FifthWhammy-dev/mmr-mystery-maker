@@ -4,6 +4,7 @@ import subprocess
 import argparse
 import os
 import sys
+import yaml
 from mysteryutils.MysteryMakerGUI import openOptionsGui
 
 MYSTERY_MAKER_VERSION = "v5.1"
@@ -277,7 +278,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         else:
             settings["VictoryMode"] = "CantFightMajora, Hearts"
                                                     
-    wgtsSongLayout = [25,35,10,30]
+    wgtsSongLayout = [20,35,10,35]
     if customModes["Song Layout"] == "Traditional":
         wgtsSongLayout = [100,0,0,0]
     elif customModes["Song Layout"] == "Songsanity":
@@ -813,6 +814,8 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsFrogs = [75,25]
+    if customModes["Main Density Mode"] == "Light":
+        wgtsFrogs = [80,20]
     if customModes["Main Density Mode"] == "Super":
         wgtsFrogs = [50,50]
     #if hardOptions >= HARD_OPTIONS_LIMIT and (catLongQuests[0] == "Frog Choir" or catLongQuests[0] == "All Long Quests"):
@@ -878,7 +881,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
 
     wgtsSnowsanity = [65,15,20,0]
     if customModes["Main Density Mode"] == "Light":
-        wgtsSnowsanity = [90,0,10,0]
+        wgtsSnowsanity = [80,10,10,0]
     if customModes["Main Density Mode"] == "Super":
         wgtsSnowsanity = [40,30,30,0]
     #if hardOptions >= HARD_OPTIONS_LIMIT:
@@ -902,9 +905,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     wgtsPotsanityOverworld = [40,0,20,5,5,5,5,10,10]
     catPotsanityOverworld = 0
     if customModes["Main Density Mode"] == "Light":
-        wgtsPotsanityOverworld = [54,0,0,0,8,8,8,16,16]
+        wgtsPotsanityOverworld = [44,0,0,0,8,8,8,16,16]
     if customModes["Main Density Mode"] == "Super":
-        wgtsPotsanityOverworld = [4,0,30,5,8,8,8,16,16]
+        wgtsPotsanityOverworld = [4,0,30,10,8,8,8,16,16]
     if customModes["Potsanity"] == "Off":
         wgtsPotsanityOverworld = [100,0,0,0,0,0,0,0,0]
     if customModes["Potsanity"] == "Central Pots":
@@ -922,7 +925,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     if customModes["Potsanity"] == "Any Two Groups":
         catPotsanityOverworld = ["Two groups"]
     if customModes["Potsanity"] == "Full Potsanity":
-        wgtsPotsanityOverworld = [0,0,0,100,0,0,0,0,0,0]
+        wgtsPotsanityOverworld = [0,0,0,100,0,0,0,0,0]
     if catPotsanityOverworld == 0:
         catPotsanityOverworld = random.choices(["---",
                                        "One group",
@@ -1285,7 +1288,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         if catPotsanityOverworld[0] == "One group" or catPotsanityOverworld[0] == "Two groups":
             print("     Potsanity: Overworld: ", catPotsanityOverworld[0], "--", PORolledDirections,file=spoiler_file)
         else:
-            print("     Potsanity: Overworld:", catPotsanityOverworld[0],file=spoiler_file)
+            print("     Potsanity: Overworld: ", catPotsanityOverworld[0],file=spoiler_file)
         print("       Potsanity: Temples: ", catPotsanityTemple[0],file=spoiler_file)
         print("Photos/Sales/Small Favors: ", catPhotosSales[0],file=spoiler_file)
         if customModes["No Clock Town"] == True:
@@ -1302,10 +1305,12 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
 argParser = argparse.ArgumentParser(description="Randomly generates Mystery settings files for MMR and runs MMR.CLI to roll seeds with them.")
 argParser.add_argument("-n", dest="numberOfSettingsFiles",type=int,default=1,
                     help="create multiple settings/seeds at once")
-argParser.add_argument("-i", "--input", dest="inputFile",default="Mystery_Settings_base_v5.json",
+argParser.add_argument("-i", "--input", dest="inputFile",default="Mystery_Settings_base_v5_1.json",
                     help="base MMR settings file")
 argParser.add_argument("-r", "--randomizer-exe", dest="randomizerExe",default="MMR.CLI.exe",
-                    help="MMR command-line executable")   
+                    help="MMR command-line executable")
+argParser.add_argument("-w", "--weights-file", dest="weightsFile",default="0",
+                    help="custom Mystery Maker weights file")   
 argParser.add_argument("--settings-only", dest="settingsOnly", action="store_true",
                     help="only generate settings; don't roll any seeds")
 argParser.add_argument("--version", dest="showVersion", action="store_true",
@@ -1318,9 +1323,14 @@ if (args.showVersion):
 
 optionSettingsFile = args.inputFile
 optionRandomizerExe = args.randomizerExe
+optionWeightsFile = args.weightsFile
 optionOutputCount = args.numberOfSettingsFiles
 optionDontMakeSeed = args.settingsOnly
 optionCustomModes = MODE_DEFAULTS
+if optionWeightsFile != "0":
+    with open(optionWeightsFile, 'r') as loadedWeightsFile:
+        weightsFileDict = yaml.safe_load(loadedWeightsFile)
+        optionCustomModes = weightsFileDict["modes"]
 
 if (len(sys.argv) == 1):
     guiResults = openOptionsGui(MYSTERY_MAKER_VERSION)

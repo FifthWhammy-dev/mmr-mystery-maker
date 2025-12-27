@@ -4,6 +4,7 @@ import subprocess
 import argparse
 import os
 import sys
+import yaml
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
@@ -31,7 +32,7 @@ def openOptionsGui(version_string):
         startBossKeysMode.set("Off (Default)")
         startSmallKeysMode.set("Sometimes (Default)")
         mainDensityMode.set("Normal")
-        densityCategoryMinimum.set("6")
+        densityCategoryMinimum.set("7")
         densityNoCT.set("0")
         densityNoPT.set("0")
         densityMapCompassMode.set("0")
@@ -43,6 +44,25 @@ def openOptionsGui(version_string):
         extraICMode.set("0")
         extraSunsSongMode.set("0")
         resetButton.state(["disabled"])
+
+    def guiLoadWeightsFile(*args):
+        loadPath = filedialog.askopenfilename(filetypes=[("Mystery Maker weights files", ".yml")])
+        
+        if loadPath != "":
+            with open(loadPath, 'r') as loadedFile:
+                weightsFileDict = yaml.safe_load(loadedFile)
+                loadSettingsFromDict(weightsFileDict["modes"])
+
+    def guiSaveWeightsFile(*args):
+        savePath = filedialog.asksaveasfilename(filetypes=[("Mystery Maker weights files", ".yml")])
+
+        if savePath != "":
+            weightsFileDict = dict()
+            weightsFileDict["mystery_maker_version"] = version_string
+            weightsFileDict["modes"] = createSettingsDict()
+
+            with open(savePath, "w") as fileToSave:
+                yaml.dump(weightsFileDict, fileToSave)
 
     def browseForBaseSettingsFile(*args):
         baseSettingsFilePath.set(filedialog.askopenfilename())
@@ -76,6 +96,72 @@ def openOptionsGui(version_string):
                 extraICMode.get() == "0" and
                 extraSunsSongMode.get() == "0")
     
+    def createSettingsDict(*args):
+        cmSettings = dict()
+        cmSettings["Goal Mode"] = goalMode.get()
+        if goalMode.get() == "Long Goal":
+            cmSettings["Long Goal"] = goalLongGoal.get()
+        else:
+            cmSettings["Long Goal"] = "None"
+        cmSettings["Direct to Credits"] = (goalDirectToCredits.get() == "1")
+        cmSettings["Start Mode"] = startDifficultyMode.get()
+        cmSettings["Song Layout"] = startSongLayoutMode.get()
+        cmSettings["All Moon Trials"] = (startAllMoonTrialsMode.get() == "1")
+        cmSettings["Early Moon Access Remains"] = int(goalEarlyMoonRemains.get())
+        cmSettings["Blitz Remains Count"] = (goalBlitzRemainsCount.get() == "1")
+        cmSettings["Random Item Mode"] = startRandomItemMode.get()
+        cmSettings["FD Anywhere Mode"] = startFDAnywhereMode.get()
+        cmSettings["Dungeon Entrances"] = startDungeonERMode.get()
+        cmSettings["Boss Keys"] = startBossKeysMode.get()
+        cmSettings["Small Keys"] = startSmallKeysMode.get()
+        cmSettings["Main Density Mode"] = mainDensityMode.get()
+        cmSettings["Category Minimum"] = int(densityCategoryMinimum.get())
+        cmSettings["No Clock Town"] = (densityNoCT.get() == "1")
+        cmSettings["No Post-Temple"] = (densityNoPT.get() == "1")
+        cmSettings["Map and Compass Hints"] = (densityMapCompassMode.get() == "1")
+        cmSettings["Potsanity"] = densityPotsanityMode.get()
+        cmSettings["Scoopsanity"] = densityScoopsanityMode.get()
+        cmSettings["Vanilla Eggs for Baby Zoras"] = (densityScrambledEggsMode.get() == "0") # careful here!
+        cmSettings["Stubborn Princess"] = (densityStubbornPrincessMode.get() == "0")
+        cmSettings["No Frog Choir"] = (densityNoFrogChoirMode.get() == "1")
+        cmSettings["Stubborn Seahorse"] = (densityStubbornSeahorseMode.get() == "1")
+        cmSettings["No Iceless FD Logic"] = (extraNoIcelessFDLogicMode.get() == "1")
+        cmSettings["No Milk Road FD Logic"] = (extraNoMilkRoadFDLogicMode.get() == "1")
+        cmSettings["Importance Count"] = (extraICMode.get() == "1")
+        cmSettings["Sun's Song"] = (extraSunsSongMode.get() == "1")
+        
+        return cmSettings
+    
+    def loadSettingsFromDict(modesDict):
+        goalMode.set(modesDict["Goal Mode"])
+        goalLongGoal.set(modesDict["Long Goal"])
+        goalDirectToCredits.set("1" if modesDict["Direct to Credits"] else "0")
+        startDifficultyMode.set(modesDict["Start Mode"])
+        startSongLayoutMode.set(modesDict["Song Layout"])
+        startAllMoonTrialsMode.set("1" if modesDict["All Moon Trials"] else "0")
+        goalEarlyMoonRemains.set(str(modesDict["Early Moon Access Remains"]))
+        goalBlitzRemainsCount.set("1" if modesDict["Blitz Remains Count"] else "0")
+        startRandomItemMode.set(modesDict["Random Item Mode"])
+        startFDAnywhereMode.set(modesDict["FD Anywhere Mode"])
+        startDungeonERMode.set(modesDict["Dungeon Entrances"])
+        startBossKeysMode.set(modesDict["Boss Keys"])
+        startSmallKeysMode.set(modesDict["Small Keys"])
+        mainDensityMode.set(modesDict["Main Density Mode"])
+        densityCategoryMinimum.set(str(modesDict["Category Minimum"]))
+        densityNoCT.set("1" if modesDict["No Clock Town"] else "0")
+        densityNoPT.set("1" if modesDict["No Post-Temple"] else "0")
+        densityMapCompassMode.set("1" if modesDict["Map and Compass Hints"] else "0")
+        densityPotsanityMode.set(modesDict["Potsanity"])
+        densityScoopsanityMode.set(modesDict["Scoopsanity"])
+        densityScrambledEggsMode.set("0" if modesDict["Vanilla Eggs for Baby Zoras"] else "1")
+        densityStubbornPrincessMode.set("0" if modesDict["Stubborn Princess"] else "1")
+        densityNoFrogChoirMode.set("1" if modesDict["No Frog Choir"] else "0")
+        densityStubbornSeahorseMode.set("1" if modesDict["Stubborn Seahorse"] else "0")
+        extraNoIcelessFDLogicMode.set("1" if modesDict["No Iceless FD Logic"] else "0")
+        extraNoMilkRoadFDLogicMode.set("1" if modesDict["No Milk Road FD Logic"] else "0")
+        extraICMode.set("1" if modesDict["Importance Count"] else "0")
+        extraSunsSongMode.set("1" if modesDict["Sun's Song"] else "0")
+
     def updateModeTabs(*args):
         goalLongGoal_combo.state(["!disabled"] if goalMode.get() == "Long Goal" else ["disabled"])
                       
@@ -103,14 +189,14 @@ def openOptionsGui(version_string):
 
     windowForceClosed = StringVar(value="0")
 
-    baseSettingsFilePath = StringVar(value="Mystery_Settings_base_v5.json")
+    baseSettingsFilePath = StringVar(value="Mystery_Settings_base_v5_1.json")
     baseSettingsFilePath_entry = ttk.Entry(mainframe, width=70, textvariable=baseSettingsFilePath)
-    baseSettingsFilePath_entry.grid(column=2, row=2, sticky=(W, E))
-    baseSettingsFilePath_tip = Hovertip(baseSettingsFilePath_entry, "The MMR settings file that's copied and modified\nby Mystery Maker to make mystery seeds.\nThe Mystery_Settings_base_v5.json file comes with Mystery Maker.")
+    baseSettingsFilePath_entry.grid(column=2, row=2, columnspan=3, sticky=(W, E))
+    baseSettingsFilePath_tip = Hovertip(baseSettingsFilePath_entry, "The MMR settings file that's copied and modified\nby Mystery Maker to make mystery seeds.\nThe Mystery_Settings_base_v5_1.json file comes with Mystery Maker.")
 
     mmrCommandLineExePath = StringVar(value="MMR.CLI.exe")
     mmrCommandLineExePath_entry = ttk.Entry(mainframe, width=70, textvariable=mmrCommandLineExePath)
-    mmrCommandLineExePath_entry.grid(column=2, row=3, sticky=(W, E))
+    mmrCommandLineExePath_entry.grid(column=2, row=3, columnspan=3, sticky=(W, E))
     mmrCommandLineExePath_tip = Hovertip(mmrCommandLineExePath_entry, "The MMR command-line executable that makes playable seed files.\nChanging this should only be needed if you didn't install\nMystery Maker in the same folder as MMR.")
 
     numberToGenerate = StringVar(value="1")
@@ -123,17 +209,23 @@ def openOptionsGui(version_string):
     makeSettingsOnly_checkbutton.grid(column=1, row=5, sticky=E)
     makeSettingsOnly_tip = Hovertip(makeSettingsOnly_checkbutton, "When checked, Mystery Maker only generates a .json file\nwhich can be loaded manually in MMR to make a playable seed.")
 
-    ttk.Button(mainframe, text="Browse...", command=browseForBaseSettingsFile).grid(column=3, row=2, sticky=W)
-    ttk.Button(mainframe, text="Browse...", command=browseForCommandLineExe).grid(column=3, row=3, sticky=W)
-    resetButton = ttk.Button(mainframe, text="Reset Modes", command=guiResetModes)
-    resetButton.grid(column=2, row=5, sticky=E)
+    ttk.Button(mainframe, text="Browse...", command=browseForBaseSettingsFile).grid(column=5, row=2, sticky=W)
+    ttk.Button(mainframe, text="Browse...", command=browseForCommandLineExe).grid(column=5, row=3, sticky=W)
+    loadButton = ttk.Button(mainframe, text="Load...", command=guiLoadWeightsFile)
+    loadButton.grid(column=2, row=5, sticky=E)
+    loadButton_tip = Hovertip(loadButton, "Load Mystery Maker mode settings from a .yml file.")
+    saveButton = ttk.Button(mainframe, text="Save...", command=guiSaveWeightsFile)
+    saveButton.grid(column=3, row=5, sticky=E)
+    saveButton_tip = Hovertip(saveButton, "Save Mystery Maker mode settings to a .yml file.")
+    resetButton = ttk.Button(mainframe, text="Reset to Defaults", command=guiResetModes)
+    resetButton.grid(column=4, row=5, sticky=E)
     resetButton.state(["disabled"])
-    resetButton_tip = Hovertip(resetButton, "Resets all special goal, start, and density mode settings to default.")
+    resetButton_tip = Hovertip(resetButton, "Resets all mode settings to default.")
     makeButton = ttk.Button(mainframe, text="Make Mystery", command=guiStartRandomize)
-    makeButton.grid(column=3, row=5, sticky=W)
+    makeButton.grid(column=5, row=5, sticky=W)
     makeButton_tip = Hovertip(makeButton, text="Generates one or more Mystery settings files and seeds with the specified options,\nplacing them in the 'output' directory.\nMystery Maker will close when finished.")
 
-    ttk.Label(mainframe, text="Generated settings and seeds will be placed in the 'output' directory.\nHover over options to display a tooltip with more information.", justify="center").grid(column=1, row=0, columnspan=3)
+    ttk.Label(mainframe, text="Generated settings and seeds will be placed in the 'output' directory.\nHover over options to display a tooltip with more information.", justify="center").grid(column=1, row=0, columnspan=5)
     ttk.Label(mainframe, text="Custom base MMR settings file:").grid(column=1, row=2, sticky=E)
     ttk.Label(mainframe, text="Custom path to MMR.CLI.exe:").grid(column=1, row=3, sticky=E)
     ttk.Label(mainframe, text="# of seeds:").grid(column=1, row=4, sticky=E)
@@ -151,7 +243,7 @@ def openOptionsGui(version_string):
     modeTabs_notebook.add(modeTabStartMode, text="Setup Modes")
     modeTabs_notebook.add(modeTabDensityMode, text="Density Modes")
     modeTabs_notebook.add(modeTabExtraMode, text="Extra Modes")
-    modeTabs_notebook.grid(column=1, row=1, columnspan=3, sticky=(W, E))
+    modeTabs_notebook.grid(column=1, row=1, columnspan=5, sticky=(W, E))
 
     # Goal Mode pane
     goalMode = StringVar(value="No Blitz")
@@ -410,7 +502,6 @@ def openOptionsGui(version_string):
     extraNoIC_tip = Hovertip(extraNoIC_check, "Enable Importance Count. WotH hints will become IC hints instead.")
     extraSunsSong_tip = Hovertip(extraSunsSong_check, "Allow the use of Sun's Song (C-Right, C-Down, C-Up, C-Right, C-Down, C-Up) to speed up the clock.\nSun's Song will be available from the start of the seed.")
 
-
     for child in mainframe.winfo_children(): 
         child.grid_configure(padx=5, pady=5)
 
@@ -419,39 +510,8 @@ def openOptionsGui(version_string):
     guiWindow.bind("<Return>", guiStartRandomize)
 
     guiWindow.mainloop()
-    customModesSettings = dict()
-    customModesSettings["Goal Mode"] = goalMode.get()
-    if goalMode.get() == "Long Goal":
-        customModesSettings["Long Goal"] = goalLongGoal.get()
-    else:
-        customModesSettings["Long Goal"] = "None"
-    customModesSettings["Direct to Credits"] = (goalDirectToCredits.get() == "1")
-    customModesSettings["Start Mode"] = startDifficultyMode.get()
-    customModesSettings["Song Layout"] = startSongLayoutMode.get()
-    customModesSettings["All Moon Trials"] = (startAllMoonTrialsMode.get() == "1")
-    customModesSettings["Early Moon Access Remains"] = int(goalEarlyMoonRemains.get())
-    customModesSettings["Blitz Remains Count"] = (goalBlitzRemainsCount.get() == "1")
-    customModesSettings["Random Item Mode"] = startRandomItemMode.get()
-    customModesSettings["FD Anywhere Mode"] = startFDAnywhereMode.get()
-    customModesSettings["Dungeon Entrances"] = startDungeonERMode.get()
-    customModesSettings["Boss Keys"] = startBossKeysMode.get()
-    customModesSettings["Small Keys"] = startSmallKeysMode.get()
-    customModesSettings["Main Density Mode"] = mainDensityMode.get()
-    customModesSettings["Category Minimum"] = int(densityCategoryMinimum.get())
-    customModesSettings["No Clock Town"] = (densityNoCT.get() == "1")
-    customModesSettings["No Post-Temple"] = (densityNoPT.get() == "1")
-    customModesSettings["Map and Compass Hints"] = (densityMapCompassMode.get() == "1")
-    customModesSettings["Potsanity"] = densityPotsanityMode.get()
-    customModesSettings["Scoopsanity"] = densityScoopsanityMode.get()
-    customModesSettings["Vanilla Eggs for Baby Zoras"] = (densityScrambledEggsMode.get() == "0") # careful here!
-    customModesSettings["Stubborn Princess"] = (densityStubbornPrincessMode.get() == "0")
-    customModesSettings["No Frog Choir"] = (densityNoFrogChoirMode.get () == "1")
-    customModesSettings["Stubborn Seahorse"] = (densityStubbornSeahorseMode.get() == "1")
-    customModesSettings["No Iceless FD Logic"] = (extraNoIcelessFDLogicMode.get() == "1")
-    customModesSettings["No Milk Road FD Logic"] = (extraNoMilkRoadFDLogicMode.get() == "1")
-    customModesSettings["Importance Count"] = (extraICMode.get() == "1")
-    customModesSettings["Sun's Song"] = (extraSunsSongMode.get() == "1")
-
+    customModesSettings = createSettingsDict()
+    
     return [(windowForceClosed.get() == "1"),
             baseSettingsFilePath.get(),
             mmrCommandLineExePath.get(),

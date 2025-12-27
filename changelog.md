@@ -1,11 +1,11 @@
 This changelog, covering Mystery Maker releases from Version 5.0 onward, is Markdown-formatted for better readability. Preceding Mystery Maker releases are discussed in the plaintext changelog.txt.
 
 # Mystery Maker release 5.1
-This minor Mystery Maker release begins implementing saving and loading of the various options in the Mystery Maker program! For this release, all mode options can be saved or loaded into .yml files this way. Custom weights support for individual categories is planned for Version 6.
+This minor Mystery Maker release begins implementing saving and loading of the various options in the Mystery Maker program! For this release, all mode options can be saved or loaded into .yml files this way. Customization support for individual categories is planned for Version 6.
 
 Additionally, this release makes core settings changes in response to Version 5 feedback and testing. Overall, Version 5.1 seeks to further increase the amount of Mystery activity in the average seed. Some of the changes are more experimental: in particular, **two Milk Road FD tricks are legal and in logic** in this release!
 
-Version 6 is expected early next year (mid-to-late January 2026). It is slated to include custom weights support and further balance adjustments. It will be the last planned major release of the current development period. 
+Version 6 is expected early next year (mid-to-late January 2026). It is slated to include per-category customization support and further balance adjustments. It will be the last planned major release of the current development period. 
 
 *This schedule is subject to change if a new version of MMR releases! Supporting new MMR features is a priority for Mystery whenever feasible.*
 
@@ -116,6 +116,13 @@ These are *special exceptions* to the [MMR Tournament Ruleset Trick List](https:
 *More weight boosts, to increase activity in every seed and more naturally support higher active category counts. One finding of Version 5 was that dungeons could use some additional help, so the temple-centric categories receive the biggest boosts this release.*
 
 *Notably, with Overworld Greens going from 10 -> 15, every check in Mystery save for Baby Zoras has an effective weight of at least 15. This corresponds to appearing in roughly one in seven seeds, as opposed to Mystery S2's baseline of one in ten.*
+
+## Weights File Support
+- Mystery Maker can now save and load its current mode configuration into files of its own, called *weights files*.
+  - Weights files are in YAML format and use the **.yml** extension. Currently they store Mystery Maker's existing generator options (and current version number).
+  - Weights files may be loaded and saved in the GUI using the Load and Save buttons, or may be passed via command-line using the -w or --weights-file options followed by the weight file's path.
+  - Weights files are still in a proof-of-concept state, especially since they don't have any actual weights yet. As such, forward compatibility of v5.1 weights files with future Mystery Maker releases is not guaranteed! (But the command line options should stay constant.)
+  - A sample weights file matching v5.1's default mode values is included, as *defaultWeightsFile_v5_1.yml*.
 
 ## Generator Option Changes
 - Modified the Potsanity Density Modes combobox to control **Overworld Pots**. Its "Off" and "Full Potsanity" choices will affect Temple Pots; the others will not.
