@@ -123,6 +123,7 @@ These are *special exceptions* to the [MMR Tournament Ruleset Trick List](https:
   - Weights files may be loaded and saved in the GUI using the Load and Save buttons, or may be passed via command-line using the -w or --weights-file options followed by the weight file's path.
   - Weights files are still in a proof-of-concept state, especially since they don't have any actual weights yet. As such, forward compatibility of v5.1 weights files with future Mystery Maker releases is not guaranteed! (But the command line options should stay constant.)
   - A sample weights file matching v5.1's default mode values is included, as *defaultWeightsFile_v5_1.yml*.
+  - Mystery Maker uses [PyYAML 6.0.3](https://pypi.org/project/PyYAML/) to read and write weights files. Be sure to install PyYAML ("pip install pyyaml") if you're running the source Python script or building the EXE yourself. If you're just running the provided MysteryMaker.exe, you don't need to do anything extra.
 
 ## Generator Option Changes
 - Modified the Potsanity Density Modes combobox to control **Overworld Pots**. Its "Off" and "Full Potsanity" choices will affect Temple Pots; the others will not.
