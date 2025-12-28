@@ -7,21 +7,21 @@ import sys
 import yaml
 from mysteryutils.MysteryMakerGUI import openOptionsGui
 
-MYSTERY_MAKER_VERSION = "v5.1"
+MYSTERY_MAKER_VERSION = "v5.1.1"
 
 MODE_DEFAULTS = {"Goal Mode":"No Blitz",
                  "Long Goal":"None",
                  "Direct to Credits":False,
                  "Start Mode":"Default",
-                 "Song Layout":"Any (Default)",
+                 "Song Layout":"Any",
                  "All Moon Trials":False,
                  "Early Moon Access Remains":1,
                  "Blitz Remains Count":False,
-                 "Random Item Mode":"Any (Default)",
-                 "FD Anywhere Mode":"Sometimes (Default)",
-                 "Dungeon Entrances":"Sometimes (Default)",
-                 "Boss Keys":"Off (Default)",
-                 "Small Keys":"Sometimes (Default)",
+                 "Random Item Mode":"Any",
+                 "FD Anywhere Mode":"Sometimes",
+                 "Dungeon Entrances":"Sometimes",
+                 "Boss Keys":"Off",
+                 "Small Keys":"Sometimes",
                  "Main Density Mode":"Normal",
                  "Category Minimum":7,
                  "No Clock Town":False,
@@ -34,7 +34,7 @@ MODE_DEFAULTS = {"Goal Mode":"No Blitz",
                  "No Frog Choir":False,
                  "Stubborn Seahorse":False,
                  "No Iceless FD Logic":False,
-                 "No Milk Road FD Logic":False,
+                 "No Milk Road FD Logic":True,
                  "Importance Count":False,
                  "Sun's Song":False}
 
@@ -492,7 +492,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     wgtsEntrancesTemples = [50,50]
     if customModes["Dungeon Entrances"] == "Off":
         wgtsEntrancesTemples = [100,0]
-    if customModes["Dungeon Entrances"] == "Sometimes (Default)":
+    if customModes["Dungeon Entrances"] == "Sometimes":
         wgtsEntrancesTemples = [50,50]
     if customModes["Dungeon Entrances"] == "Always":
         wgtsEntrancesTemples = [0,100]
@@ -524,7 +524,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         wgtsKeysanityBossKeys = [100,0,0,0,0]
     if customModes["Main Density Mode"] == "Super":
         wgtsKeysanityBossKeys = [100,0,0,0,0]
-    if customModes["Boss Keys"] == "Off (Default)":
+    if customModes["Boss Keys"] == "Off":
         wgtsKeysanityBossKeys = [100,0,0,0,0]
     if customModes["Boss Keys"] == "Sometimes":
         wgtsKeysanityBossKeys = [65,20,15,0,0]
@@ -565,7 +565,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         wgtsKeysanitySmallKeys = [40,0,60,0,0]
     if customModes["Small Keys"] == "Off":
         wgtsKeysanitySmallKeys = [100,0,0,0,0]
-    if customModes["Small Keys"] == "Sometimes (Default)":
+    if customModes["Small Keys"] == "Sometimes":
         wgtsKeysanitySmallKeys = [60,0,40,0,0]
     if customModes["Small Keys"] == "Always Within Their Temple":
         wgtsKeysanitySmallKeys = [0,100,0,0,0]
@@ -1169,7 +1169,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                 print("                            (Direct to Credits is on)", file=spoiler_file)
             if (customModes["Start Mode"] == "Kokiri" or customModes["Start Mode"] == "Swordless"):
                 print("    Start Difficulty Mode: ", customModes["Start Mode"],file=spoiler_file)
-            if (customModes["Song Layout"] != "Any (Default)"):
+            if (customModes["Song Layout"] != "Any"):
                 print("         Song Layout Mode: ", customModes["Song Layout"],file=spoiler_file)
             if (customModes["All Moon Trials"]):
                 print("                                (Moon Oath Adds All Trials)", file=spoiler_file)
@@ -1177,15 +1177,15 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                 print("Early Moon Access Remains: ", customModes["Early Moon Access Remains"],file=spoiler_file)
             if (customModes["Blitz Remains Count"]):
                 print("                                (Blitz Remains count)", file=spoiler_file)
-            if (customModes["Random Item Mode"] != "Any (Default)"):
+            if (customModes["Random Item Mode"] != "Any"):
                 print("          Start Item Mode: ", customModes["Random Item Mode"],file=spoiler_file)
-            if (customModes["FD Anywhere Mode"] != "Sometimes (Default)"):
+            if (customModes["FD Anywhere Mode"] != "Sometimes"):
                 print("         FD Anywhere Mode: ", customModes["FD Anywhere Mode"],file=spoiler_file)
-            if (customModes["Dungeon Entrances"] != "Sometimes (Default)"):
+            if (customModes["Dungeon Entrances"] != "Sometimes"):
                 print("   Dungeon Entrances Mode: ", customModes["Dungeon Entrances"],file=spoiler_file)
-            if (customModes["Boss Keys"] != "Off (Default)"):
+            if (customModes["Boss Keys"] != "Off"):
                 print("           Boss Keys Mode: ", customModes["Boss Keys"],file=spoiler_file)
-            if (customModes["Small Keys"] != "Sometimes (Default)"):
+            if (customModes["Small Keys"] != "Sometimes"):
                 print("          Small Keys Mode: ", customModes["Small Keys"],file=spoiler_file)
             if (customModes["Main Density Mode"] != "Normal"):
                 print("        Main Density Mode: ", customModes["Main Density Mode"],file=spoiler_file)
@@ -1292,9 +1292,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         print("       Potsanity: Temples: ", catPotsanityTemple[0],file=spoiler_file)
         print("Photos/Sales/Small Favors: ", catPhotosSales[0],file=spoiler_file)
         if customModes["No Clock Town"] == True:
-            print("        Bombers' Notebook:  --- (disabled by No Clock Town)", file=spoiler_file)
+            print("         Notebook Entries:  --- (disabled by No Clock Town)", file=spoiler_file)
         else:
-            print("        Bombers' Notebook: ", catBombersNotebook[0],file=spoiler_file)
+            print("         Notebook Entries: ", catBombersNotebook[0],file=spoiler_file)
         print("---------------------------------------------",file=spoiler_file)
     #    print("  Gossip slots for always: ",gossipHintsTakenByAlways,file=spoiler_file)
     #    print("        Hard options used: ",hardOptions,file=spoiler_file)
@@ -1305,7 +1305,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
 argParser = argparse.ArgumentParser(description="Randomly generates Mystery settings files for MMR and runs MMR.CLI to roll seeds with them.")
 argParser.add_argument("-n", dest="numberOfSettingsFiles",type=int,default=1,
                     help="create multiple settings/seeds at once")
-argParser.add_argument("-i", "--input", dest="inputFile",default="Mystery_Settings_base_v5_1.json",
+argParser.add_argument("-i", "--input", dest="inputFile",default="Mystery_Settings_base_v5_1_1.json",
                     help="base MMR settings file")
 argParser.add_argument("-r", "--randomizer-exe", dest="randomizerExe",default="MMR.CLI.exe",
                     help="MMR command-line executable")

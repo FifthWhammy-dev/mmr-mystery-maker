@@ -24,13 +24,13 @@ def openOptionsGui(version_string):
         goalEarlyMoonRemains.set("1")
         goalBlitzRemainsCount.set("0")
         startDifficultyMode.set("Default")
-        startSongLayoutMode.set("Any (Default)")
+        startSongLayoutMode.set("Any")
         startAllMoonTrialsMode.set("0")
-        startRandomItemMode.set("Any (Default)")
-        startFDAnywhereMode.set("Sometimes (Default)")
-        startDungeonERMode.set("Sometimes (Default)")
-        startBossKeysMode.set("Off (Default)")
-        startSmallKeysMode.set("Sometimes (Default)")
+        startRandomItemMode.set("Any")
+        startFDAnywhereMode.set("Sometimes")
+        startDungeonERMode.set("Sometimes")
+        startBossKeysMode.set("Off")
+        startSmallKeysMode.set("Sometimes")
         mainDensityMode.set("Normal")
         densityCategoryMinimum.set("7")
         densityNoCT.set("0")
@@ -40,7 +40,10 @@ def openOptionsGui(version_string):
         densityScoopsanityMode.set("Default")
         densityScrambledEggsMode.set("0")
         densityStubbornPrincessMode.set("0")
+        densityNoFrogChoirMode.set("0")
+        densityStubbornSeahorseMode.set("0")
         extraNoIcelessFDLogicMode.set("0")
+        extraNoMilkRoadFDLogicMode.set("1")
         extraICMode.set("0")
         extraSunsSongMode.set("0")
         resetButton.state(["disabled"])
@@ -76,15 +79,15 @@ def openOptionsGui(version_string):
                 goalEarlyMoonRemains.get() == "1" and
                 goalBlitzRemainsCount.get() == "0" and
                 startDifficultyMode.get() == "Default" and
-                startRandomItemMode.get() == "Any (Default)" and
-                startSongLayoutMode.get() == "Any (Default)" and
+                startRandomItemMode.get() == "Any" and
+                startSongLayoutMode.get() == "Any" and
                 startAllMoonTrialsMode.get() == "0" and
-                startFDAnywhereMode.get() == "Sometimes (Default)" and
-                startDungeonERMode.get() == "Sometimes (Default)" and
-                startBossKeysMode.get() == "Off (Default)" and
-                startSmallKeysMode.get() == "Sometimes (Default)" and
+                startFDAnywhereMode.get() == "Sometimes" and
+                startDungeonERMode.get() == "Sometimes" and
+                startBossKeysMode.get() == "Off" and
+                startSmallKeysMode.get() == "Sometimes" and
                 mainDensityMode.get() == "Normal" and
-                densityCategoryMinimum.get() == "6" and
+                densityCategoryMinimum.get() == "7" and
                 densityNoCT.get() == "0" and
                 densityNoPT.get() == "0" and
                 densityMapCompassMode.get() == "0" and
@@ -92,7 +95,10 @@ def openOptionsGui(version_string):
                 densityScoopsanityMode.get() == "Default" and
                 densityScrambledEggsMode.get() == "0" and
                 densityStubbornPrincessMode.get() == "0" and
+                densityNoFrogChoirMode.get() == "0" and
+                densityStubbornSeahorseMode.get() == "0" and
                 extraNoIcelessFDLogicMode.get() == "0" and
+                extraNoMilkRoadFDLogicMode.get() == "1" and
                 extraICMode.get() == "0" and
                 extraSunsSongMode.get() == "0")
     
@@ -189,10 +195,10 @@ def openOptionsGui(version_string):
 
     windowForceClosed = StringVar(value="0")
 
-    baseSettingsFilePath = StringVar(value="Mystery_Settings_base_v5_1.json")
+    baseSettingsFilePath = StringVar(value="Mystery_Settings_base_v5_1_1.json")
     baseSettingsFilePath_entry = ttk.Entry(mainframe, width=70, textvariable=baseSettingsFilePath)
     baseSettingsFilePath_entry.grid(column=2, row=2, columnspan=3, sticky=(W, E))
-    baseSettingsFilePath_tip = Hovertip(baseSettingsFilePath_entry, "The MMR settings file that's copied and modified\nby Mystery Maker to make mystery seeds.\nThe Mystery_Settings_base_v5_1.json file comes with Mystery Maker.")
+    baseSettingsFilePath_tip = Hovertip(baseSettingsFilePath_entry, "The MMR settings file that's copied and modified\nby Mystery Maker to make mystery seeds.\nThis file comes with Mystery Maker.")
 
     mmrCommandLineExePath = StringVar(value="MMR.CLI.exe")
     mmrCommandLineExePath_entry = ttk.Entry(mainframe, width=70, textvariable=mmrCommandLineExePath)
@@ -257,7 +263,7 @@ def openOptionsGui(version_string):
     goalEarlyMoonRemains.trace_add("write", updateModeTabs)
     goalBlitzRemainsCount.trace_add("write", updateModeTabs)
 
-    goalNoBlitz_radio = ttk.Radiobutton(modeTabGoalMode, text="No Blitz (default)", variable=goalMode, value="No Blitz")
+    goalNoBlitz_radio = ttk.Radiobutton(modeTabGoalMode, text="No Blitz", variable=goalMode, value="No Blitz")
     goalNoBlitz2_radio = ttk.Radiobutton(modeTabGoalMode, text="No Blitz 2", variable=goalMode, value="No Blitz 2")
     goalBlitz1_radio = ttk.Radiobutton(modeTabGoalMode, text="Blitz 1", width=15, variable=goalMode, value="Blitz 1")
     goalBlitz2_radio = ttk.Radiobutton(modeTabGoalMode, text="Blitz 2", width=15, variable=goalMode, value="Blitz 2")
@@ -296,11 +302,11 @@ def openOptionsGui(version_string):
     goalBlitzRemainsCount_check.grid(column=3, row=7, sticky=(W,E))
     
     goalNoBlitz_tip = Hovertip(goalNoBlitz_radio, "Remains on bosses. Always start without any remains.")
-    goalNoBlitz2_tip = Hovertip(goalNoBlitz2_radio, "Remains on bosses. May start with one remains,\nwith its corresponding temple and post-temple junked.\nDefault weights are 85/15 for 0/1 starting remains.")
+    goalNoBlitz2_tip = Hovertip(goalNoBlitz2_radio, "Remains on bosses. May start with one remains,\nwith its corresponding temple and post-temple junked.")
     goalBlitz1_tip = Hovertip(goalBlitz1_radio, "Remains on bosses. Always start with one remains;\nits temple and post-temple checks are junked.")
     goalBlitz2_tip = Hovertip(goalBlitz2_radio, "Remains on bosses. Always start with two remains;\ntheir temple and post-temple checks are junked.")
-    goalSeason2_tip = Hovertip(goalSeason2_radio, "Remains on bosses. May start with one or two remains,\nwith corresponding temples and post-temples junked.\nDefault weights are 65/25/10 for 0/1/2 starting remains.\nThis was used in Mystery Season 2.")
-    goalAnyThree_tip = Hovertip(goalAnyThree_radio, "Remains on bosses. Majora may be accessed and fought with three remains instead of four. MMR's item importance algorithm will take this into account!")
+    goalSeason2_tip = Hovertip(goalSeason2_radio, "Remains on bosses. May start with one or two remains,\nwith corresponding temples and post-temples junked.\nThis was used in Mystery Season 2.")
+    goalAnyThree_tip = Hovertip(goalAnyThree_radio, "Remains on bosses. Majora may be accessed and fought with three remains instead of four.\nMMR's item importance algorithm will take this into account!")
     goalRS_tip = Hovertip(goalRS_radio, "Remains shuffled anywhere. C-Up at clock tower door for region hints.")
     goalNPRS_tip = Hovertip(goalNPRS_radio, "Choose from No Blitz, Blitz 1, or Remains Shuffle (60/20/20).")
     goalFFH_tip = Hovertip(goalFFH_radio, "Remains on Great Fairy Rewards.\nAll Stray Fairies shuffled and five Stray Fairies of each color are placed:\nfind and turn in one set to win immediately!\nAlways start with Epona, Lullaby, Great Fairy's Mask, and the other 40 fairies.\nSkull Kid Song is junked; only Traditional and Songsanity song layouts are possible.\nTemple locations always shuffled.\nFairy Fountains hint fairy regions. No WotHs, no foolishes.")
@@ -312,13 +318,13 @@ def openOptionsGui(version_string):
     goalBlitzRemainsCount_tip = Hovertip(goalBlitzRemainsCount_check, "If checked, free starting remains from Blitz-junked bosses count toward moon access in relevant seeds\n(i.e. Remains for Moon Access is constant regardless of Blitz).")
 
     # Start Modes pane
-    startSongLayoutMode = StringVar(value="Any (Default)")
+    startSongLayoutMode = StringVar(value="Any")
     startDifficultyMode = StringVar(value="Default")
-    startRandomItemMode = StringVar(value="Any (Default)")
-    startFDAnywhereMode = StringVar(value="Sometimes (Default)")
-    startDungeonERMode = StringVar(value="Sometimes (Default)")
-    startBossKeysMode = StringVar(value="Off (Default)")
-    startSmallKeysMode = StringVar(value="Sometimes (Default)")
+    startRandomItemMode = StringVar(value="Any")
+    startFDAnywhereMode = StringVar(value="Sometimes")
+    startDungeonERMode = StringVar(value="Sometimes")
+    startBossKeysMode = StringVar(value="Off")
+    startSmallKeysMode = StringVar(value="Sometimes")
     startAllMoonTrialsMode = StringVar(value="0")
     startSongLayoutMode.trace_add("write", updateModeTabs)
     startDifficultyMode.trace_add("write", updateModeTabs)
@@ -331,7 +337,7 @@ def openOptionsGui(version_string):
     
     startSongLayout_label = ttk.Label(modeTabStartMode, text="Song Layout:    ")
     startSongLayout_combo = ttk.Combobox(modeTabStartMode, textvariable=startSongLayoutMode)
-    startSongLayout_combo["values"] = ("Any (Default)", "Any Non-Moon", "Traditional", "Songsanity", "Baby Zoras", "Moon Oath")
+    startSongLayout_combo["values"] = ("Any", "Any Non-Moon", "Traditional", "Songsanity", "Baby Zoras", "Moon Oath")
     startSongLayout_combo.state(["readonly"])
     startDifficulty_label = ttk.Label(modeTabStartMode, text="Start Difficulty:    ")
     startDifficulty_combo = ttk.Combobox(modeTabStartMode, textvariable=startDifficultyMode)
@@ -340,7 +346,7 @@ def openOptionsGui(version_string):
     startRandomItem_label = ttk.Label(modeTabStartMode, text="Starting Random Item:    ")
     startRandomItem_combo = ttk.Combobox(modeTabStartMode, textvariable=startRandomItemMode, width=25)
     startRandomItem_combo["values"] = ("Off",
-                                       "Any (Default)",
+                                       "Any",
                                        "Any Transformation Mask",
                                        "Any Non-Transformation",
                                        "Deku Mask",
@@ -358,19 +364,19 @@ def openOptionsGui(version_string):
     startRandomItem_combo.state(["readonly"])
     startFDAnywhere_label = ttk.Label(modeTabStartMode, text="FD Anywhere:    ")
     startFDAnywhere_combo = ttk.Combobox(modeTabStartMode, textvariable=startFDAnywhereMode, width=25)
-    startFDAnywhere_combo["values"] = ("Off", "Only When Starting", "Sometimes (Default)", "Always")
+    startFDAnywhere_combo["values"] = ("Off", "Only When Starting", "Sometimes", "Always")
     startFDAnywhere_combo.state(["readonly"])
     startDungeonER_label = ttk.Label(modeTabStartMode, text="Dungeon Entrances: ")
     startDungeonER_combo = ttk.Combobox(modeTabStartMode, textvariable=startDungeonERMode, width=25)
-    startDungeonER_combo["values"] = ("Off", "Sometimes (Default)", "Always")
+    startDungeonER_combo["values"] = ("Off", "Sometimes", "Always")
     startDungeonER_combo.state(["readonly"])
     startBossKeys_label = ttk.Label(modeTabStartMode, text="Boss Keys:    ")
     startBossKeys_combo = ttk.Combobox(modeTabStartMode, textvariable=startBossKeysMode, width=25)
-    startBossKeys_combo["values"] = ("Off (Default)", "Sometimes", "Always Within Their Temple", "Always Within Any Temple", "Anywhere Within Their Area", "Anywhere")
+    startBossKeys_combo["values"] = ("Off", "Sometimes", "Always Within Their Temple", "Always Within Any Temple", "Anywhere Within Their Area", "Anywhere")
     startBossKeys_combo.state(["readonly"])
     startSmallKeys_label = ttk.Label(modeTabStartMode, text="Small Keys:    ")
     startSmallKeys_combo = ttk.Combobox(modeTabStartMode, textvariable=startSmallKeysMode, width=25)
-    startSmallKeys_combo["values"] = ("Off", "Sometimes (Default)", "Always Within Their Temple", "Always Within Any Temple", "Anywhere Within Their Area", "Anywhere")
+    startSmallKeys_combo["values"] = ("Off", "Sometimes", "Always Within Their Temple", "Always Within Any Temple", "Anywhere Within Their Area", "Anywhere")
     startSmallKeys_combo.state(["readonly"])
     startAllMoonTrials_check = ttk.Checkbutton(modeTabStartMode, text="Moon Oath Adds All Trials", variable=startAllMoonTrialsMode)
 
@@ -423,7 +429,7 @@ def openOptionsGui(version_string):
     densityNoFrogChoirMode.trace_add("write", updateModeTabs)
     densityStubbornSeahorseMode.trace_add("write", updateModeTabs)
     
-    densityNormal_radio = ttk.Radiobutton(modeTabDensityMode, text="Normal (default)", variable=mainDensityMode, value="Normal")
+    densityNormal_radio = ttk.Radiobutton(modeTabDensityMode, text="Normal", variable=mainDensityMode, value="Normal")
     densityLight_radio = ttk.Radiobutton(modeTabDensityMode, text="Light Mystery", variable=mainDensityMode, value="Light")
     densitySuper_radio = ttk.Radiobutton(modeTabDensityMode, text="Super Mystery", variable=mainDensityMode, value="Super")
     densityCategoryMinimum_label = ttk.Label(modeTabDensityMode, text="Category Minimum: ")
@@ -464,14 +470,14 @@ def openOptionsGui(version_string):
     densityStubbornSeahorse_check.grid(column=1, row=7, sticky=(W,E))
 
     densityNormal_tip = Hovertip(densityNormal_radio, "Baseline appearance rates for all categories. See the Category Weights Table for specifics.\nSuggested category minimum is 7.")
-    densityLight_tip = Hovertip(densityLight_radio, "Excludes certain mystery options with harder or high-quantity checks\nand decreases other weights slightly.\nNo full Keaton Grass, full Tokensanity, or full Notebook.\nNo swordless start or full Potsanity (by default).\nSuggested category minimum is 5.")
-    densitySuper_tip = Hovertip(densitySuper_radio,"Dramatically increased appearance rates for all categories!\nFull Hit Spots is possible.\nSuggested category minimum is 9.")
+    densityLight_tip = Hovertip(densityLight_radio, "Excludes certain mystery options with harder or high-quantity checks\nand decreases other weights slightly.\nSee the Category Weights Table for specifics.\nSuggested category minimum is 5.")
+    densitySuper_tip = Hovertip(densitySuper_radio,"Dramatically increased appearance rates for all categories! Also, Full Hit Spots is possible.\nSee the Category Weights Table for specifics.\nSuggested category minimum is 9.")
     densityCategoryMinimum_tip = Hovertip(densityCategoryMinimum_spinbox,"Modifies the minimum number of active categories.\nMystery Maker will reroll until this minimum is met.")
-    densityNoCT_tip = Hovertip(densityNoCT_check, "All non-scoop checks in Clock Town regions, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nThe Bombers' Notebook category is disabled.\nEpona's Song is granted as an additional starting song; Skull Kid Song is always junked.\nWhen the song layout is Baby Zoras or Moon Oath, Boss Blue Warp is junked too.\nThe Moon is not in Clock Town.")
+    densityNoCT_tip = Hovertip(densityNoCT_check, "All non-scoop checks in Clock Town regions, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nThe Notebook Entries category is disabled.\nEpona's Song is granted as an additional starting song; Skull Kid Song is always junked.\nWhen the song layout is Baby Zoras or Moon Oath, Boss Blue Warp is junked too.\nThe Moon is not in Clock Town.")
     densityNoPT_tip = Hovertip(densityNoPT_check, "All post-temple checks, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nBottle: Deku Princess is never shuffled; other scoops are not affected.\nFrog Choir is disabled.\nMoon checks are not considered post-temple.")
     densityMapCompass_tip = Hovertip(densityMapCompass_check, "Whenever temple entrances are shuffled, temples' Maps are shuffled and placed exclusively in the overworld,\nrevealing their corresponding entrance shuffle when found.")
-    densityPotsanity_tip = Hovertip(densityPotsanity_combo, "Choose an Overworld Pots option instead of using the customary random roll.\n'Central' is Clock Town, Termina Field, Romani Ranch, Road to Ikana, and Ikana Graveyard.\nOwl pots are excluded.\nOff: Pot contents won't be shuffled. Also prevents Temple Pots.\nDefault: Use the default Mystery roll.\nSpecific Group: Shuffle all pots in that group.\nAny One Group: Shuffle one group, chosen randomly (by group weights).\nAny Two Groups: Shuffle two different groups, chosen randomly (by group weights)\nFull Potsanity: Shuffle all groups! Guarantees Temple Pots too.")
-    densityScoopsanity_tip = Hovertip(densityScoopsanity_combo, "Choose a Scoopsanity option instead of using the customary random roll for the category.\nOff: Scoops won't be shuffled.\nDefault: Use the default Mystery category roll.\nOn: Scoops, except for bugs, are shuffled.")
+    densityPotsanity_tip = Hovertip(densityPotsanity_combo, "Choose an Overworld Pots option instead of using the customary random roll.")
+    densityScoopsanity_tip = Hovertip(densityScoopsanity_combo, "Choose a Scoopsanity option instead of using the customary random roll.")
     densityUnscrambledEggs_tip = Hovertip(densityScrambledEggs_check, "Allows Scoopsanity to shuffle Zora Eggs even when Baby Zoras is active.")
     densityStubbornPrincess_tip = Hovertip(densityStubbornPrincess_check, "Includes the Deku Princess in Scoopsanity.\nBottle: Deku Princess will be on the backup hint list.")
     densityNoFrogChoir_tip = Hovertip(densityNoFrogChoir_check, "Prevents the Frogs category from replacing Ranch Defense with Frog Choir.\n(Ranch Defense will remain in play and be always hinted; Frog Choir will stay junked.)")
@@ -479,7 +485,7 @@ def openOptionsGui(version_string):
     
     # Extra Modes pane
     extraNoIcelessFDLogicMode = StringVar(value="0")
-    extraNoMilkRoadFDLogicMode = StringVar(value="0")
+    extraNoMilkRoadFDLogicMode = StringVar(value="1")
     extraICMode = StringVar(value="0")
     extraSunsSongMode = StringVar(value="0")
     extraNoIcelessFDLogicMode.trace_add("write", updateModeTabs)
@@ -498,7 +504,7 @@ def openOptionsGui(version_string):
     extraSunsSong_check.grid(column=1, row=4, sticky=(W,E))
 
     extraNoIcelessFDLogic_tip = Hovertip(extraNoIcelessFDLogic_check, "Disable Iceless FD logic. Removes the 'as FD' GBT Red Pump/GBT Boss Door/Ikana Canyon Iceless/GBT Map Chest Jumps tricks.")
-    extraNoMilkRoadFDLogic_tip = Hovertip(extraNoMilkRoadFDLogic_check, "Disable Milk Road FD logic. Removes the FD Jump into Ranch and Ranch Tingle as FD tricks.")
+    extraNoMilkRoadFDLogic_tip = Hovertip(extraNoMilkRoadFDLogic_check, "Disable Milk Road FD logic. Removes the FD Jump into Ranch and Ranch Tingle as FD tricks.\nAs these are racing banned tricks, they are disabled by default.")
     extraNoIC_tip = Hovertip(extraNoIC_check, "Enable Importance Count. WotH hints will become IC hints instead.")
     extraSunsSong_tip = Hovertip(extraSunsSong_check, "Allow the use of Sun's Song (C-Right, C-Down, C-Up, C-Right, C-Down, C-Up) to speed up the clock.\nSun's Song will be available from the start of the seed.")
 

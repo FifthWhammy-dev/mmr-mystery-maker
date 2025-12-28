@@ -1,5 +1,45 @@
 This changelog, covering Mystery Maker releases from Version 5.0 onward, is Markdown-formatted for better readability. Preceding Mystery Maker releases are discussed in the plaintext changelog.txt.
 
+# Mystery Maker release 5.1.1
+This minor Mystery Maker release makes a core settings and FD legality change, plus some bug fixes and cleanup.
+
+## Core Settings Changes
+
+### Logic and Tricks
+- **FD Jump into Ranch** and **Ranch Tingle as FD** are ***no longer legal or in logic***!
+
+*After discussion, v5.1's legalization and addition of these tricks is being reverted. "No Milk Road FD Logic" is now checked by default in the generator options, but remains available if you would like to experiment with it. These tricks are no longer being considered for the core settings, however.*
+
+*The Settings Document has been updated accordingly.*
+
+### Category Organization
+- The **Bombers' Notebook** category is now officially named **Notebook Entries**. No changes have been made to the category itself.
+
+*The entries are what gets shuffled, after all!*
+
+## Generator Changes
+- No Milk Road FD Logic is on by default. Note that this is the only checkbox in all of the GUI with a default state of "on".
+- Fixed the Reset to Defaults button to include the new v5.1 options.
+- "(Default)" is now longer included in generator option combo boxes.
+- Shortened some tooltips, particularly where the info is covered elsewhere.
+- Provided a new default .yml.
+
+*Some preliminary bug-fixing and cleanup to prep for Version 6, which will begin substantially refactoring Mystery Maker for improved sustainability and weights file support. In particular, expect generator options to get their own .md file in the future, as tooltips are doing a bit too much heavy lifting.*
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
 # Mystery Maker release 5.1
 This minor Mystery Maker release begins implementing saving and loading of the various options in the Mystery Maker program! For this release, all mode options can be saved or loaded into .yml files this way. Customization support for individual categories is planned for Version 6.
 

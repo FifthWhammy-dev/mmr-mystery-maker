@@ -1,12 +1,12 @@
 modes:
   All Moon Trials: false
   Blitz Remains Count: false
-  Boss Keys: Off (Default)
+  Boss Keys: 'Off'
   Category Minimum: 7
   Direct to Credits: false
-  Dungeon Entrances: Sometimes (Default)
+  Dungeon Entrances: Sometimes
   Early Moon Access Remains: 1
-  FD Anywhere Mode: Sometimes (Default)
+  FD Anywhere Mode: Sometimes
   Goal Mode: No Blitz
   Importance Count: false
   Long Goal: None
@@ -15,16 +15,16 @@ modes:
   No Clock Town: false
   No Frog Choir: false
   No Iceless FD Logic: false
-  No Milk Road FD Logic: false
+  No Milk Road FD Logic: true
   No Post-Temple: false
   Potsanity: Default
-  Random Item Mode: Any (Default)
+  Random Item Mode: Any
   Scoopsanity: Default
-  Small Keys: Sometimes (Default)
-  Song Layout: Any (Default)
+  Small Keys: Sometimes
+  Song Layout: Any
   Start Mode: Default
   Stubborn Princess: true
   Stubborn Seahorse: false
   Sun's Song: false
   Vanilla Eggs for Baby Zoras: true
-mystery_maker_version: v5.1
+mystery_maker_version: v5.1.1

@@ -3,7 +3,7 @@
 ## About 
 MMR Mystery Maker is a Python script (and now standalone .exe, thanks to [PyInstaller](https://pyinstaller.org/en/stable/index.html)) that generates semi-random "Mystery" settings files for [Majora's Mask Randomizer v1.16.0.12](https://github.com/ZoeyZolotova/mm-rando). 
 
-As of 12/26/2025, Version 5.1 is out! See the [Mystery Settings Document](https://docs.google.com/document/d/1Sty6gbtnH1n4etKx2ejit19MYtsMIVa08kPXt5aJQNY/edit?usp=sharing) and the [Category Weights and Hints spreadsheet](https://docs.google.com/spreadsheets/d/1chR1HI84BfIALG8FryDtHH8DhKTiASyuibOYxcwmvag/edit?usp=sharing) to learn more about of the Mystery settings. See the [changelog.md](https://github.com/FifthWhammy-dev/mmr-mystery-maker/blob/main/changelog.md) file for patch notes on the core settings, plus a listing of new generator options.
+See the [Mystery Settings Document](https://docs.google.com/document/d/1Sty6gbtnH1n4etKx2ejit19MYtsMIVa08kPXt5aJQNY/edit?usp=sharing) and the [Category Weights and Hints spreadsheet](https://docs.google.com/spreadsheets/d/1chR1HI84BfIALG8FryDtHH8DhKTiASyuibOYxcwmvag/edit?usp=sharing) to learn more about of the Mystery settings. See the [changelog.md](https://github.com/FifthWhammy-dev/mmr-mystery-maker/blob/main/changelog.md) file for patch notes on the core settings, plus a listing of new generator options.
 
 The Mystery Maker script uses hard-coded categories and weights, applying them to an input JSON file to generate a new settings file. By default, the script then calls MMR.CLI.exe to generate a new seed using the settings.
 
@@ -13,8 +13,6 @@ The Mystery Maker script uses hard-coded categories and weights, applying them t
 - Ensure your desired outputs are on in your MMR settings ("Patch .mmr" is recommended at minimum!), as that's how MMR.CLI.exe decides what to output. MMR will automatically apply your current outputs and cosmetic settings to seeds it generates; there's no need to manually save or create a new settings file.
 - Run MysteryMaker.exe and an options dialog will open. If it's in the same directory as MMR, you can just click Randomize in the options dialog to generate the seed.
 - When finished, check the "output" directory for your seed and Mystery spoiler.
-
-As of v4.1, many new modes are all selected in Mystery Maker itself! There's only one base settings file now.
 
 ### Command Line Options
 Command-line operation is available. Using any command-line option will bypass the options GUI and go straight to generation.
