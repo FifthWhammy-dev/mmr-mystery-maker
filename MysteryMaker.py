@@ -12,7 +12,7 @@ MYSTERY_MAKER_VERSION = "v5.1.1"
 MODE_DEFAULTS = {"Goal Mode":"No Blitz",
                  "Long Goal":"None",
                  "Direct to Credits":False,
-                 "Start Mode":"Default",
+                 "Start Mode":"Kokiri or Swordless",
                  "Song Layout":"Any",
                  "All Moon Trials":False,
                  "Early Moon Access Remains":1,
@@ -27,11 +27,11 @@ MODE_DEFAULTS = {"Goal Mode":"No Blitz",
                  "No Clock Town":False,
                  "No Post-Temple":False,
                  "Map and Compass Hints":False,
-                 "Potsanity":"Default",
-                 "Scoopsanity":"Default",
+                 "Potsanity":"Sometimes",
+                 "Scoopsanity":"Sometimes",
                  "Vanilla Eggs for Baby Zoras":True,
                  "Stubborn Princess":True,
-                 "No Frog Choir":False,
+                 "No Frog Choir":True,
                  "Stubborn Seahorse":False,
                  "No Iceless FD Logic":False,
                  "No Milk Road FD Logic":True,
@@ -177,10 +177,6 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         wgtsStartingBossRemains = [85,15,0,0,0,0,0,0,0,0]
     if (customModes["Goal Mode"] == "Two to Four Remains"):
         wgtsStartingBossRemains = [65,25,10,0,0,0,0,0,0,0]
-    if (customModes["Goal Mode"] == "Normal + Remains Shuffle"):
-        wgtsStartingBossRemains = [45,25,10,20,0,0,0,0,0,0]
-    if (customModes["Goal Mode"] == "Grab Bag"):
-        wgtsStartingBossRemains = [11,11,11,33,33,0,0,0,0,0]
     if (customModes["Long Goal"] == "Full Fairy Hunt"):
         wgtsStartingBossRemains = [0,0,0,0,0,0,100,0,0,0]
     if (customModes["Long Goal"] == "Mask Hunt"):
@@ -324,22 +320,20 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
             itemListString = AddStringToListString(itemListString,"----------------f000000--------------d00000-------") # Just the Link Trial PoH, chests, and pots [7, 1r]
 
 
-    wgtsStartingSwordShield = [75,25,0,0,0]
+    wgtsStartingSwordShield = [75,25,0,0]
     if customModes["Main Density Mode"] == "Light":
-        wgtsStartingSwordShield = [100,0,0,0,0]
+        wgtsStartingSwordShield = [100,0,0,0]
     if customModes["Main Density Mode"] == "Super":
-        wgtsStartingSwordShield = [50,50,0,0,0]
+        wgtsStartingSwordShield = [50,50,0,0]
     if (customModes["Start Mode"] == "Kokiri"):
-        wgtsStartingSwordShield = [100,0,0,0,0]
+        wgtsStartingSwordShield = [100,0,0,0]
     if (customModes["Start Mode"] == "Swordless"):
-        wgtsStartingSwordShield = [0,100,0,0,0]
+        wgtsStartingSwordShield = [0,100,0,0]
     if (customModes["Start Mode"] == "Strong"):
-        wgtsStartingSwordShield = [0,0,100,0,0]
+        wgtsStartingSwordShield = [0,0,100,0]
     if (customModes["Start Mode"] == "Fragile"):
-        wgtsStartingSwordShield = [0,0,0,100,0]
-    if (customModes["Start Mode"] == "Cruel"):
-        wgtsStartingSwordShield = [0,0,0,0,100]
-    catStartingSwordShield = random.choices(["Normal","No sword or shield","Strong Start","Fragile Start","Cruel Start"],wgtsStartingSwordShield)
+        wgtsStartingSwordShield = [0,0,0,100]
+    catStartingSwordShield = random.choices(["Normal","No sword or shield","Strong Start","Fragile Start"],wgtsStartingSwordShield)
     if catStartingSwordShield[0] == "No sword or shield":
         itemListString = AddEntryToListString(itemListString,7,"4000000")
         itemListString = AddEntryToListString(itemListString,7,"2000000")
@@ -347,13 +341,6 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         startListString = AddStringToListString(startListString,"--40000--805000")
     if catStartingSwordShield[0] == "Fragile Start":
         itemListString = AddStringToListString(itemListString,"------------------------------1e000000-------")
-        settings["CritWiggleDisable"] = True
-    if catStartingSwordShield[0] == "Cruel Start":
-        itemListString = AddStringToListString(itemListString,"------------------------------1e000000-------")
-        if catStartingBossRemains[0] != "Mask Hunt":
-            itemListString = RemoveEntryFromListString(itemListString,7,"200000")   # unshuffle FD
-        if (settings["DamageMode"] == "Default"):
-            settings["DamageMode"] = "Double"
 
     catStartingRandomItem = 0
     wgtsStartingRandomItem = [0,10,10,10,10,10,10,5,5,10,10,5,5,0]
@@ -361,7 +348,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         wgtsStartingRandomItem = [0,10,10,10,10,0,0,0,0,0,0,0,0,0]
     if customModes["Random Item Mode"] == "Any Non-Transformation":
         wgtsStartingRandomItem = [0,0,0,0,0,10,10,5,5,10,10,5,5,0]
-    if catStartingSwordShield[0] == "Fragile Start":
+    if customModes["Random Item Mode"] == "Any Non-Sword":
         wgtsStartingRandomItem[4] = 0
         wgtsStartingRandomItem[12] = 0
     if customModes["Random Item Mode"] == "Deku Mask":
@@ -388,7 +375,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,0,0,1,0,0]
     if customModes["Random Item Mode"] == "Great Fairy's Sword":
         wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,0,0,0,1,0]    
-    if catStartingSwordShield[0] == "Cruel Start" or customModes["Random Item Mode"] == "Off":
+    if customModes["Random Item Mode"] == "Off":
         wgtsStartingRandomItem = [100,0,0,0,0,0,0,0,0,0,0,0,0,0]
     catStartingRandomItem = random.choices(["None",
                                             "Deku Mask",
@@ -483,8 +470,11 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         wgtsFierceDeityAnywhere = [100,0]
     if customModes["FD Anywhere Mode"] == "Always" or catStartingRandomItem[0] == "Fierce Deity's Mask":
         wgtsFierceDeityAnywhere = [0,100]
-    if customModes["FD Anywhere Mode"] == "Off" or catStartingSwordShield[0] == "Cruel Start":
+    if customModes["FD Anywhere Mode"] == "Off" or customModes["FD Anywhere Mode"] == "Off and Unshuffled":
         wgtsFierceDeityAnywhere = [100,0]
+        if customModes["FD Anywhere Mode"] == "Off and Unshuffled" and catStartingBossRemains[0] != "Mask Hunt":
+            itemListString = RemoveEntryFromListString(itemListString,7,"200000")   # unshuffle FD
+            junkListString = RemoveEntryFromListString(junkListString,7,"200000")
     catFierceDeityAnywhere = random.choices(["Off","Active"], wgtsFierceDeityAnywhere)
     if catFierceDeityAnywhere[0] == "Active":
         settings["AllowFierceDeityAnywhere"] = True
@@ -1167,8 +1157,8 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                 print("                Goal Mode: ", customModes["Goal Mode"],file=spoiler_file)
             if (customModes["Direct to Credits"] or customModes["Goal Mode"] == "Five Fairy Hunt"):
                 print("                            (Direct to Credits is on)", file=spoiler_file)
-            if (customModes["Start Mode"] == "Kokiri" or customModes["Start Mode"] == "Swordless"):
-                print("    Start Difficulty Mode: ", customModes["Start Mode"],file=spoiler_file)
+            if (customModes["Start Mode"] != "Kokiri or Swordless"):
+                print(" Starting Basic Gear Mode: ", customModes["Start Mode"],file=spoiler_file)
             if (customModes["Song Layout"] != "Any"):
                 print("         Song Layout Mode: ", customModes["Song Layout"],file=spoiler_file)
             if (customModes["All Moon Trials"]):
@@ -1189,23 +1179,23 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                 print("          Small Keys Mode: ", customModes["Small Keys"],file=spoiler_file)
             if (customModes["Main Density Mode"] != "Normal"):
                 print("        Main Density Mode: ", customModes["Main Density Mode"],file=spoiler_file)
-            if (NONZERO_CATEGORIES_MINIMUM != 6):
+            if (NONZERO_CATEGORIES_MINIMUM != 7):
                 print("         Category Minimum: ", NONZERO_CATEGORIES_MINIMUM,file=spoiler_file)
             if (customModes["No Clock Town"]):
                 print("            No Clock Town: ", customModes["No Clock Town"],file=spoiler_file)
             if (customModes["No Post-Temple"]):
                 print("           No Post-Temple: ", customModes["No Post-Temple"],file=spoiler_file)
             if (customModes["Map and Compass Hints"]):
-                print("    Map and Compass Hints: ", customModes["Map and Compass Hints"],file=spoiler_file)
-            if (customModes["Potsanity"] != "Default"):
+                print("     Dungeon ER Map Hints: ", customModes["Map and Compass Hints"],file=spoiler_file)
+            if (customModes["Potsanity"] != "Sometimes"):
                 print("           Potsanity Mode: ", customModes["Potsanity"],file=spoiler_file)
-            if (customModes["Scoopsanity"] != "Default"):
+            if (customModes["Scoopsanity"] != "Sometimes"):
                 print("         Scoopsanity Mode: ", customModes["Scoopsanity"],file=spoiler_file)
             if (customModes["Vanilla Eggs for Baby Zoras"] != True):
                 print("Vanilla Eggs + Baby Zoras: ", customModes["Vanilla Eggs for Baby Zoras"],file=spoiler_file)
             if (customModes["Stubborn Princess"] != True):
                 print("        Stubborn Princess: ", customModes["Stubborn Princess"],file=spoiler_file)
-            if (customModes["No Frog Choir"]):
+            if (customModes["No Frog Choir"] != True):
                 print("            No Frog Choir: ", customModes["No Frog Choir"],file=spoiler_file)
             if (customModes["Stubborn Seahorse"]):
                 print("        Stubborn Seahorse: ", customModes["Stubborn Seahorse"],file=spoiler_file)

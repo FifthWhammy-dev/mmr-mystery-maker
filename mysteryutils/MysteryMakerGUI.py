@@ -23,7 +23,7 @@ def openOptionsGui(version_string):
         goalDirectToCredits.set("0")
         goalEarlyMoonRemains.set("1")
         goalBlitzRemainsCount.set("0")
-        startDifficultyMode.set("Default")
+        startDifficultyMode.set("Kokiri or Swordless")
         startSongLayoutMode.set("Any")
         startAllMoonTrialsMode.set("0")
         startRandomItemMode.set("Any")
@@ -36,11 +36,11 @@ def openOptionsGui(version_string):
         densityNoCT.set("0")
         densityNoPT.set("0")
         densityMapCompassMode.set("0")
-        densityPotsanityMode.set("Default")
-        densityScoopsanityMode.set("Default")
+        densityPotsanityMode.set("Sometimes")
+        densityScoopsanityMode.set("Sometimes")
         densityScrambledEggsMode.set("0")
         densityStubbornPrincessMode.set("0")
-        densityNoFrogChoirMode.set("0")
+        densityNoFrogChoirMode.set("1")
         densityStubbornSeahorseMode.set("0")
         extraNoIcelessFDLogicMode.set("0")
         extraNoMilkRoadFDLogicMode.set("1")
@@ -78,7 +78,7 @@ def openOptionsGui(version_string):
                 goalDirectToCredits.get() == "0" and
                 goalEarlyMoonRemains.get() == "1" and
                 goalBlitzRemainsCount.get() == "0" and
-                startDifficultyMode.get() == "Default" and
+                startDifficultyMode.get() == "Kokiri or Swordless" and
                 startRandomItemMode.get() == "Any" and
                 startSongLayoutMode.get() == "Any" and
                 startAllMoonTrialsMode.get() == "0" and
@@ -91,11 +91,11 @@ def openOptionsGui(version_string):
                 densityNoCT.get() == "0" and
                 densityNoPT.get() == "0" and
                 densityMapCompassMode.get() == "0" and
-                densityPotsanityMode.get() == "Default" and
-                densityScoopsanityMode.get() == "Default" and
+                densityPotsanityMode.get() == "Sometimes" and
+                densityScoopsanityMode.get() == "Sometimes" and
                 densityScrambledEggsMode.get() == "0" and
                 densityStubbornPrincessMode.get() == "0" and
-                densityNoFrogChoirMode.get() == "0" and
+                densityNoFrogChoirMode.get() == "1" and
                 densityStubbornSeahorseMode.get() == "0" and
                 extraNoIcelessFDLogicMode.get() == "0" and
                 extraNoMilkRoadFDLogicMode.get() == "1" and
@@ -170,16 +170,7 @@ def openOptionsGui(version_string):
 
     def updateModeTabs(*args):
         goalLongGoal_combo.state(["!disabled"] if goalMode.get() == "Long Goal" else ["disabled"])
-                      
-        if startDifficultyMode.get() == "Cruel":
-            startRandomItemMode.set("Off")
-            startRandomItem_combo.state(["disabled"])
-            startFDAnywhereMode.set("Off")
-            startFDAnywhere_combo.state(["disabled"])
-        else:
-            startRandomItem_combo.state(["!disabled"])
-            startFDAnywhere_combo.state(["!disabled"])
-        
+                             
         if checkDefaults():
             resetButton.state(["disabled"])
         else:
@@ -264,15 +255,13 @@ def openOptionsGui(version_string):
     goalBlitzRemainsCount.trace_add("write", updateModeTabs)
 
     goalNoBlitz_radio = ttk.Radiobutton(modeTabGoalMode, text="No Blitz", variable=goalMode, value="No Blitz")
-    goalNoBlitz2_radio = ttk.Radiobutton(modeTabGoalMode, text="No Blitz 2", variable=goalMode, value="No Blitz 2")
+    goalNoBlitz2_radio = ttk.Radiobutton(modeTabGoalMode, text="Random Blitz (0 or 1)", variable=goalMode, value="No Blitz 2")
     goalBlitz1_radio = ttk.Radiobutton(modeTabGoalMode, text="Blitz 1", width=15, variable=goalMode, value="Blitz 1")
     goalBlitz2_radio = ttk.Radiobutton(modeTabGoalMode, text="Blitz 2", width=15, variable=goalMode, value="Blitz 2")
-    goalSeason2_radio = ttk.Radiobutton(modeTabGoalMode, text="Two to Four Remains", variable=goalMode, value="Two to Four Remains")
+    goalSeason2_radio = ttk.Radiobutton(modeTabGoalMode, text="Random Blitz (0, 1, or 2)", variable=goalMode, value="Two to Four Remains")
     goalAnyThree_radio = ttk.Radiobutton(modeTabGoalMode, text="Any Three Remains", variable=goalMode, value="Any Three Remains")
     goalRS_radio = ttk.Radiobutton(modeTabGoalMode, text="Remains Shuffle", variable=goalMode, value="Remains Shuffle")
-    goalNPRS_radio = ttk.Radiobutton(modeTabGoalMode, text="Normal + Remains Shuffle", variable=goalMode, value="Normal + Remains Shuffle")
     goalFFH_radio = ttk.Radiobutton(modeTabGoalMode, text="Five Fairy Hunt", variable=goalMode, value="Five Fairy Hunt")
-    goalGB_radio = ttk.Radiobutton(modeTabGoalMode, text="Grab Bag", variable=goalMode, value="Grab Bag")
     goalLongGoal_radio = ttk.Radiobutton(modeTabGoalMode, text="Long Goal:", variable=goalMode, value="Long Goal")    
     goalLongGoal_combo = ttk.Combobox(modeTabGoalMode, textvariable=goalLongGoal)
     goalLongGoal_combo["values"] = ("Full Fairy Hunt", "Mask Hunt", "Skull Tokens", "Hearts")
@@ -285,21 +274,19 @@ def openOptionsGui(version_string):
     goalBlitzRemainsCount_check = ttk.Checkbutton(modeTabGoalMode, text="Blitz Remains Count", variable=goalBlitzRemainsCount)
 
     goalNoBlitz_radio.grid(column=1, row=1, sticky=(W, E))
-    goalNoBlitz2_radio.grid(column=2, row=1, sticky=(W, E))
-    goalBlitz1_radio.grid(column=3, row=1, sticky=(W, E))
-    goalBlitz2_radio.grid(column=4, row=1, sticky=(W, E))
-    goalSeason2_radio.grid(column=5, row=1, sticky=(W, E))
-    goalAnyThree_radio.grid(column=1, row=2, sticky=(W, E))
+    goalBlitz1_radio.grid(column=2, row=1, sticky=(W, E))
+    goalBlitz2_radio.grid(column=3, row=1, sticky=(W, E))
+    goalNoBlitz2_radio.grid(column=1, row=2, sticky=(W, E))
+    goalSeason2_radio.grid(column=2, row=2, sticky=(W, E))
     goalRS_radio.grid(column=1, row=3, sticky=(W, E))
-    goalNPRS_radio.grid(column=2, row=3, sticky=(W, E))
     goalFFH_radio.grid(column=1, row=4, sticky=(W, E))
-    goalGB_radio.grid(column=2, row=4, sticky=(W, E))
-    goalLongGoal_radio.grid(column=1, row=5, sticky=(W, E))
-    goalLongGoal_combo.grid(column=2, row=5, sticky=(W, E))
-    goalDirectToCredits_check.grid(column=1, row=6, sticky=(W, E))
-    goalEarlyMoonRemains_label.grid(column=1, row=7, sticky=(W,E))
-    goalEarlyMoonRemains_spinbox.grid(column=2, row=7, sticky=(W))
-    goalBlitzRemainsCount_check.grid(column=3, row=7, sticky=(W,E))
+    goalAnyThree_radio.grid(column=1, row=5, sticky=(W, E))
+    goalLongGoal_radio.grid(column=1, row=6, sticky=(W, E))
+    goalLongGoal_combo.grid(column=2, row=6, sticky=(W, E))
+    goalDirectToCredits_check.grid(column=1, row=7, sticky=(W, E))
+    goalEarlyMoonRemains_label.grid(column=1, row=8, sticky=(W,E))
+    goalEarlyMoonRemains_spinbox.grid(column=2, row=8, sticky=(W))
+    goalBlitzRemainsCount_check.grid(column=3, row=8, sticky=(W,E))
     
     goalNoBlitz_tip = Hovertip(goalNoBlitz_radio, "Remains on bosses. Always start without any remains.")
     goalNoBlitz2_tip = Hovertip(goalNoBlitz2_radio, "Remains on bosses. May start with one remains,\nwith its corresponding temple and post-temple junked.")
@@ -308,18 +295,16 @@ def openOptionsGui(version_string):
     goalSeason2_tip = Hovertip(goalSeason2_radio, "Remains on bosses. May start with one or two remains,\nwith corresponding temples and post-temples junked.\nThis was used in Mystery Season 2.")
     goalAnyThree_tip = Hovertip(goalAnyThree_radio, "Remains on bosses. Majora may be accessed and fought with three remains instead of four.\nMMR's item importance algorithm will take this into account!")
     goalRS_tip = Hovertip(goalRS_radio, "Remains shuffled anywhere. C-Up at clock tower door for region hints.")
-    goalNPRS_tip = Hovertip(goalNPRS_radio, "Choose from No Blitz, Blitz 1, or Remains Shuffle (60/20/20).")
-    goalFFH_tip = Hovertip(goalFFH_radio, "Remains on Great Fairy Rewards.\nAll Stray Fairies shuffled and five Stray Fairies of each color are placed:\nfind and turn in one set to win immediately!\nAlways start with Epona, Lullaby, Great Fairy's Mask, and the other 40 fairies.\nSkull Kid Song is junked; only Traditional and Songsanity song layouts are possible.\nTemple locations always shuffled.\nFairy Fountains hint fairy regions. No WotHs, no foolishes.")
-    goalGB_tip = Hovertip(goalGB_radio, "Choose one of Remains on Bosses, Remains Shuffle, or Five Fairy Hunt (equal weights).\nFor Remains on Bosses, No Blitz, Blitz 1, and Blitz 2 are all equally likely.")
-    goalLongGoal_tip = Hovertip(goalLongGoal_radio, "Choose a long victory mode from the drop-down box.\nComplete the chosen win condition before fighting Majora.\n(Hover over the drop-down box for specifics.)\nEvery long victory mode gives no WotH or foolish hints.")
+    goalFFH_tip = Hovertip(goalFFH_radio, "Remains on Great Fairy Rewards.\nAny one remains wins immediately; find five fairies of any one set!")
+    goalLongGoal_tip = Hovertip(goalLongGoal_radio, "Choose a long victory mode from the drop-down box.\nComplete the chosen win condition before fighting Majora.")
     goalLongGoalCombo_tip = Hovertip(goalLongGoal_combo, "Full Fairy Hunt: Find all four boss remains on Great Fairy Rewards. All Stray Fairies are shuffled.\nMask Hunt: Find all shuffled masks. Always uses Moon Oath song layout.\nSkull Tokens: Find all 60 shuffled skull tokens.\nHearts: Find all shuffled Heart Containers and Pieces of Heart.")
     goalDirectToCredits_tip = Hovertip(goalDirectToCredits_check, "Win immediately upon collecting all required remains or\nwin condition items without needing to use Oath and fight Majora.\n(This is always on in Five Fairy Hunt.)")
-    goalEarlyMoonRemains_tip = Hovertip(goalEarlyMoonRemains_spinbox, "Modifies the number of remains from unjunked bosses to be collected during the seed\nfor moon access when Moon Oath is the song layout.\n(By default, Mystery adjusts MMR's 'Remains for Moon Access' value automatically in Blitz seeds;\nMystery seeds will require two remains in Link's inventory for moon access in a Blitz 1 Moon Oath seed.)\nDefault is 1.\nMoon Oath will not be rolled in non-Mask Hunt seeds where this value would cause four remains to be required for moon access.")
+    goalEarlyMoonRemains_tip = Hovertip(goalEarlyMoonRemains_spinbox, "Modifies the number of remains from unjunked bosses to be collected during the seed for moon access\n in Moon Oath or long goal seeds.")
     goalBlitzRemainsCount_tip = Hovertip(goalBlitzRemainsCount_check, "If checked, free starting remains from Blitz-junked bosses count toward moon access in relevant seeds\n(i.e. Remains for Moon Access is constant regardless of Blitz).")
 
     # Start Modes pane
     startSongLayoutMode = StringVar(value="Any")
-    startDifficultyMode = StringVar(value="Default")
+    startDifficultyMode = StringVar(value="Kokiri or Swordless")
     startRandomItemMode = StringVar(value="Any")
     startFDAnywhereMode = StringVar(value="Sometimes")
     startDungeonERMode = StringVar(value="Sometimes")
@@ -339,9 +324,9 @@ def openOptionsGui(version_string):
     startSongLayout_combo = ttk.Combobox(modeTabStartMode, textvariable=startSongLayoutMode)
     startSongLayout_combo["values"] = ("Any", "Any Non-Moon", "Traditional", "Songsanity", "Baby Zoras", "Moon Oath")
     startSongLayout_combo.state(["readonly"])
-    startDifficulty_label = ttk.Label(modeTabStartMode, text="Start Difficulty:    ")
+    startDifficulty_label = ttk.Label(modeTabStartMode, text="Starting Basic Gear:    ")
     startDifficulty_combo = ttk.Combobox(modeTabStartMode, textvariable=startDifficultyMode)
-    startDifficulty_combo["values"] = ("Strong", "Kokiri", "Default", "Swordless", "Fragile", "Cruel")
+    startDifficulty_combo["values"] = ("Strong", "Kokiri", "Kokiri or Swordless", "Swordless", "Fragile")
     startDifficulty_combo.state(["readonly"])
     startRandomItem_label = ttk.Label(modeTabStartMode, text="Starting Random Item:    ")
     startRandomItem_combo = ttk.Combobox(modeTabStartMode, textvariable=startRandomItemMode, width=25)
@@ -349,6 +334,7 @@ def openOptionsGui(version_string):
                                        "Any",
                                        "Any Transformation Mask",
                                        "Any Non-Transformation",
+                                       "Any Non-Sword",
                                        "Deku Mask",
                                        "Goron Mask",
                                        "Zora Mask",
@@ -364,7 +350,7 @@ def openOptionsGui(version_string):
     startRandomItem_combo.state(["readonly"])
     startFDAnywhere_label = ttk.Label(modeTabStartMode, text="FD Anywhere:    ")
     startFDAnywhere_combo = ttk.Combobox(modeTabStartMode, textvariable=startFDAnywhereMode, width=25)
-    startFDAnywhere_combo["values"] = ("Off", "Only When Starting", "Sometimes", "Always")
+    startFDAnywhere_combo["values"] = ("Off and Unshuffled", "Off", "Only When Starting", "Sometimes", "Always")
     startFDAnywhere_combo.state(["readonly"])
     startDungeonER_label = ttk.Label(modeTabStartMode, text="Dungeon Entrances: ")
     startDungeonER_combo = ttk.Combobox(modeTabStartMode, textvariable=startDungeonERMode, width=25)
@@ -396,13 +382,13 @@ def openOptionsGui(version_string):
     startSmallKeys_label.grid(column=1, row=7, sticky=(W,E))
     startSmallKeys_combo.grid(column=2, row=7, sticky=(W,E))
     startAllMoonTrials_check.grid(column=3, row=1, sticky=(W,E))
-    startSongLayout_tip = Hovertip(startSongLayout_combo, "Choose a song layout.\nSong checks include Skull Kid Song, Imprisoned Monkey, Baby Goron, Romani's Game, Day 1 Grave Tablet, Ikana King, and Boss Blue Warp.\nAny: Use the default Mystery category roll.\nAny Non-Moon: Use a random roll, excluding Moon Oath. (Its weight is added to Traditional.)\nTraditional: Songs on song checks, including Skull Kid Song. Adds and hints Anju and Kafei.\nSongsanity: Songs anywhere. Traditional song checks (except Skull Kid Song) can get items. Adds a 4th WotH hint.\nBaby Zoras: Songs on song checks. Baby Zoras replaces Skull Kid's Song and is always hinted. By default, Scoopsanity can't shuffle eggs.\nMoon Oath: Songs on song checks, except Skull Kid's Song. Oath to Order is given as an additional starting song.\n          Link Trial's PoH, chests, and pots are shuffled! Moon access is available with fewer remains. Adds and hints Anju and Kafei.")
-    startDifficulty_tip = Hovertip(startDifficulty_combo, "Choose a starting difficulty mode.\nHigher difficulties change more than just starting items!\nStrong: Razor Sword, Hero's Shield, Spin Attack Mastery, and Double Defense.\nKokiri: Kokiri Sword and Hero's Shield.\nDefault: 75% chance of Kokiri Sword and Hero's Shield (always, in Light Mystery).\nSwordless: No Kokiri Sword or Hero's Shield.\nFragile: No sword (or FD or GFS, by default), no shield, one heart. No Crit Wiggle.\nCruel: No sword, no shield, one heart. No starting random item. Fierce Deity's Mask is not shuffled. Link takes double damage!")
-    startRandomItem_tip = Hovertip(startRandomItem_combo, "Choose a starting random item mode, or guarantee a specific starting item.\n(When randomized, Bomb Bag, Blast Mask, Bunny Hood, and Great Fairy's Sword each\nhave half the weight of other items.)\nOff: Do not give a starting random item.\nAny: Randomly choose any item on the list.\nAny Transformation Mask: Randomly choose any transformation mask, including Fierce Deity's Mask.\nAny Non-Transformation: Randomly choose anything but Deku, Goron, Zora, or Fierce Deity.")
-    startFDAnywhere_tip = Hovertip(startFDAnywhere_combo, "Choose a Fierce Deity's Mask Anywhere mode.\n(Remember that FD can be required in logic when FD Anywhere is active!\nConsult the Mystery Settings Document or base .json for added tricks.)\nOff: FD Anywhere is never on.\nOnly When Starting: FD Anywhere is only on when starting with Fierce Deity's Mask.\nSometimes: FD Anywhere is always on when starting with FD, and sometimes on otherwise (50%, by default).\nAlways: FD Anywhere is always on.")
-    startDungeonER_tip = Hovertip(startDungeonER_combo, "Choose a Dungeon Entrances option.\nAffected entrances are WFT, SHT, GBT, and inverted STT.\nOff: Dungeon entrances are never shuffled.\nSometimes: Use the default Mystery category roll.\nAlways: Dungeon entrances are always shuffled.")
-    startBossKeys_tip = Hovertip(startBossKeys_combo, "Choose a Boss Keys option.\nRemember that WotH/Foolish hints ignore Boss Keys when shuffled within temples!\nOff: Boss Keys don't appear. Boss doors are always open and Boss Key chests can have items.\nSometimes: Use a random roll with Season 2 weights (65/20/15 for off/own temple/any temple).\nAlways Within Their Temple: Boss Keys are on any check in their own temple.\nAlways Within Any Temple: Boss Keys are on any check in any temple.\nAnywhere Within Their Area: Boss Keys are on any check in their temple or temple's region.\nAnywhere: Boss Keys are anywhere.")
-    startSmallKeys_tip = Hovertip(startSmallKeys_combo, "Choose a Small Keys option.\nRemember that WotH/Foolish hints ignore Small Keys when shuffled within temples!\nOff: Small Keys don't appear. Small key doors are always open.\nSometimes: Use the default Mystery category roll.\nAlways Within Their Temple: Small Keys are on any check in their own temple.\nAlways Within Any Temple: Small Keys are on any check in any temple.\nAnywhere Within Their Area: Small Keys are on any check in their temple or temple's region.\nAnywhere: Small Keys are anywhere.")
+    startSongLayout_tip = Hovertip(startSongLayout_combo, "Choose a song layout.")
+    startDifficulty_tip = Hovertip(startDifficulty_combo, "Choose how the starting sword, shield, and hearts are handled.")
+    startRandomItem_tip = Hovertip(startRandomItem_combo, "Choose a starting random item mode, or guarantee a specific starting item.")
+    startFDAnywhere_tip = Hovertip(startFDAnywhere_combo, "Choose a Fierce Deity's Mask Anywhere mode.")
+    startDungeonER_tip = Hovertip(startDungeonER_combo, "Choose a Dungeon Entrances option.\nAffected entrances are WFT, SHT, GBT, and inverted STT.")
+    startBossKeys_tip = Hovertip(startBossKeys_combo, "Choose a Boss Keys option.")
+    startSmallKeys_tip = Hovertip(startSmallKeys_combo, "Choose a Small Keys option.")
     startAllMoonTrials_tip = Hovertip(startAllMoonTrials_check, "Adds the Deku Trial, Goron Trial, and Zora Trial Pieces of Heart to the Moon Oath shuffle.")
 
     # Density Modes pane
@@ -411,11 +397,11 @@ def openOptionsGui(version_string):
     densityNoCT = StringVar(value="0")
     densityNoPT = StringVar(value="0")
     densityMapCompassMode = StringVar(value="0")
-    densityPotsanityMode = StringVar(value="Default")
-    densityScoopsanityMode = StringVar(value="Default")
+    densityPotsanityMode = StringVar(value="Sometimes")
+    densityScoopsanityMode = StringVar(value="Sometimes")
     densityScrambledEggsMode = StringVar(value="0")
     densityStubbornPrincessMode = StringVar(value="0")
-    densityNoFrogChoirMode = StringVar(value="0")
+    densityNoFrogChoirMode = StringVar(value="1")
     densityStubbornSeahorseMode = StringVar(value="0")
     mainDensityMode.trace_add("write", updateModeTabs)
     densityCategoryMinimum.trace_add("write", updateModeTabs)
@@ -441,10 +427,10 @@ def openOptionsGui(version_string):
     densityPotsanity_label = ttk.Label(modeTabDensityMode, text="Overworld Pots: ")
     densityScoopsanity_label = ttk.Label(modeTabDensityMode, text="Scoopsanity:  ")
     densityPotsanity_combo = ttk.Combobox(modeTabDensityMode, textvariable=densityPotsanityMode, width=25)
-    densityPotsanity_combo["values"] = ("Off", "Default", "Central Pots", "South Pots", "North Pots", "West Pots", "East Pots", "Any One Group", "Any Two Groups", "Full Potsanity")
+    densityPotsanity_combo["values"] = ("Off", "Sometimes", "Central Pots", "South Pots", "North Pots", "West Pots", "East Pots", "Any One Group", "Any Two Groups", "Full Potsanity")
     densityPotsanity_combo.state(["readonly"])
     densityScoopsanity_combo = ttk.Combobox(modeTabDensityMode, textvariable=densityScoopsanityMode, width=25)
-    densityScoopsanity_combo["values"] = ("Off", "Default", "On")
+    densityScoopsanity_combo["values"] = ("Off", "Sometimes", "On")
     densityScoopsanity_combo.state(["readonly"])
     densityScrambledEggs_check = ttk.Checkbutton(modeTabDensityMode, text="Always Scrambles Eggs", variable=densityScrambledEggsMode)
     densityStubbornPrincess_check = ttk.Checkbutton(modeTabDensityMode, text="Shuffles Princess", variable=densityStubbornPrincessMode)

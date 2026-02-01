@@ -1,5 +1,37 @@
 This changelog, covering Mystery Maker releases from Version 5.0 onward, is Markdown-formatted for better readability. Preceding Mystery Maker releases are discussed in the plaintext changelog.txt.
 
+# Mystery Maker release 5.2
+
+**TODO!! This is in progress.**
+
+This minor Mystery Maker release makes final core settings adjustments for MMR 1.16, plus documentation and adjustments for additional generator options.
+
+Ideally, this will be the last significant Mystery Maker release targeting MMR 1.16. Mystery Maker Version 6.0 and onward will aim to support MMR 2.0!
+
+## Generator Changes
+- Added generator_options.md to document generator options in detail.
+- Shortened generator tooltips.
+
+### Goal Modes
+- Renamed **No Blitz 2** to **Random Blitz (0 or 1)**
+- Renamed **Two to Four Remains** to **Random Blitz (0, 1, or 2)**.
+- Moved **Any Three Remains** to below Remains Shuffle and Five Fairy Hunt.
+- Removed **Normal + Remains Shuffle** and **Grab Bag**.
+
+### Start Modes
+- Renamed **Start Difficulty** to **Starting Basic Gear**. Within **Starting Basic Gear**:
+  - Renamed the **Default** option to **Kokiri or Swordless**.
+  - Altered the **Fragile** option to no longer disable Crit Wiggle.
+  - Removed the **Cruel** option.
+- Added an **Any Non-Sword** option to **Starting Random Item**.
+- Added an **Off and Unshuffled** option to **FD Anywhere**.
+
+### Density Modes
+- Renamed **Overworld Pots**' **Default** option to **Sometimes**.
+- Renamed **Scoopsanity**'s **Default** option to **Sometimes**.
+
+*Some housekeeping for the many generator options that have been added over the past 18 months.*
+
 # Mystery Maker release 5.1.1
 This minor Mystery Maker release makes a core settings and FD legality change, plus some bug fixes and cleanup.
 
