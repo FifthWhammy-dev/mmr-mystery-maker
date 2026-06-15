@@ -1,5 +1,10 @@
 from enum import StrEnum
 
+class OutputModes(StrEnum):
+    WEB = "Web Settings"
+    DESKTOP = "Desktop Settings"
+    DESKTOPANDSEED = "Desktop Settings and Seed"
+
 class CategoryNames(StrEnum):
     BASELINE = "Base"
     SONGLAYOUT = "Song Layout"
@@ -10,7 +15,7 @@ class CategoryNames(StrEnum):
     ERGROTTO = "Entrances: Grottos"
     ERDUNGEON = "Entrances: Dungeons"
     SMALLKEYS = "Small Keys"
-    STRAYFAIRIES = "Stray Fairies"
+    STRAYFAIRIES = "Extra Stray Fairies"
     SHOPCHECKS = "Shops: Checks"
     SHOPPRICES = "Shops: Prices"
     SOILS = "Soft Soils"
@@ -52,8 +57,7 @@ class ShuffleNames(StrEnum):
     SONG_OTHER = "Any non-Epona song but Oath"
     FD_ON = "On"
     KEYS_TEMPLES = "Shuffled within any temple"
-    STRAYS_BASE = "Dungeon ER chests"
-    STRAYS_BUBBLES = "Bubbles plus Dungeon ER chests"
+    STRAYS_BUBBLES = "Just Add Bubbles"
     STRAYS_FULL = "All Stray Fairies"
     SHOP_C_THREE = "Three-Item Shops"
     SHOP_C_FULL = "Almost all purchases"
@@ -85,7 +89,6 @@ shuffleCheckStrings[(CategoryNames.BASELINE, ShuffleNames.BASE_JUNKED)] = "-----
 
 shuffleCheckStrings[(CategoryNames.SONGLAYOUT, ShuffleNames.SL_TRADITIONAL)] = "----------------------------------3f8---"
 
-shuffleCheckStrings[(CategoryNames.STRAYFAIRIES, ShuffleNames.STRAYS_BASE)] = "--------------------------b003f0-7f003800----------"
 shuffleCheckStrings[(CategoryNames.STRAYFAIRIES, ShuffleNames.STRAYS_BUBBLES)] = "--------------------------b003fe-7f363db4----------"
 shuffleCheckStrings[(CategoryNames.STRAYFAIRIES, ShuffleNames.STRAYS_FULL)] = "--------------------------3fffffff-fffffffe----------"
 

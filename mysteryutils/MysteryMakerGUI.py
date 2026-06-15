@@ -9,8 +9,9 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 from idlelib.tooltip import Hovertip
+from mysteryutils.Definitions import OutputModes
 
-def openOptionsGui(version_string):
+def openOptionsGui(version_string: str, show_desktop_options: bool):
     def guiStartRandomize(*args):
         guiWindow.destroy()
 
@@ -19,33 +20,18 @@ def openOptionsGui(version_string):
         guiWindow.destroy()
 
     def guiResetModes(*args):
-        goalMode.set("No Blitz")
-        goalDirectToCredits.set("0")
-        goalEarlyMoonRemains.set("1")
-        goalBlitzRemainsCount.set("0")
+        goalMode.set("Remains on Bosses")
         startDifficultyMode.set("Kokiri or Swordless")
         startSongLayoutMode.set("Any")
-        startAllMoonTrialsMode.set("0")
+        startFreeOathMode.set("1")
+        startFreeEponaMode.set("0")
         startRandomItemMode.set("Any")
         startFDAnywhereMode.set("Sometimes")
+        startInteriorsERMode.set("Sometimes")
+        startGrottosERMode.set("Sometimes")
         startDungeonERMode.set("Sometimes")
-        startBossKeysMode.set("Off")
-        startSmallKeysMode.set("Sometimes")
         mainDensityMode.set("Normal")
         densityCategoryMinimum.set("7")
-        densityNoCT.set("0")
-        densityNoPT.set("0")
-        densityMapCompassMode.set("0")
-        densityPotsanityMode.set("Sometimes")
-        densityScoopsanityMode.set("Sometimes")
-        densityScrambledEggsMode.set("0")
-        densityStubbornPrincessMode.set("0")
-        densityNoFrogChoirMode.set("1")
-        densityStubbornSeahorseMode.set("0")
-        extraNoIcelessFDLogicMode.set("0")
-        extraNoMilkRoadFDLogicMode.set("1")
-        extraICMode.set("0")
-        extraSunsSongMode.set("0")
         resetButton.state(["disabled"])
 
     def guiLoadWeightsFile(*args):
@@ -74,103 +60,51 @@ def openOptionsGui(version_string):
         mmrCommandLineExePath.set(filedialog.askopenfilename())
 
     def checkDefaults(*args):
-        return (goalMode.get() == "No Blitz" and
-                goalDirectToCredits.get() == "0" and
-                goalEarlyMoonRemains.get() == "1" and
-                goalBlitzRemainsCount.get() == "0" and
+        return (goalMode.get() == "Remains on Bosses" and
                 startDifficultyMode.get() == "Kokiri or Swordless" and
+                startFreeOathMode.get() == "1" and
+                startFreeEponaMode.get() == "0" and
                 startRandomItemMode.get() == "Any" and
-                startSongLayoutMode.get() == "Any" and
-                startAllMoonTrialsMode.get() == "0" and
+                startSongLayoutMode.get() == "Random" and
                 startFDAnywhereMode.get() == "Sometimes" and
+                startInteriorsERMode.get() == "Sometimes" and
+                startGrottosERMode.get() == "Sometimes" and
                 startDungeonERMode.get() == "Sometimes" and
-                startBossKeysMode.get() == "Off" and
-                startSmallKeysMode.get() == "Sometimes" and
                 mainDensityMode.get() == "Normal" and
-                densityCategoryMinimum.get() == "7" and
-                densityNoCT.get() == "0" and
-                densityNoPT.get() == "0" and
-                densityMapCompassMode.get() == "0" and
-                densityPotsanityMode.get() == "Sometimes" and
-                densityScoopsanityMode.get() == "Sometimes" and
-                densityScrambledEggsMode.get() == "0" and
-                densityStubbornPrincessMode.get() == "0" and
-                densityNoFrogChoirMode.get() == "1" and
-                densityStubbornSeahorseMode.get() == "0" and
-                extraNoIcelessFDLogicMode.get() == "0" and
-                extraNoMilkRoadFDLogicMode.get() == "1" and
-                extraICMode.get() == "0" and
-                extraSunsSongMode.get() == "0")
+                densityCategoryMinimum.get() == "7")
     
     def createSettingsDict(*args):
         cmSettings = dict()
         cmSettings["Goal Mode"] = goalMode.get()
-        if goalMode.get() == "Long Goal":
-            cmSettings["Long Goal"] = goalLongGoal.get()
-        else:
-            cmSettings["Long Goal"] = "None"
-        cmSettings["Direct to Credits"] = (goalDirectToCredits.get() == "1")
         cmSettings["Start Mode"] = startDifficultyMode.get()
         cmSettings["Song Layout"] = startSongLayoutMode.get()
-        cmSettings["All Moon Trials"] = (startAllMoonTrialsMode.get() == "1")
-        cmSettings["Early Moon Access Remains"] = int(goalEarlyMoonRemains.get())
-        cmSettings["Blitz Remains Count"] = (goalBlitzRemainsCount.get() == "1")
+        cmSettings["Free Oath"] = startFreeOathMode.get()
+        cmSettings["Free Epona"] = startFreeEponaMode.get()
         cmSettings["Random Item Mode"] = startRandomItemMode.get()
         cmSettings["FD Anywhere Mode"] = startFDAnywhereMode.get()
-        cmSettings["Dungeon Entrances"] = startDungeonERMode.get()
-        cmSettings["Boss Keys"] = startBossKeysMode.get()
-        cmSettings["Small Keys"] = startSmallKeysMode.get()
+        cmSettings["Simple Interiors ER"] = startInteriorsERMode.get()
+        cmSettings["Grottos ER"] = startGrottosERMode.get()
+        cmSettings["Dungeon ER"] = startDungeonERMode.get()
         cmSettings["Main Density Mode"] = mainDensityMode.get()
         cmSettings["Category Minimum"] = int(densityCategoryMinimum.get())
-        cmSettings["No Clock Town"] = (densityNoCT.get() == "1")
-        cmSettings["No Post-Temple"] = (densityNoPT.get() == "1")
-        cmSettings["Map and Compass Hints"] = (densityMapCompassMode.get() == "1")
-        cmSettings["Potsanity"] = densityPotsanityMode.get()
-        cmSettings["Scoopsanity"] = densityScoopsanityMode.get()
-        cmSettings["Vanilla Eggs for Baby Zoras"] = (densityScrambledEggsMode.get() == "0") # careful here!
-        cmSettings["Stubborn Princess"] = (densityStubbornPrincessMode.get() == "0")
-        cmSettings["No Frog Choir"] = (densityNoFrogChoirMode.get() == "1")
-        cmSettings["Stubborn Seahorse"] = (densityStubbornSeahorseMode.get() == "1")
-        cmSettings["No Iceless FD Logic"] = (extraNoIcelessFDLogicMode.get() == "1")
-        cmSettings["No Milk Road FD Logic"] = (extraNoMilkRoadFDLogicMode.get() == "1")
-        cmSettings["Importance Count"] = (extraICMode.get() == "1")
-        cmSettings["Sun's Song"] = (extraSunsSongMode.get() == "1")
         
         return cmSettings
     
     def loadSettingsFromDict(modesDict):
         goalMode.set(modesDict["Goal Mode"])
-        goalLongGoal.set(modesDict["Long Goal"])
-        goalDirectToCredits.set("1" if modesDict["Direct to Credits"] else "0")
         startDifficultyMode.set(modesDict["Start Mode"])
         startSongLayoutMode.set(modesDict["Song Layout"])
-        startAllMoonTrialsMode.set("1" if modesDict["All Moon Trials"] else "0")
-        goalEarlyMoonRemains.set(str(modesDict["Early Moon Access Remains"]))
-        goalBlitzRemainsCount.set("1" if modesDict["Blitz Remains Count"] else "0")
+        startFreeOathMode.set(modesDict["Free Oath"])
+        startFreeEponaMode.set(modesDict["Free Epona"])
         startRandomItemMode.set(modesDict["Random Item Mode"])
         startFDAnywhereMode.set(modesDict["FD Anywhere Mode"])
-        startDungeonERMode.set(modesDict["Dungeon Entrances"])
-        startBossKeysMode.set(modesDict["Boss Keys"])
-        startSmallKeysMode.set(modesDict["Small Keys"])
+        startInteriorsERMode.set(modesDict["Simple Interiors ER"])
+        startGrottosERMode.set(modesDict["Grottos ER"])
+        startDungeonERMode.set(modesDict["Dungeon ER"])
         mainDensityMode.set(modesDict["Main Density Mode"])
         densityCategoryMinimum.set(str(modesDict["Category Minimum"]))
-        densityNoCT.set("1" if modesDict["No Clock Town"] else "0")
-        densityNoPT.set("1" if modesDict["No Post-Temple"] else "0")
-        densityMapCompassMode.set("1" if modesDict["Map and Compass Hints"] else "0")
-        densityPotsanityMode.set(modesDict["Potsanity"])
-        densityScoopsanityMode.set(modesDict["Scoopsanity"])
-        densityScrambledEggsMode.set("0" if modesDict["Vanilla Eggs for Baby Zoras"] else "1")
-        densityStubbornPrincessMode.set("0" if modesDict["Stubborn Princess"] else "1")
-        densityNoFrogChoirMode.set("1" if modesDict["No Frog Choir"] else "0")
-        densityStubbornSeahorseMode.set("1" if modesDict["Stubborn Seahorse"] else "0")
-        extraNoIcelessFDLogicMode.set("1" if modesDict["No Iceless FD Logic"] else "0")
-        extraNoMilkRoadFDLogicMode.set("1" if modesDict["No Milk Road FD Logic"] else "0")
-        extraICMode.set("1" if modesDict["Importance Count"] else "0")
-        extraSunsSongMode.set("1" if modesDict["Sun's Song"] else "0")
 
-    def updateModeTabs(*args):
-        goalLongGoal_combo.state(["!disabled"] if goalMode.get() == "Long Goal" else ["disabled"])
-                             
+    def updateModeTabs(*args):                             
         if checkDefaults():
             resetButton.state(["disabled"])
         else:
@@ -186,46 +120,57 @@ def openOptionsGui(version_string):
 
     windowForceClosed = StringVar(value="0")
 
-    baseSettingsFilePath = StringVar(value="Mystery_Settings_base_v5_1_1.json")
+    outputMode = StringVar(value=OutputModes.WEB)
+    if (show_desktop_options):
+        ttk.Label(mainframe, text="Output:").grid(column=1, row=2, sticky=E)
+        outputMode_combo = ttk.Combobox(mainframe, textvariable=outputMode)
+        outputMode_combo["values"] = (OutputModes.WEB, OutputModes.DESKTOP, OutputModes.DESKTOPANDSEED)
+        outputMode_combo.grid(column=2, row=2, columnspan=1, sticky=(W, E))
+        outputMode_combo.state(["readonly"])
+        outputMode_tip = Hovertip(outputMode_combo, "The desired output. This release of Mystery Maker only supports MMR 2.0.")
+
+    baseSettingsFilePath = StringVar(value="Mystery_Settings_base_v6_0_0.json")
+    ttk.Label(mainframe, text="Custom base MMR settings file:").grid(column=1, row=3, sticky=E)
     baseSettingsFilePath_entry = ttk.Entry(mainframe, width=70, textvariable=baseSettingsFilePath)
-    baseSettingsFilePath_entry.grid(column=2, row=2, columnspan=3, sticky=(W, E))
-    baseSettingsFilePath_tip = Hovertip(baseSettingsFilePath_entry, "The MMR settings file that's copied and modified\nby Mystery Maker to make mystery seeds.\nThis file comes with Mystery Maker.")
+    baseSettingsFilePath_entry.grid(column=2, row=3, columnspan=3, sticky=(W, E))
+    baseSettingsFilePath_tip = Hovertip(baseSettingsFilePath_entry, "The MMR settings file that's copied and modified by Mystery Maker to make mystery seeds.\nThis file comes with Mystery Maker.")
+    ttk.Button(mainframe, text="Browse...", command=browseForBaseSettingsFile).grid(column=5, row=3, sticky=W)
 
     mmrCommandLineExePath = StringVar(value="MMR.CLI.exe")
-    mmrCommandLineExePath_entry = ttk.Entry(mainframe, width=70, textvariable=mmrCommandLineExePath)
-    mmrCommandLineExePath_entry.grid(column=2, row=3, columnspan=3, sticky=(W, E))
-    mmrCommandLineExePath_tip = Hovertip(mmrCommandLineExePath_entry, "The MMR command-line executable that makes playable seed files.\nChanging this should only be needed if you didn't install\nMystery Maker in the same folder as MMR.")
+    if (show_desktop_options):
+        ttk.Label(mainframe, text="Custom path to MMR.CLI.exe:").grid(column=1, row=4, sticky=E)
+        mmrCommandLineExePath_entry = ttk.Entry(mainframe, width=70, textvariable=mmrCommandLineExePath)
+        mmrCommandLineExePath_entry.grid(column=2, row=4, columnspan=3, sticky=(W, E))
+        mmrCommandLineExePath_tip = Hovertip(mmrCommandLineExePath_entry, "The MMR command-line executable that makes playable seed files.\nChanging this should only be needed if you didn't install Mystery Maker in the same folder as MMR.")
+        ttk.Button(mainframe, text="Browse...", command=browseForCommandLineExe).grid(column=5, row=4, sticky=W)
 
     numberToGenerate = StringVar(value="1")
+    ttk.Label(mainframe, text="# of seeds:").grid(column=1, row=5, sticky=E)
     numberToGenerate_spinbox = ttk.Spinbox(mainframe, width=5, from_=1, to=100, textvariable=numberToGenerate)
-    numberToGenerate_spinbox.grid(column=2, row=4, sticky=W)
+    numberToGenerate_spinbox.grid(column=2, row=5, sticky=W)
     numberToGenerate_tip = Hovertip(numberToGenerate_spinbox, "Setting this above 1 will create many settings/seeds at once, one at a time.")
 
-    makeSettingsOnly = StringVar(value="0")
-    makeSettingsOnly_checkbutton = ttk.Checkbutton(mainframe, text="Only make settings file", variable=makeSettingsOnly)
-    makeSettingsOnly_checkbutton.grid(column=1, row=5, sticky=E)
-    makeSettingsOnly_tip = Hovertip(makeSettingsOnly_checkbutton, "When checked, Mystery Maker only generates a .json file\nwhich can be loaded manually in MMR to make a playable seed.")
+    
 
-    ttk.Button(mainframe, text="Browse...", command=browseForBaseSettingsFile).grid(column=5, row=2, sticky=W)
-    ttk.Button(mainframe, text="Browse...", command=browseForCommandLineExe).grid(column=5, row=3, sticky=W)
-    loadButton = ttk.Button(mainframe, text="Load...", command=guiLoadWeightsFile)
-    loadButton.grid(column=2, row=5, sticky=E)
-    loadButton_tip = Hovertip(loadButton, "Load Mystery Maker mode settings from a .yml file.")
-    saveButton = ttk.Button(mainframe, text="Save...", command=guiSaveWeightsFile)
-    saveButton.grid(column=3, row=5, sticky=E)
-    saveButton_tip = Hovertip(saveButton, "Save Mystery Maker mode settings to a .yml file.")
+    loadButton = ttk.Button(mainframe, text="Load Mystery YML...", command=guiLoadWeightsFile)
+    loadButton.grid(column=2, row=6, sticky=E)
+    loadButton_tip = Hovertip(loadButton, "Load Mystery Maker settings from a .yml file.")
+    saveButton = ttk.Button(mainframe, text="Save Mystery YML...", command=guiSaveWeightsFile)
+    saveButton.grid(column=3, row=6, sticky=E)
+    saveButton_tip = Hovertip(saveButton, "Save Mystery Maker settings to a .yml file.")
     resetButton = ttk.Button(mainframe, text="Reset to Defaults", command=guiResetModes)
-    resetButton.grid(column=4, row=5, sticky=E)
+    resetButton.grid(column=4, row=6, sticky=E)
     resetButton.state(["disabled"])
     resetButton_tip = Hovertip(resetButton, "Resets all mode settings to default.")
     makeButton = ttk.Button(mainframe, text="Make Mystery", command=guiStartRandomize)
-    makeButton.grid(column=5, row=5, sticky=W)
+    makeButton.grid(column=5, row=6, sticky=W)
     makeButton_tip = Hovertip(makeButton, text="Generates one or more Mystery settings files and seeds with the specified options,\nplacing them in the 'output' directory.\nMystery Maker will close when finished.")
 
-    ttk.Label(mainframe, text="Generated settings and seeds will be placed in the 'output' directory.\nHover over options to display a tooltip with more information.", justify="center").grid(column=1, row=0, columnspan=5)
-    ttk.Label(mainframe, text="Custom base MMR settings file:").grid(column=1, row=2, sticky=E)
-    ttk.Label(mainframe, text="Custom path to MMR.CLI.exe:").grid(column=1, row=3, sticky=E)
-    ttk.Label(mainframe, text="# of seeds:").grid(column=1, row=4, sticky=E)
+    #ttk.Label(mainframe, text="Generated settings and seeds will be placed in the 'output' directory.\nHover over options to display a tooltip with more information.", justify="center").grid(column=1, row=0, columnspan=5)
+
+    
+    
+    
 
     modeTabs_notebook = ttk.Notebook(mainframe)
     modeTabGoalMode = ttk.Frame(modeTabs_notebook, padding="4 4 4 4")
@@ -233,97 +178,70 @@ def openOptionsGui(version_string):
     modeTabStartMode = ttk.Frame(modeTabs_notebook, padding="4 4 4 4")
     modeTabStartMode.grid(column=0, row=0, sticky=(N,W,S,E))    
     modeTabDensityMode = ttk.Frame(modeTabs_notebook, padding="4 4 4 4")
-    modeTabDensityMode.grid(column=0, row=0, sticky=(N,W,S,E))
-    modeTabExtraMode = ttk.Frame(modeTabs_notebook, padding="4 4 4 4")
-    modeTabExtraMode.grid(column=0, row=0, sticky=(N,W,S,E))  
-    modeTabs_notebook.add(modeTabGoalMode, text="Goal Mode")
-    modeTabs_notebook.add(modeTabStartMode, text="Setup Modes")
-    modeTabs_notebook.add(modeTabDensityMode, text="Density Modes")
-    modeTabs_notebook.add(modeTabExtraMode, text="Extra Modes")
+    modeTabDensityMode.grid(column=0, row=0, sticky=(N,W,S,E)) 
+    modeTabs_notebook.add(modeTabGoalMode, text="Goal")
+    modeTabs_notebook.add(modeTabStartMode, text="Setup")
+    modeTabs_notebook.add(modeTabDensityMode, text="Checks")
     modeTabs_notebook.grid(column=1, row=1, columnspan=5, sticky=(W, E))
 
     # Goal Mode pane
-    goalMode = StringVar(value="No Blitz")
-    goalLongGoal = StringVar(value="Full Fairy Hunt")
-    goalDirectToCredits = StringVar(value="0")
-    goalEarlyMoonRemains = StringVar(value="1")
-    goalBlitzRemainsCount = StringVar(value="0")
+    goalRequiredRemains = StringVar(value="4")
+    goalMode = StringVar(value="Remains on Bosses")
+    goalFairyHuntSetSize = StringVar(value="5")
+    goalRequiredRemains.trace_add("write", updateModeTabs)
     goalMode.trace_add("write", updateModeTabs)
-    goalLongGoal.trace_add("write", updateModeTabs)
-    goalDirectToCredits.trace_add("write", updateModeTabs)
-    goalEarlyMoonRemains.trace_add("write", updateModeTabs)
-    goalBlitzRemainsCount.trace_add("write", updateModeTabs)
+    goalFairyHuntSetSize.trace_add("write", updateModeTabs)
 
-    goalNoBlitz_radio = ttk.Radiobutton(modeTabGoalMode, text="No Blitz", variable=goalMode, value="No Blitz")
-    goalNoBlitz2_radio = ttk.Radiobutton(modeTabGoalMode, text="Random Blitz (0 or 1)", variable=goalMode, value="No Blitz 2")
-    goalBlitz1_radio = ttk.Radiobutton(modeTabGoalMode, text="Blitz 1", width=15, variable=goalMode, value="Blitz 1")
-    goalBlitz2_radio = ttk.Radiobutton(modeTabGoalMode, text="Blitz 2", width=15, variable=goalMode, value="Blitz 2")
-    goalSeason2_radio = ttk.Radiobutton(modeTabGoalMode, text="Random Blitz (0, 1, or 2)", variable=goalMode, value="Two to Four Remains")
-    goalAnyThree_radio = ttk.Radiobutton(modeTabGoalMode, text="Any Three Remains", variable=goalMode, value="Any Three Remains")
-    goalRS_radio = ttk.Radiobutton(modeTabGoalMode, text="Remains Shuffle", variable=goalMode, value="Remains Shuffle")
-    goalFFH_radio = ttk.Radiobutton(modeTabGoalMode, text="Five Fairy Hunt", variable=goalMode, value="Five Fairy Hunt")
-    goalLongGoal_radio = ttk.Radiobutton(modeTabGoalMode, text="Long Goal:", variable=goalMode, value="Long Goal")    
-    goalLongGoal_combo = ttk.Combobox(modeTabGoalMode, textvariable=goalLongGoal)
-    goalLongGoal_combo["values"] = ("Full Fairy Hunt", "Mask Hunt", "Skull Tokens", "Hearts")
-    goalLongGoal_combo.state(["readonly"])
-    goalLongGoal_combo.state(["disabled"])
-    goalDirectToCredits_check = ttk.Checkbutton(modeTabGoalMode, text="Direct To Credits", variable=goalDirectToCredits)
-    goalEarlyMoonRemains_label = ttk.Label(modeTabGoalMode, text="Bosses for Early Moon: ")
-    goalEarlyMoonRemains_spinbox = ttk.Spinbox(modeTabGoalMode, width=3, from_=0, to=4, textvariable=goalEarlyMoonRemains)
-    goalEarlyMoonRemains_spinbox.state(["readonly"])
-    goalBlitzRemainsCount_check = ttk.Checkbutton(modeTabGoalMode, text="Blitz Remains Count", variable=goalBlitzRemainsCount)
+    goalRequiredRemains_label = ttk.Label(modeTabGoalMode, text="Required Remains: ")
+    goalRequiredRemains_spinbox = ttk.Spinbox(modeTabGoalMode, width=3, from_=1, to=4, textvariable=goalRequiredRemains)
+    goalRemainsOnBosses_radio = ttk.Radiobutton(modeTabGoalMode, text="Remains on Bosses", variable=goalMode, value="Remains on Bosses")
+    goalRemainsShuffle_radio = ttk.Radiobutton(modeTabGoalMode, text="Remains Shuffle", variable=goalMode, value="Remains Shuffle")
+    goalFairyHunt_radio = ttk.Radiobutton(modeTabGoalMode, text="Fairy Hunt", variable=goalMode, value="Fairy Hunt")
+    goalFairyHuntSetSize_label = ttk.Label(modeTabGoalMode, text="Set Size: ")
+    goalFairyHuntSetSize_spinbox = ttk.Spinbox(modeTabGoalMode, width=3, from_=0, to=15, textvariable=goalFairyHuntSetSize)
+    goalMaskHunt_radio = ttk.Radiobutton(modeTabGoalMode, text="Mask Hunt", variable=goalMode, value="Mask Hunt")
 
-    goalNoBlitz_radio.grid(column=1, row=1, sticky=(W, E))
-    goalBlitz1_radio.grid(column=2, row=1, sticky=(W, E))
-    goalBlitz2_radio.grid(column=3, row=1, sticky=(W, E))
-    goalNoBlitz2_radio.grid(column=1, row=2, sticky=(W, E))
-    goalSeason2_radio.grid(column=2, row=2, sticky=(W, E))
-    goalRS_radio.grid(column=1, row=3, sticky=(W, E))
-    goalFFH_radio.grid(column=1, row=4, sticky=(W, E))
-    goalAnyThree_radio.grid(column=1, row=5, sticky=(W, E))
-    goalLongGoal_radio.grid(column=1, row=6, sticky=(W, E))
-    goalLongGoal_combo.grid(column=2, row=6, sticky=(W, E))
-    goalDirectToCredits_check.grid(column=1, row=7, sticky=(W, E))
-    goalEarlyMoonRemains_label.grid(column=1, row=8, sticky=(W,E))
-    goalEarlyMoonRemains_spinbox.grid(column=2, row=8, sticky=(W))
-    goalBlitzRemainsCount_check.grid(column=3, row=8, sticky=(W,E))
+    goalRequiredRemains_label.grid(column=1, row=1, sticky=(W, E))
+    goalRequiredRemains_spinbox.grid(column=2, row=1, sticky=(W, E))
+    goalRemainsOnBosses_radio.grid(column=1, row=2, sticky=(W, E))
+    goalRemainsShuffle_radio.grid(column=1, row=3, sticky=(W, E))
+    goalFairyHunt_radio.grid(column=1, row=4, sticky=(W, E))
+    goalFairyHuntSetSize_label.grid(column=2, row=4, sticky=(W, E))
+    goalFairyHuntSetSize_spinbox.grid(column=3, row=4, sticky=(W, E))
+    goalMaskHunt_radio.grid(column=1, row=5, sticky=(W, E))
     
-    goalNoBlitz_tip = Hovertip(goalNoBlitz_radio, "Remains on bosses. Always start without any remains.")
-    goalNoBlitz2_tip = Hovertip(goalNoBlitz2_radio, "Remains on bosses. May start with one remains,\nwith its corresponding temple and post-temple junked.")
-    goalBlitz1_tip = Hovertip(goalBlitz1_radio, "Remains on bosses. Always start with one remains;\nits temple and post-temple checks are junked.")
-    goalBlitz2_tip = Hovertip(goalBlitz2_radio, "Remains on bosses. Always start with two remains;\ntheir temple and post-temple checks are junked.")
-    goalSeason2_tip = Hovertip(goalSeason2_radio, "Remains on bosses. May start with one or two remains,\nwith corresponding temples and post-temples junked.\nThis was used in Mystery Season 2.")
-    goalAnyThree_tip = Hovertip(goalAnyThree_radio, "Remains on bosses. Majora may be accessed and fought with three remains instead of four.\nMMR's item importance algorithm will take this into account!")
-    goalRS_tip = Hovertip(goalRS_radio, "Remains shuffled anywhere. C-Up at clock tower door for region hints.")
-    goalFFH_tip = Hovertip(goalFFH_radio, "Remains on Great Fairy Rewards.\nAny one remains wins immediately; find five fairies of any one set!")
-    goalLongGoal_tip = Hovertip(goalLongGoal_radio, "Choose a long victory mode from the drop-down box.\nComplete the chosen win condition before fighting Majora.")
-    goalLongGoalCombo_tip = Hovertip(goalLongGoal_combo, "Full Fairy Hunt: Find all four boss remains on Great Fairy Rewards. All Stray Fairies are shuffled.\nMask Hunt: Find all shuffled masks. Always uses Moon Oath song layout.\nSkull Tokens: Find all 60 shuffled skull tokens.\nHearts: Find all shuffled Heart Containers and Pieces of Heart.")
-    goalDirectToCredits_tip = Hovertip(goalDirectToCredits_check, "Win immediately upon collecting all required remains or\nwin condition items without needing to use Oath and fight Majora.\n(This is always on in Five Fairy Hunt.)")
-    goalEarlyMoonRemains_tip = Hovertip(goalEarlyMoonRemains_spinbox, "Modifies the number of remains from unjunked bosses to be collected during the seed for moon access\n in Moon Oath or long goal seeds.")
-    goalBlitzRemainsCount_tip = Hovertip(goalBlitzRemainsCount_check, "If checked, free starting remains from Blitz-junked bosses count toward moon access in relevant seeds\n(i.e. Remains for Moon Access is constant regardless of Blitz).")
+    goalRequiredRemains_tip = Hovertip(goalRequiredRemains_spinbox, "Remains needed to access the Moon, fight Majora, and receive the Oath hint.")
+    goalRemainsOnBosses_tip = Hovertip(goalRemainsOnBosses_radio, "Remains on bosses. The conventional MMR win condition.")
+    goalRemainsShuffle_tip = Hovertip(goalRemainsShuffle_radio, "Remains shuffled anywhere. C-Up at the Clock Tower door for region hints.")
+    goalFairyHunt_tip = Hovertip(goalFairyHunt_radio, "Remains on Great Fairy Rewards. Visit the Fairy Fountains for region hints.")
+    goalFairyHuntSetSize_tip = Hovertip(goalFairyHuntSetSize_spinbox, "Fairies of each color to be shuffled throughout Termina. Link starts with the remainder.")
+    goalMaskHunt_tip = Hovertip(goalMaskHunt_radio, "Remains on bosses. To fight Majora, also find all 20 non-transformation masks! Visit the Moon Trial Gossips for mask hints.")
 
     # Start Modes pane
-    startSongLayoutMode = StringVar(value="Any")
+    startSongLayoutMode = StringVar(value="Random")
+    startFreeOathMode = StringVar(value="1")
+    startFreeEponaMode = StringVar(value="0")
     startDifficultyMode = StringVar(value="Kokiri or Swordless")
     startRandomItemMode = StringVar(value="Any")
     startFDAnywhereMode = StringVar(value="Sometimes")
+    startInteriorsERMode = StringVar(value="Sometimes")
+    startGrottosERMode = StringVar(value="Sometimes")
     startDungeonERMode = StringVar(value="Sometimes")
-    startBossKeysMode = StringVar(value="Off")
-    startSmallKeysMode = StringVar(value="Sometimes")
-    startAllMoonTrialsMode = StringVar(value="0")
     startSongLayoutMode.trace_add("write", updateModeTabs)
+    startFreeOathMode.trace_add("write", updateModeTabs)
+    startFreeEponaMode.trace_add("write", updateModeTabs)
     startDifficultyMode.trace_add("write", updateModeTabs)
     startRandomItemMode.trace_add("write", updateModeTabs)
     startFDAnywhereMode.trace_add("write", updateModeTabs)
+    startInteriorsERMode.trace_add("write", updateModeTabs)
+    startGrottosERMode.trace_add("write", updateModeTabs)
     startDungeonERMode.trace_add("write", updateModeTabs)
-    startBossKeysMode.trace_add("write", updateModeTabs)
-    startSmallKeysMode.trace_add("write", updateModeTabs)
-    startAllMoonTrialsMode.trace_add("write", updateModeTabs)
-    
     startSongLayout_label = ttk.Label(modeTabStartMode, text="Song Layout:    ")
     startSongLayout_combo = ttk.Combobox(modeTabStartMode, textvariable=startSongLayoutMode)
-    startSongLayout_combo["values"] = ("Any", "Any Non-Moon", "Traditional", "Songsanity", "Baby Zoras", "Moon Oath")
+    startSongLayout_combo["values"] = ("Random", "Traditional", "Songsanity", "Start with All")
     startSongLayout_combo.state(["readonly"])
+    startFreeOath_check = ttk.Checkbutton(modeTabStartMode, text="Oath Start", variable=startFreeOathMode)
+    startFreeEpona_check = ttk.Checkbutton(modeTabStartMode, text="Epona Start", variable=startFreeEponaMode)
     startDifficulty_label = ttk.Label(modeTabStartMode, text="Starting Basic Gear:    ")
     startDifficulty_combo = ttk.Combobox(modeTabStartMode, textvariable=startDifficultyMode)
     startDifficulty_combo["values"] = ("Strong", "Kokiri", "Kokiri or Swordless", "Swordless", "Fragile")
@@ -352,147 +270,67 @@ def openOptionsGui(version_string):
     startFDAnywhere_combo = ttk.Combobox(modeTabStartMode, textvariable=startFDAnywhereMode, width=25)
     startFDAnywhere_combo["values"] = ("Off and Unshuffled", "Off", "Only When Starting", "Sometimes", "Always")
     startFDAnywhere_combo.state(["readonly"])
-    startDungeonER_label = ttk.Label(modeTabStartMode, text="Dungeon Entrances: ")
+    startInteriorsER_combo = ttk.Combobox(modeTabStartMode, textvariable=startInteriorsERMode, width=25)
+    startInteriorsER_label = ttk.Label(modeTabStartMode, text="Simple Interiors ER: ")
+    startInteriorsER_combo["values"] = ("Off", "Sometimes", "Always")
+    startInteriorsER_combo.state(["readonly"])
+    startGrottosER_combo = ttk.Combobox(modeTabStartMode, textvariable=startGrottosERMode, width=25)
+    startGrottosER_label = ttk.Label(modeTabStartMode, text="Grottos ER: ")
+    startGrottosER_combo["values"] = ("Off", "Sometimes", "Always")
+    startGrottosER_combo.state(["readonly"])
+    startDungeonER_label = ttk.Label(modeTabStartMode, text="Dungeon ER: ")
     startDungeonER_combo = ttk.Combobox(modeTabStartMode, textvariable=startDungeonERMode, width=25)
     startDungeonER_combo["values"] = ("Off", "Sometimes", "Always")
-    startDungeonER_combo.state(["readonly"])
-    startBossKeys_label = ttk.Label(modeTabStartMode, text="Boss Keys:    ")
-    startBossKeys_combo = ttk.Combobox(modeTabStartMode, textvariable=startBossKeysMode, width=25)
-    startBossKeys_combo["values"] = ("Off", "Sometimes", "Always Within Their Temple", "Always Within Any Temple", "Anywhere Within Their Area", "Anywhere")
-    startBossKeys_combo.state(["readonly"])
-    startSmallKeys_label = ttk.Label(modeTabStartMode, text="Small Keys:    ")
-    startSmallKeys_combo = ttk.Combobox(modeTabStartMode, textvariable=startSmallKeysMode, width=25)
-    startSmallKeys_combo["values"] = ("Off", "Sometimes", "Always Within Their Temple", "Always Within Any Temple", "Anywhere Within Their Area", "Anywhere")
-    startSmallKeys_combo.state(["readonly"])
-    startAllMoonTrials_check = ttk.Checkbutton(modeTabStartMode, text="Moon Oath Adds All Trials", variable=startAllMoonTrialsMode)
-
+    startDungeonER_combo.state(["readonly"])    
     
     startSongLayout_label.grid(column=1, row=1, sticky=(W,E))
     startSongLayout_combo.grid(column=2, row=1, sticky=(W,E))
-    startDifficulty_label.grid(column=1, row=2, sticky=(W,E))
-    startDifficulty_combo.grid(column=2, row=2, sticky=(W,E))
-    startRandomItem_label.grid(column=1, row=3, sticky=(W,E))
-    startRandomItem_combo.grid(column=2, row=3, sticky=(W,E))
-    startFDAnywhere_label.grid(column=1, row=4, sticky=(W,E))
-    startFDAnywhere_combo.grid(column=2, row=4, sticky=(W,E))
-    startDungeonER_label.grid(column=1, row=5, sticky=(W,E))
-    startDungeonER_combo.grid(column=2, row=5, sticky=(W,E))
-    startBossKeys_label.grid(column=1, row=6, sticky=(W,E))
-    startBossKeys_combo.grid(column=2, row=6, sticky=(W,E))
-    startSmallKeys_label.grid(column=1, row=7, sticky=(W,E))
-    startSmallKeys_combo.grid(column=2, row=7, sticky=(W,E))
-    startAllMoonTrials_check.grid(column=3, row=1, sticky=(W,E))
+    startFreeOath_check.grid(column=1, row=2, sticky=(W,E))
+    startFreeEpona_check.grid(column=2, row=2, sticky=(W,E))
+    startDifficulty_label.grid(column=1, row=3, sticky=(W,E))
+    startDifficulty_combo.grid(column=2, row=3, sticky=(W,E))
+    startRandomItem_label.grid(column=1, row=4, sticky=(W,E))
+    startRandomItem_combo.grid(column=2, row=4, sticky=(W,E))
+    startFDAnywhere_label.grid(column=1, row=5, sticky=(W,E))
+    startFDAnywhere_combo.grid(column=2, row=5, sticky=(W,E))
+    startInteriorsER_label.grid(column=3, row=3, sticky=(W,E))
+    startInteriorsER_combo.grid(column=4, row=3, sticky=(W,E))
+    startGrottosER_label.grid(column=3, row=4, sticky=(W,E))
+    startGrottosER_combo.grid(column=4, row=4, sticky=(W,E))
+    startDungeonER_label.grid(column=3, row=5, sticky=(W,E))
+    startDungeonER_combo.grid(column=4, row=5, sticky=(W,E))
     startSongLayout_tip = Hovertip(startSongLayout_combo, "Choose a song layout.")
+    startFreeOath_tip = Hovertip(startFreeOath_check, "Also start with Oath to Order. Boss Blue Warp is junked.")
+    startFreeEpona_tip = Hovertip(startFreeEpona_check, "Also start with Epona's Song. Romani's Game is junked.")
     startDifficulty_tip = Hovertip(startDifficulty_combo, "Choose how the starting sword, shield, and hearts are handled.")
     startRandomItem_tip = Hovertip(startRandomItem_combo, "Choose a starting random item mode, or guarantee a specific starting item.")
     startFDAnywhere_tip = Hovertip(startFDAnywhere_combo, "Choose a Fierce Deity's Mask Anywhere mode.")
-    startDungeonER_tip = Hovertip(startDungeonER_combo, "Choose a Dungeon Entrances option.\nAffected entrances are WFT, SHT, GBT, and inverted STT.")
-    startBossKeys_tip = Hovertip(startBossKeys_combo, "Choose a Boss Keys option.")
-    startSmallKeys_tip = Hovertip(startSmallKeys_combo, "Choose a Small Keys option.")
-    startAllMoonTrials_tip = Hovertip(startAllMoonTrials_check, "Adds the Deku Trial, Goron Trial, and Zora Trial Pieces of Heart to the Moon Oath shuffle.")
+    startInteriorsER_tip = Hovertip(startDungeonER_combo, "Choose a Simple Interiors ER option.\nAffected entrances include uninverted STT.")
+    startGrottosER_tip = Hovertip(startDungeonER_combo, "Choose a Grottos ER option.")
+    startDungeonER_tip = Hovertip(startDungeonER_combo, "Choose a Dungeon ER option.\nAffected entrances are WFT, SHT, GBT, and inverted STT.")
 
     # Density Modes pane
     mainDensityMode = StringVar(value="Normal")
     densityCategoryMinimum = StringVar(value="7")
-    densityNoCT = StringVar(value="0")
-    densityNoPT = StringVar(value="0")
-    densityMapCompassMode = StringVar(value="0")
-    densityPotsanityMode = StringVar(value="Sometimes")
-    densityScoopsanityMode = StringVar(value="Sometimes")
-    densityScrambledEggsMode = StringVar(value="0")
-    densityStubbornPrincessMode = StringVar(value="0")
-    densityNoFrogChoirMode = StringVar(value="1")
-    densityStubbornSeahorseMode = StringVar(value="0")
     mainDensityMode.trace_add("write", updateModeTabs)
     densityCategoryMinimum.trace_add("write", updateModeTabs)
-    densityNoCT.trace_add("write", updateModeTabs)
-    densityNoPT.trace_add("write", updateModeTabs)
-    densityMapCompassMode.trace_add("write", updateModeTabs)
-    densityPotsanityMode.trace_add("write", updateModeTabs)
-    densityScoopsanityMode.trace_add("write", updateModeTabs)
-    densityScrambledEggsMode.trace_add("write", updateModeTabs)
-    densityStubbornPrincessMode.trace_add("write", updateModeTabs)
-    densityNoFrogChoirMode.trace_add("write", updateModeTabs)
-    densityStubbornSeahorseMode.trace_add("write", updateModeTabs)
     
     densityNormal_radio = ttk.Radiobutton(modeTabDensityMode, text="Normal", variable=mainDensityMode, value="Normal")
-    densityLight_radio = ttk.Radiobutton(modeTabDensityMode, text="Light Mystery", variable=mainDensityMode, value="Light")
     densitySuper_radio = ttk.Radiobutton(modeTabDensityMode, text="Super Mystery", variable=mainDensityMode, value="Super")
     densityCategoryMinimum_label = ttk.Label(modeTabDensityMode, text="Category Minimum: ")
     densityCategoryMinimum_spinbox = ttk.Spinbox(modeTabDensityMode, width=3, from_=0, to=14, textvariable=densityCategoryMinimum)
     densityCategoryMinimum_spinbox.state(["readonly"])
-    densityNoCT_check = ttk.Checkbutton(modeTabDensityMode, text="No Clock Town", variable=densityNoCT)
-    densityNoPT_check = ttk.Checkbutton(modeTabDensityMode, text="No Post-Temple", variable=densityNoPT)
-    densityMapCompass_check = ttk.Checkbutton(modeTabStartMode, text="Maps Hint Dungeon ER", variable=densityMapCompassMode)
-    densityPotsanity_label = ttk.Label(modeTabDensityMode, text="Overworld Pots: ")
-    densityScoopsanity_label = ttk.Label(modeTabDensityMode, text="Scoopsanity:  ")
-    densityPotsanity_combo = ttk.Combobox(modeTabDensityMode, textvariable=densityPotsanityMode, width=25)
-    densityPotsanity_combo["values"] = ("Off", "Sometimes", "Central Pots", "South Pots", "North Pots", "West Pots", "East Pots", "Any One Group", "Any Two Groups", "Full Potsanity")
-    densityPotsanity_combo.state(["readonly"])
-    densityScoopsanity_combo = ttk.Combobox(modeTabDensityMode, textvariable=densityScoopsanityMode, width=25)
-    densityScoopsanity_combo["values"] = ("Off", "Sometimes", "On")
-    densityScoopsanity_combo.state(["readonly"])
-    densityScrambledEggs_check = ttk.Checkbutton(modeTabDensityMode, text="Always Scrambles Eggs", variable=densityScrambledEggsMode)
-    densityStubbornPrincess_check = ttk.Checkbutton(modeTabDensityMode, text="Shuffles Princess", variable=densityStubbornPrincessMode)
-    densityNoFrogChoir_check = ttk.Checkbutton(modeTabDensityMode, text="No Frog Choir", variable=densityNoFrogChoirMode)
-    densityStubbornSeahorse_check = ttk.Checkbutton(modeTabDensityMode, text="Never Shuffle Seahorse", variable=densityStubbornSeahorseMode)
-
-    densityMapCompass_check.grid(column=3, row=5, sticky=(W,E))   # should be moved up alongside other setup modes
 
     densityNormal_radio.grid(column=1, row=1, sticky=(W,E))
-    densityLight_radio.grid(column=2, row=1, sticky=(W,E))
-    densitySuper_radio.grid(column=3, row=1, sticky=(W,E))
+    densitySuper_radio.grid(column=2, row=1, sticky=(W,E))
     densityCategoryMinimum_label.grid(column=1, row=2, sticky=(W,E))
     densityCategoryMinimum_spinbox.grid(column=2, row=2, sticky=(W))
-    densityNoCT_check.grid(column=1, row=3, sticky=(W,E))
-    densityNoPT_check.grid(column=2, row=3, sticky=(W,E))
-    densityPotsanity_label.grid(column=1, row=4, sticky=(W,E))
-    densityPotsanity_combo.grid(column=2, row=4, sticky=(W,E))
-    densityScoopsanity_label.grid(column=1, row=5, sticky=(W,E))
-    densityScoopsanity_combo.grid(column=2, row=5, sticky=(W,E))
-    densityScrambledEggs_check.grid(column=3, row=5, sticky=(W,E))
-    densityStubbornPrincess_check.grid(column=4, row=5, sticky=(W,E))
-    densityNoFrogChoir_check.grid(column=1, row=6, sticky=(W,E))
-    densityStubbornSeahorse_check.grid(column=1, row=7, sticky=(W,E))
 
-    densityNormal_tip = Hovertip(densityNormal_radio, "Baseline appearance rates for all categories. See the Category Weights Table for specifics.\nSuggested category minimum is 7.")
-    densityLight_tip = Hovertip(densityLight_radio, "Excludes certain mystery options with harder or high-quantity checks\nand decreases other weights slightly.\nSee the Category Weights Table for specifics.\nSuggested category minimum is 5.")
-    densitySuper_tip = Hovertip(densitySuper_radio,"Dramatically increased appearance rates for all categories! Also, Full Hit Spots is possible.\nSee the Category Weights Table for specifics.\nSuggested category minimum is 9.")
+    densityNormal_tip = Hovertip(densityNormal_radio, "Baseline appearance rates for all categories.")
+    densitySuper_tip = Hovertip(densitySuper_radio,"Dramatically increased appearance rates for all categories!")
     densityCategoryMinimum_tip = Hovertip(densityCategoryMinimum_spinbox,"Modifies the minimum number of active categories.\nMystery Maker will reroll until this minimum is met.")
-    densityNoCT_tip = Hovertip(densityNoCT_check, "All non-scoop checks in Clock Town regions, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nThe Notebook Entries category is disabled.\nEpona's Song is granted as an additional starting song; Skull Kid Song is always junked.\nWhen the song layout is Baby Zoras or Moon Oath, Boss Blue Warp is junked too.\nThe Moon is not in Clock Town.")
-    densityNoPT_tip = Hovertip(densityNoPT_check, "All post-temple checks, including those added by Mystery categories,\nare junked or unshuffled as appropriate.\nBottle: Deku Princess is never shuffled; other scoops are not affected.\nFrog Choir is disabled.\nMoon checks are not considered post-temple.")
-    densityMapCompass_tip = Hovertip(densityMapCompass_check, "Whenever temple entrances are shuffled, temples' Maps are shuffled and placed exclusively in the overworld,\nrevealing their corresponding entrance shuffle when found.")
-    densityPotsanity_tip = Hovertip(densityPotsanity_combo, "Choose an Overworld Pots option instead of using the customary random roll.")
-    densityScoopsanity_tip = Hovertip(densityScoopsanity_combo, "Choose a Scoopsanity option instead of using the customary random roll.")
-    densityUnscrambledEggs_tip = Hovertip(densityScrambledEggs_check, "Allows Scoopsanity to shuffle Zora Eggs even when Baby Zoras is active.")
-    densityStubbornPrincess_tip = Hovertip(densityStubbornPrincess_check, "Includes the Deku Princess in Scoopsanity.\nBottle: Deku Princess will be on the backup hint list.")
-    densityNoFrogChoir_tip = Hovertip(densityNoFrogChoir_check, "Prevents the Frogs category from replacing Ranch Defense with Frog Choir.\n(Ranch Defense will remain in play and be always hinted; Frog Choir will stay junked.)")
-    densityStubbornSeahorse_tip = Hovertip(densityStubbornSeahorse_check, "Excludes the Fisherman Pictograph check from the Photos, Sales, and Small Favors category.\nThis keeps the Seahorse in its vanilla location and model.")
     
     # Extra Modes pane
-    extraNoIcelessFDLogicMode = StringVar(value="0")
-    extraNoMilkRoadFDLogicMode = StringVar(value="1")
-    extraICMode = StringVar(value="0")
-    extraSunsSongMode = StringVar(value="0")
-    extraNoIcelessFDLogicMode.trace_add("write", updateModeTabs)
-    extraNoMilkRoadFDLogicMode.trace_add("write", updateModeTabs)
-    extraICMode.trace_add("write", updateModeTabs)
-    extraSunsSongMode.trace_add("write", updateModeTabs)
-
-    extraNoIcelessFDLogic_check = ttk.Checkbutton(modeTabExtraMode, text="No Iceless FD Logic", variable=extraNoIcelessFDLogicMode)
-    extraNoMilkRoadFDLogic_check = ttk.Checkbutton(modeTabExtraMode, text="No Milk Road FD Logic", variable=extraNoMilkRoadFDLogicMode)
-    extraNoIC_check = ttk.Checkbutton(modeTabExtraMode, text="Importance Count", variable=extraICMode)
-    extraSunsSong_check = ttk.Checkbutton(modeTabExtraMode, text="Enable Sun's Song", variable=extraSunsSongMode)
-
-    extraNoIcelessFDLogic_check.grid(column=1, row=1, sticky=(W,E))
-    extraNoMilkRoadFDLogic_check.grid(column=1, row=2, sticky=(W,E))
-    extraNoIC_check.grid(column=1, row=3, sticky=(W,E))
-    extraSunsSong_check.grid(column=1, row=4, sticky=(W,E))
-
-    extraNoIcelessFDLogic_tip = Hovertip(extraNoIcelessFDLogic_check, "Disable Iceless FD logic. Removes the 'as FD' GBT Red Pump/GBT Boss Door/Ikana Canyon Iceless/GBT Map Chest Jumps tricks.")
-    extraNoMilkRoadFDLogic_tip = Hovertip(extraNoMilkRoadFDLogic_check, "Disable Milk Road FD logic. Removes the FD Jump into Ranch and Ranch Tingle as FD tricks.\nAs these are racing banned tricks, they are disabled by default.")
-    extraNoIC_tip = Hovertip(extraNoIC_check, "Enable Importance Count. WotH hints will become IC hints instead.")
-    extraSunsSong_tip = Hovertip(extraSunsSong_check, "Allow the use of Sun's Song (C-Right, C-Down, C-Up, C-Right, C-Down, C-Up) to speed up the clock.\nSun's Song will be available from the start of the seed.")
 
     for child in mainframe.winfo_children(): 
         child.grid_configure(padx=5, pady=5)
@@ -508,5 +346,5 @@ def openOptionsGui(version_string):
             baseSettingsFilePath.get(),
             mmrCommandLineExePath.get(),
             (int)(numberToGenerate.get()),
-            (makeSettingsOnly.get() == "1"),
+            outputMode.get(),
             customModesSettings]

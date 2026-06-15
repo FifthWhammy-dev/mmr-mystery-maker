@@ -6,8 +6,9 @@ import os
 import sys
 import yaml
 from mysteryutils.MysteryMakerGUI import openOptionsGui
+from mysteryutils.Definitions import OutputModes,CategoryNames,ShuffleNames,shuffleCheckStrings
 
-MYSTERY_MAKER_VERSION = "v5.1.1"
+MYSTERY_MAKER_VERSION = "v6.0.0"
 
 MODE_DEFAULTS = {"Goal Mode":"No Blitz",
                  "Long Goal":"None",
@@ -1292,17 +1293,21 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
 
     return outputFilename
 
-argParser = argparse.ArgumentParser(description="Randomly generates Mystery settings files for MMR and runs MMR.CLI to roll seeds with them.")
+argParser = argparse.ArgumentParser(description="Randomly generates Mystery settings files for MMR.")
 argParser.add_argument("-n", dest="numberOfSettingsFiles",type=int,default=1,
                     help="create multiple settings/seeds at once")
 argParser.add_argument("-i", "--input", dest="inputFile",default="Mystery_Settings_base_v5_1_1.json",
                     help="base MMR settings file")
 argParser.add_argument("-r", "--randomizer-exe", dest="randomizerExe",default="MMR.CLI.exe",
-                    help="MMR command-line executable")
+                    help="custom MMR command-line executable, used only with --desktop-output")
 argParser.add_argument("-w", "--weights-file", dest="weightsFile",default="0",
                     help="custom Mystery Maker weights file")   
-argParser.add_argument("--settings-only", dest="settingsOnly", action="store_true",
-                    help="only generate settings; don't roll any seeds")
+argParser.add_argument("-d", "--desktop-output", dest="desktopOutput", action="store_true",
+                    help="generate desktop settings instead of web settings, then make a seed with them using a local MMR CLI executable")
+argParser.add_argument("--desktop-output-no-seed", dest="desktopOutputNoSeed", action="store_true",
+                    help="generate desktop settings instead of web settings")
+argParser.add_argument("--desktop-support-gui", dest="guiDesktopMode", action="store_true",
+                    help="open the GUI, but with extra options for desktop MMR")
 argParser.add_argument("--version", dest="showVersion", action="store_true",
                     help="print version number and exit")
 args = argParser.parse_args()
@@ -1315,21 +1320,21 @@ optionSettingsFile = args.inputFile
 optionRandomizerExe = args.randomizerExe
 optionWeightsFile = args.weightsFile
 optionOutputCount = args.numberOfSettingsFiles
-optionDontMakeSeed = args.settingsOnly
+optionOutputMode = OutputModes.DESKTOPANDSEED if args.desktopOutput else (OutputModes.DESKTOP if args.desktopOutputNoSeed else OutputModes.WEB)
 optionCustomModes = MODE_DEFAULTS
 if optionWeightsFile != "0":
     with open(optionWeightsFile, 'r') as loadedWeightsFile:
         weightsFileDict = yaml.safe_load(loadedWeightsFile)
         optionCustomModes = weightsFileDict["modes"]
 
-if (len(sys.argv) == 1):
-    guiResults = openOptionsGui(MYSTERY_MAKER_VERSION)
+if (len(sys.argv) == 1 or (len(sys.argv) == 2 and args.guiDesktopMode)):
+    guiResults = openOptionsGui(MYSTERY_MAKER_VERSION, args.guiDesktopMode)
     if (guiResults[0]):
         sys.exit()
     optionSettingsFile = guiResults[1]
     optionRandomizerExe = guiResults[2]
     optionOutputCount = guiResults[3]
-    optionDontMakeSeed = guiResults[4]
+    optionOutputMode = guiResults[4]
     optionCustomModes = guiResults[5]
 
 for i in range(optionOutputCount):
@@ -1342,6 +1347,6 @@ for i in range(optionOutputCount):
             if (consecutiveFailures >= 10000):
                 print ("Exiting, couldn't meet category minimum after 10000 attempts")
                 sys.exit()
-    if (optionDontMakeSeed == False):
+    if (optionOutputMode == OutputModes.DESKTOPANDSEED):
         mmrcl = optionRandomizerExe + " -outputpatch -spoiler -settings " + resultFilename
         subprocess.call(mmrcl)
