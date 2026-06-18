@@ -5,122 +5,20 @@ import argparse
 import os
 import sys
 import yaml
+from datetime import datetime, timezone
 from mysteryutils.MysteryMakerGUI import openOptionsGui
-from mysteryutils.Definitions import OutputModes,CategoryNames,ShuffleNames,shuffleCheckStrings
-
-MYSTERY_MAKER_VERSION = "v6.0.0"
-
-MODE_DEFAULTS = {"Goal Mode":"No Blitz",
-                 "Long Goal":"None",
-                 "Direct to Credits":False,
-                 "Start Mode":"Kokiri or Swordless",
-                 "Song Layout":"Any",
-                 "All Moon Trials":False,
-                 "Early Moon Access Remains":1,
-                 "Blitz Remains Count":False,
-                 "Random Item Mode":"Any",
-                 "FD Anywhere Mode":"Sometimes",
-                 "Dungeon Entrances":"Sometimes",
-                 "Boss Keys":"Off",
-                 "Small Keys":"Sometimes",
-                 "Main Density Mode":"Normal",
-                 "Category Minimum":7,
-                 "No Clock Town":False,
-                 "No Post-Temple":False,
-                 "Map and Compass Hints":False,
-                 "Potsanity":"Sometimes",
-                 "Scoopsanity":"Sometimes",
-                 "Vanilla Eggs for Baby Zoras":True,
-                 "Stubborn Princess":True,
-                 "No Frog Choir":True,
-                 "Stubborn Seahorse":False,
-                 "No Iceless FD Logic":False,
-                 "No Milk Road FD Logic":True,
-                 "Importance Count":False,
-                 "Sun's Song":False}
+from mysteryutils.Definitions import *
+from mysteryutils.CategoryListGen import CreateSetupCategoryList, CreateMainCategoryList, ApplyWeights
+from mysteryutils.ListStringUtils import *
+from mysteryutils.SettingsFile import SettingsFile, DesktopSettingsFile, WebSettingsFile
+from mysteryutils.MysterySeed import MysterySeed
 
 def CheckForCustom(modeSettings):
     for mode in modeSettings:
-        if modeSettings[mode] != MODE_DEFAULTS[mode]:
+        if modeSettings[mode] != OPTION_DEFAULTS[mode]:
             return True
     
     return False
-
-def AddEntryToListString(liststring, word, value):
-    bitstringWords = liststring.split("-")
-    bitstringWords.reverse()
-    existingWord = bitstringWords[word]
-    if existingWord == '':
-        existingWord = '0'
-    bitstringWords[word] = hex(int(existingWord,16) | int(value,16))[2:]
-    bitstringWords.reverse()
-    return "-".join(bitstringWords)
-
-def RemoveEntryFromListString(liststring, word, value):
-    bitstringWords = liststring.split("-")
-    bitstringWords.reverse()
-    existingWord = bitstringWords[word]
-    if existingWord == '':
-        existingWord = '0'
-    if int(existingWord,16) | int(value,16) == int(existingWord,16):
-        bitstringWords[word] = hex(int(existingWord,16) - int(value,16))[2:]
-    bitstringWords.reverse()
-    return "-".join(bitstringWords)
-
-def CheckEntryInListString(liststring, word, value):
-    bitstringWords = liststring.split("-")
-    bitstringWords.reverse()
-    existingWord = bitstringWords[word]
-    if existingWord == '':
-        existingWord = '0'
-    if int(existingWord,16) | int(value,16) == int(existingWord,16):
-        return True
-    else:
-        return False
-
-def AddStringToListString(liststring, newstring):
-    liststringWords = liststring.split("-")
-    newstringWords = newstring.split("-")
-    for i in range(min([len(liststringWords),len(newstringWords)])):
-        if (liststringWords[i] != '' or newstringWords[i] != ''):
-            if liststringWords[i] == '':
-                liststringWords[i] = '0'
-            if newstringWords[i] == '':
-                newstringWords[i] = '0'
-            liststringWords[i] = hex(int(liststringWords[i],16) |
-                                     int(newstringWords[i],16))[2:]
-            if liststringWords[i] == '0':
-                liststringWords[i] = ''
-    return "-".join(liststringWords)
-
-def RemoveStringFromListString(liststring, newstring):
-    liststringWords = liststring.split("-")
-    newstringWords = newstring.split("-")
-    for i in range(min([len(liststringWords),len(newstringWords)])):
-        if (liststringWords[i] != '' or newstringWords[i] != ''):
-            if liststringWords[i] == '':
-                liststringWords[i] = '0'
-            if newstringWords[i] == '':
-                newstringWords[i] = '0'
-            liststringWords[i] = hex((int(liststringWords[i],16) ^
-                                     int(newstringWords[i],16)) &
-                                     int(liststringWords[i],16))[2:]
-            if liststringWords[i] == '0':
-                liststringWords[i] = ''
-    return "-".join(liststringWords)
-
-def CheckStringInListString(liststring, newstring):
-    liststringWords = liststring.split("-")
-    newstringWords = newstring.split("-")
-    for i in range(min([len(liststringWords),len(newstringWords)])):
-        if (liststringWords[i] != '' or newstringWords[i] != ''):
-            if liststringWords[i] == '':
-                liststringWords[i] = '0'
-            if newstringWords[i] == '':
-                newstringWords[i] = '0'
-            if (int(liststringWords[i],16) | int(newstringWords[i],16)) != int(liststringWords[i],16):
-                return False
-    return True
 
 def FilenameOnly(pathstring):
     filename = pathstring[(pathstring.rfind("/") + 1):]
@@ -137,46 +35,28 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     itemListString = settings["CustomItemListString"]
     startListString = settings["CustomStartingItemListString"]
     junkListString = settings["CustomJunkLocationsString"]
-     
-    # gossipHintsTakenByAlways = 4 + settings["OverrideNumberOfRequiredGossipHints"] + settings["OverrideNumberOfNonRequiredGossipHints"]
-    # GOSSIP_HINTS_LIMIT = 12  # intentionally two less than the 14 gossip slots available
-    # if (customModes["No Post-Temple"] == True):
-    #    gossipHintsTakenByAlways -= 3
 
     nonzeroCategories = 0
-    NONZERO_CATEGORIES_MINIMUM = customModes["Category Minimum"]
+    NONZERO_CATEGORIES_MINIMUM = customModes[GeneratorOptionNames.CATEGORYMINIMUM]
 
-    moonAccessRemainsRequirement = customModes["Early Moon Access Remains"]
-
-    #hardOptions = 0
-    #HARD_OPTIONS_LIMIT = 2
-
-    if customModes["Main Density Mode"] == "Light":
-    #    HARD_OPTIONS_LIMIT = 0
-        settings["OverrideNumberOfRequiredGossipHints"] += 1
-    #    gossipHintsTakenByAlways += 1
-        if NONZERO_CATEGORIES_MINIMUM > 8:
-            NONZERO_CATEGORIES_MINIMUM = 8
-    #if customModes["Main Density Mode"] == "Super":
-    #    HARD_OPTIONS_LIMIT = 3
-    #    GOSSIP_HINTS_LIMIT = 14
+    moonAccessRemainsRequirement = 4
     
     wgtsStartingBossRemains = [100,0,0,0,0,0,0,0,0,0]    
-    if (customModes["Goal Mode"] == "No Blitz"):
+    if (customModes[GeneratorOptionNames.GOAL] == GoalNames.REMAINSONBOSSES):
         wgtsStartingBossRemains = [100,0,0,0,0,0,0,0,0,0]
-    if (customModes["Goal Mode"] == "Blitz 1"):
+    if (customModes[GeneratorOptionNames.GOAL] == "Blitz 1"):
         wgtsStartingBossRemains = [0,100,0,0,0,0,0,0,0,0]
-    if (customModes["Goal Mode"] == "Blitz 2"):
+    if (customModes[GeneratorOptionNames.GOAL] == "Blitz 2"):
         wgtsStartingBossRemains = [0,0,100,0,0,0,0,0,0,0]
-    if (customModes["Goal Mode"] == "Remains Shuffle"):
+    if (customModes[GeneratorOptionNames.GOAL] == "Remains Shuffle"):
         wgtsStartingBossRemains = [0,0,0,100,0,0,0,0,0,0]
-    if (customModes["Goal Mode"] == "Five Fairy Hunt"):
+    if (customModes[GeneratorOptionNames.GOAL] == "Five Fairy Hunt"):
         wgtsStartingBossRemains = [0,0,0,0,100,0,0,0,0,0]
-    if (customModes["Goal Mode"] == "Any Three Remains"):
+    if (customModes[GeneratorOptionNames.GOAL] == "Any Three Remains"):
         wgtsStartingBossRemains = [0,0,0,0,0,100,0,0,0,0]
-    if (customModes["Goal Mode"] == "No Blitz 2"):
+    if (customModes[GeneratorOptionNames.GOAL] == "No Blitz 2"):
         wgtsStartingBossRemains = [85,15,0,0,0,0,0,0,0,0]
-    if (customModes["Goal Mode"] == "Two to Four Remains"):
+    if (customModes[GeneratorOptionNames.GOAL] == "Two to Four Remains"):
         wgtsStartingBossRemains = [65,25,10,0,0,0,0,0,0,0]
     if (customModes["Long Goal"] == "Full Fairy Hunt"):
         wgtsStartingBossRemains = [0,0,0,0,0,0,100,0,0,0]
@@ -276,15 +156,15 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
             settings["VictoryMode"] = "CantFightMajora, Hearts"
                                                     
     wgtsSongLayout = [20,35,10,35]
-    if customModes["Song Layout"] == "Traditional":
+    if customModes[GeneratorOptionNames.SONGLAYOUT] == "Traditional":
         wgtsSongLayout = [100,0,0,0]
-    elif customModes["Song Layout"] == "Songsanity":
+    elif customModes[GeneratorOptionNames.SONGLAYOUT] == "Songsanity":
         wgtsSongLayout = [0,100,0,0]
-    elif customModes["Song Layout"] == "Baby Zoras":
+    elif customModes[GeneratorOptionNames.SONGLAYOUT] == "Baby Zoras":
         wgtsSongLayout = [0,0,100,0]
-    elif customModes["Song Layout"] == "Moon Oath":
+    elif customModes[GeneratorOptionNames.SONGLAYOUT] == "Moon Oath":
         wgtsSongLayout = [0,0,0,100]
-    elif customModes["Song Layout"] == "Any Non-Moon":
+    elif customModes[GeneratorOptionNames.SONGLAYOUT] == "Any Non-Moon":
         wgtsSongLayout = [55,35,10,0]
     if (moonAccessRemainsRequirement >= 4) or (moonAccessRemainsRequirement == 3 and catStartingBossRemains[0] == "Any Three Remains") or (catStartingBossRemains[0] == "Five Fairy Hunt"):
         wgtsSongLayout[0] += wgtsSongLayout[3]
@@ -322,17 +202,17 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
 
 
     wgtsStartingSwordShield = [75,25,0,0]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsStartingSwordShield = [100,0,0,0]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsStartingSwordShield = [50,50,0,0]
-    if (customModes["Start Mode"] == "Kokiri"):
+    if (customModes[GeneratorOptionNames.STARTGEAR] == "Kokiri"):
         wgtsStartingSwordShield = [100,0,0,0]
-    if (customModes["Start Mode"] == "Swordless"):
+    if (customModes[GeneratorOptionNames.STARTGEAR] == "Swordless"):
         wgtsStartingSwordShield = [0,100,0,0]
-    if (customModes["Start Mode"] == "Strong"):
+    if (customModes[GeneratorOptionNames.STARTGEAR] == "Strong"):
         wgtsStartingSwordShield = [0,0,100,0]
-    if (customModes["Start Mode"] == "Fragile"):
+    if (customModes[GeneratorOptionNames.STARTGEAR] == "Fragile"):
         wgtsStartingSwordShield = [0,0,0,100]
     catStartingSwordShield = random.choices(["Normal","No sword or shield","Strong Start","Fragile Start"],wgtsStartingSwordShield)
     if catStartingSwordShield[0] == "No sword or shield":
@@ -345,38 +225,38 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
 
     catStartingRandomItem = 0
     wgtsStartingRandomItem = [0,10,10,10,10,10,10,5,5,10,10,5,5,0]
-    if customModes["Random Item Mode"] == "Any Transformation Mask":
+    if customModes[GeneratorOptionNames.RANDOMITEM] == "Any Transformation Mask":
         wgtsStartingRandomItem = [0,10,10,10,10,0,0,0,0,0,0,0,0,0]
-    if customModes["Random Item Mode"] == "Any Non-Transformation":
+    if customModes[GeneratorOptionNames.RANDOMITEM] == "Any Non-Transformation":
         wgtsStartingRandomItem = [0,0,0,0,0,10,10,5,5,10,10,5,5,0]
-    if customModes["Random Item Mode"] == "Any Non-Sword":
+    if customModes[GeneratorOptionNames.RANDOMITEM] == "Any Non-Sword":
         wgtsStartingRandomItem[4] = 0
         wgtsStartingRandomItem[12] = 0
-    if customModes["Random Item Mode"] == "Deku Mask":
+    if customModes[GeneratorOptionNames.RANDOMITEM] == "Deku Mask":
         wgtsStartingRandomItem = [0,1,0,0,0,0,0,0,0,0,0,0,0,0]
-    if customModes["Random Item Mode"] == "Goron Mask":
+    if customModes[GeneratorOptionNames.RANDOMITEM] == "Goron Mask":
         wgtsStartingRandomItem = [0,0,1,0,0,0,0,0,0,0,0,0,0,0]
-    if customModes["Random Item Mode"] == "Zora Mask":
+    if customModes[GeneratorOptionNames.RANDOMITEM] == "Zora Mask":
         wgtsStartingRandomItem = [0,0,0,1,0,0,0,0,0,0,0,0,0,0]
-    if customModes["Random Item Mode"] == "Fierce Deity's Mask":
+    if customModes[GeneratorOptionNames.RANDOMITEM] == "Fierce Deity's Mask":
         wgtsStartingRandomItem = [0,0,0,0,1,0,0,0,0,0,0,0,0,0]
-    if customModes["Random Item Mode"] == "Bow":
+    if customModes[GeneratorOptionNames.RANDOMITEM] == "Bow":
         wgtsStartingRandomItem = [0,0,0,0,0,1,0,0,0,0,0,0,0,0]
-    if customModes["Random Item Mode"] == "Hookshot":
+    if customModes[GeneratorOptionNames.RANDOMITEM] == "Hookshot":
         wgtsStartingRandomItem = [0,0,0,0,0,0,1,0,0,0,0,0,0,0]
-    if customModes["Random Item Mode"] == "Bomb Bag":
+    if customModes[GeneratorOptionNames.RANDOMITEM] == "Bomb Bag":
         wgtsStartingRandomItem = [0,0,0,0,0,0,0,1,0,0,0,0,0,0]
-    if customModes["Random Item Mode"] == "Blast Mask":
+    if customModes[GeneratorOptionNames.RANDOMITEM] == "Blast Mask":
         wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,1,0,0,0,0,0]
-    if customModes["Random Item Mode"] == "Adult's Wallet":
+    if customModes[GeneratorOptionNames.RANDOMITEM] == "Adult's Wallet":
         wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,1,0,0,0,0]
-    if customModes["Random Item Mode"] == "Empty Bottle (Dampe's)":
+    if customModes[GeneratorOptionNames.RANDOMITEM] == "Empty Bottle (Dampe's)":
         wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,0,1,0,0,0]
-    if customModes["Random Item Mode"] == "Bunny Hood":
+    if customModes[GeneratorOptionNames.RANDOMITEM] == "Bunny Hood":
         wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,0,0,1,0,0]
-    if customModes["Random Item Mode"] == "Great Fairy's Sword":
+    if customModes[GeneratorOptionNames.RANDOMITEM] == "Great Fairy's Sword":
         wgtsStartingRandomItem = [0,0,0,0,0,0,0,0,0,0,0,0,1,0]    
-    if customModes["Random Item Mode"] == "Off":
+    if customModes[GeneratorOptionNames.RANDOMITEM] == "Off":
         wgtsStartingRandomItem = [100,0,0,0,0,0,0,0,0,0,0,0,0,0]
     catStartingRandomItem = random.choices(["None",
                                             "Deku Mask",
@@ -467,13 +347,13 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         startListString = AddEntryToListString(startListString,2,"2")
 
     wgtsFierceDeityAnywhere = [50,50]
-    if customModes["FD Anywhere Mode"] == "Only When Starting":
+    if customModes[GeneratorOptionNames.FDANYWHERE] == "Only When Starting":
         wgtsFierceDeityAnywhere = [100,0]
-    if customModes["FD Anywhere Mode"] == "Always" or catStartingRandomItem[0] == "Fierce Deity's Mask":
+    if customModes[GeneratorOptionNames.FDANYWHERE] == "Always" or catStartingRandomItem[0] == "Fierce Deity's Mask":
         wgtsFierceDeityAnywhere = [0,100]
-    if customModes["FD Anywhere Mode"] == "Off" or customModes["FD Anywhere Mode"] == "Off and Unshuffled":
+    if customModes[GeneratorOptionNames.FDANYWHERE] == "Off" or customModes[GeneratorOptionNames.FDANYWHERE] == "Off and Unshuffled":
         wgtsFierceDeityAnywhere = [100,0]
-        if customModes["FD Anywhere Mode"] == "Off and Unshuffled" and catStartingBossRemains[0] != "Mask Hunt":
+        if customModes[GeneratorOptionNames.FDANYWHERE] == "Off and Unshuffled" and catStartingBossRemains[0] != "Mask Hunt":
             itemListString = RemoveEntryFromListString(itemListString,7,"200000")   # unshuffle FD
             junkListString = RemoveEntryFromListString(junkListString,7,"200000")
     catFierceDeityAnywhere = random.choices(["Off","Active"], wgtsFierceDeityAnywhere)
@@ -481,17 +361,17 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         settings["AllowFierceDeityAnywhere"] = True
 
     wgtsEntrancesTemples = [50,50]
-    if customModes["Dungeon Entrances"] == "Off":
+    if customModes[GeneratorOptionNames.ERDUNGEON] == "Off":
         wgtsEntrancesTemples = [100,0]
-    if customModes["Dungeon Entrances"] == "Sometimes":
+    if customModes[GeneratorOptionNames.ERDUNGEON] == "Sometimes":
         wgtsEntrancesTemples = [50,50]
-    if customModes["Dungeon Entrances"] == "Always":
+    if customModes[GeneratorOptionNames.ERDUNGEON] == "Always":
         wgtsEntrancesTemples = [0,100]
     wgtsEntrancesBossRooms = [100,0]
     # wgtsEntrancesBossRooms = [70,30]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsEntrancesBossRooms = [100,0]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsEntrancesTemples = [100,0]
         #wgtsEntrancesBossRooms = [40,60]
     if catStartingBossRemains[0] == "Five Fairy Hunt":
@@ -511,9 +391,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                                                          "--2a8--")         # don't start with temple compasses; shuffle them instead
 
     wgtsKeysanityBossKeys = [100,0,0,0,0]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsKeysanityBossKeys = [100,0,0,0,0]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsKeysanityBossKeys = [100,0,0,0,0]
     if customModes["Boss Keys"] == "Off":
         wgtsKeysanityBossKeys = [100,0,0,0,0]
@@ -550,9 +430,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         settings["BossKeyMode"] = "KeepThroughTime"
 
     wgtsKeysanitySmallKeys = [60,0,40,0,0]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsKeysanitySmallKeys = [80,0,20,0,0]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsKeysanitySmallKeys = [40,0,60,0,0]
     if customModes["Small Keys"] == "Off":
         wgtsKeysanitySmallKeys = [100,0,0,0,0]
@@ -586,10 +466,10 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
 
     wgtsShopsanityChecks = [50,25,25]
     wgtsShopsanityPrices = [60,20,20]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsShopsanityChecks = [60,20,20]
         wgtsShopsanityPrices = [65,20,15]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsShopsanityChecks = [30,35,35]
         wgtsShopsanityPrices = [30,35,35]
     catShopsanityChecks = random.choices(["---",
@@ -599,18 +479,18 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     if catShopsanityChecks[0] == "Late Shopsanity":
         itemListString = AddStringToListString(itemListString,
                                                "-------------------------3--------3f000----")               # Goron + Zora + Milk Bar [8, 3r]
-        if customModes["Main Density Mode"] == "Light":
+        if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
             wgtsShopsanityPrices = [45,35,20]
-        elif customModes["Main Density Mode"] == "Super":
+        elif customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
             wgtsShopsanityPrices = [20,40,40]
         else:
             wgtsShopsanityPrices = [40,35,25]
     if catShopsanityChecks[0] == "Full Shopsanity":
         itemListString = AddStringToListString(itemListString,
                                                "-------------------------b03--------3ffff-80000000---")     # All purchases minus Swamp Scrub [24, 7r] 
-        if customModes["Main Density Mode"] == "Light":
+        if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
             wgtsShopsanityPrices = [25,50,25]
-        elif customModes["Main Density Mode"] == "Super":
+        elif customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
             wgtsShopsanityPrices = [10,45,45]
         else:
             wgtsShopsanityPrices = [20,50,30]
@@ -631,9 +511,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsSoilsanity = [55,45]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsSoilsanity = [70,30]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsSoilsanity = [35,65]
     catSoilsanity = random.choices(["---","Shuffled"],wgtsSoilsanity)
     if catSoilsanity[0] == "Shuffled":
@@ -643,9 +523,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsCowsanity = [55,45]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsCowsanity = [70,30]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsCowsanity = [35,65]
     catCowsanity = random.choices(["---","Shuffled"],wgtsCowsanity)
     if catCowsanity[0] == "Shuffled":
@@ -655,7 +535,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsStrayFairies = [0,55,45]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsStrayFairies = [0,40,60]
     if (catStartingBossRemains[0] == "Five Fairy Hunt" or catStartingBossRemains[0] == "Full Fairy Hunt"):
         wgtsStrayFairies = [0,0,100]
@@ -680,9 +560,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
                                                    "ffff-ffffffff-fff00000--")            
 
     wgtsScoopsanity = [65,35]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsScoopsanity = [75,25]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsScoopsanity = [40,60]
     if customModes["Scoopsanity"] == "Off":
         wgtsScoopsanity = [100,0]
@@ -704,9 +584,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsHitSpots = [65,35,0]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsHitSpots = [70,30,0]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsHitSpots = [35,50,15]
     catHitSpots = random.choices(["---", "One Rupee each", "All Rupees"], wgtsHitSpots)
     if catHitSpots[0] == "One Rupee each":
@@ -719,9 +599,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsTokensanity = [75,25,5]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsTokensanity = [85,15,0]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsTokensanity = [55,35,10]
     if catStartingBossRemains[0] == "Skull Tokens":
         wgtsTokensanity = [0,0,100]
@@ -746,9 +626,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsCratesAndBarrels = [55,45]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsCratesAndBarrels = [70,30]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsCratesAndBarrels = [40,60]
     catCratesAndBarrels = random.choices(["---","Shuffled"], wgtsCratesAndBarrels)
     if catCratesAndBarrels[0] == "Shuffled":
@@ -757,9 +637,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsKeatonGrass = [70,25,5]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsKeatonGrass = [75,25,0]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsKeatonGrass = [50,35,15]
     catKeatonGrass = random.choices(["---","Odd checks only","All shuffled"], wgtsKeatonGrass)
     if catKeatonGrass[0] == "Odd checks only":
@@ -772,9 +652,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsButterflyAndWellFairies = [60,40]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsButterflyAndWellFairies = [75,25]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsButterflyAndWellFairies = [35,65]
     catButterflyAndWellFairies = random.choices(["---","Shuffled"], wgtsButterflyAndWellFairies)
     if catButterflyAndWellFairies[0] == "Shuffled":
@@ -785,9 +665,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsGossipFairies = [55,0,45,0]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsGossipFairies = [75,0,45,0]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsGossipFairies = [35,0,65,0]
     catGossipFairies = random.choices(["---","Regional Gossips (no roads)","Regional Gossips","All Termina Gossips"], wgtsGossipFairies)
     if catGossipFairies[0] == "Regional Gossips (no roads)":
@@ -805,9 +685,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsFrogs = [75,25]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsFrogs = [80,20]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsFrogs = [50,50]
     #if hardOptions >= HARD_OPTIONS_LIMIT and (catLongQuests[0] == "Frog Choir" or catLongQuests[0] == "All Long Quests"):
     #    wgtsFrogs = [100,0]
@@ -825,9 +705,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsLooseRupeesOverworld = [50,15,20,15]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsLooseRupeesOverworld = [70,10,10,10]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsLooseRupeesOverworld = [30,20,20,30]
     catLooseRupeesOverworld = random.choices(["---",                                     
                                      "Overworld Red",
@@ -848,9 +728,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
             junkListString = AddEntryToListString(junkListString, 2, "40000")                       # junk Butler
     
     wgtsLooseRupeesTemple = [40,35,0,25]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsLooseRupeesTemple = [60,20,0,20]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsLooseRupeesTemple = [20,35,0,45]
     catLooseRupeesTemple = random.choices(["---",                                     
                                      "Temple Red",
@@ -871,9 +751,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsSnowsanity = [65,15,20,0]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsSnowsanity = [80,10,10,0]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsSnowsanity = [40,30,30,0]
     #if hardOptions >= HARD_OPTIONS_LIMIT:
     #    wgtsSnowsanity[1] += wgtsSnowsanity[2]
@@ -895,9 +775,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
     #                         0  1 2  A C S N W  E 
     wgtsPotsanityOverworld = [40,0,20,5,5,5,5,10,10]
     catPotsanityOverworld = 0
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsPotsanityOverworld = [44,0,0,0,8,8,8,16,16]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsPotsanityOverworld = [4,0,30,10,8,8,8,16,16]
     if customModes["Potsanity"] == "Off":
         wgtsPotsanityOverworld = [100,0,0,0,0,0,0,0,0]
@@ -976,9 +856,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
             settings["OverrideHintPriorities"][3].remove("CollectibleStrayFairyStoneTower7")    # unhint Stone Tower Wizzrobe
 
     wgtsPotsanityTemple = [50,50]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsPotsanityTemple = [75,25]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsPotsanityTemple = [25,75]
     if customModes["Potsanity"] == "Full Potsanity" or catPotsanityOverworld[0] == "All groups":
         wgtsPotsanityTemple = [0,100]
@@ -995,9 +875,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
 
     wgtsPhotosSales = [60,40]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsPhotosSales = [75,25]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsPhotosSales = [35,65]
     #if gossipHintsTakenByAlways >= GOSSIP_HINTS_LIMIT:
     #    wgtsPhotosSales[0] += wgtsPhotosSales[1]
@@ -1014,9 +894,9 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         nonzeroCategories += 1
        
     wgtsBombersNotebook = [75,10,15]
-    if customModes["Main Density Mode"] == "Light":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
         wgtsBombersNotebook = [80,20,0]
-    if customModes["Main Density Mode"] == "Super":
+    if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
         wgtsBombersNotebook = [50,20,30]
     #if hardOptions >= HARD_OPTIONS_LIMIT or gossipHintsTakenByAlways >= GOSSIP_HINTS_LIMIT:
     #    wgtsBombersNotebook[1] += wgtsBombersNotebook[2]
@@ -1154,32 +1034,22 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         print("  Output file: ", outputFilename,file=spoiler_file)
         if (CheckForCustom(customModes)):
             print(" ***       ALTERNATE MODES ACTIVE!       *** ",file=spoiler_file)
-            if (customModes["Goal Mode"] != "No Blitz"):
-                print("                Goal Mode: ", customModes["Goal Mode"],file=spoiler_file)
-            if (customModes["Direct to Credits"] or customModes["Goal Mode"] == "Five Fairy Hunt"):
-                print("                            (Direct to Credits is on)", file=spoiler_file)
-            if (customModes["Start Mode"] != "Kokiri or Swordless"):
-                print(" Starting Basic Gear Mode: ", customModes["Start Mode"],file=spoiler_file)
-            if (customModes["Song Layout"] != "Any"):
-                print("         Song Layout Mode: ", customModes["Song Layout"],file=spoiler_file)
-            if (customModes["All Moon Trials"]):
-                print("                                (Moon Oath Adds All Trials)", file=spoiler_file)
-            if (customModes["Early Moon Access Remains"] != 1 or customModes["Blitz Remains Count"]):
-                print("Early Moon Access Remains: ", customModes["Early Moon Access Remains"],file=spoiler_file)
-            if (customModes["Blitz Remains Count"]):
-                print("                                (Blitz Remains count)", file=spoiler_file)
-            if (customModes["Random Item Mode"] != "Any"):
-                print("          Start Item Mode: ", customModes["Random Item Mode"],file=spoiler_file)
-            if (customModes["FD Anywhere Mode"] != "Sometimes"):
-                print("         FD Anywhere Mode: ", customModes["FD Anywhere Mode"],file=spoiler_file)
-            if (customModes["Dungeon Entrances"] != "Sometimes"):
-                print("   Dungeon Entrances Mode: ", customModes["Dungeon Entrances"],file=spoiler_file)
-            if (customModes["Boss Keys"] != "Off"):
-                print("           Boss Keys Mode: ", customModes["Boss Keys"],file=spoiler_file)
+            if (customModes[GeneratorOptionNames.GOAL] != "No Blitz"):
+                print("                Goal Mode: ", customModes[GeneratorOptionNames.GOAL],file=spoiler_file)
+            if (customModes[GeneratorOptionNames.STARTGEAR] != "Kokiri or Swordless"):
+                print(" Starting Basic Gear Mode: ", customModes[GeneratorOptionNames.STARTGEAR],file=spoiler_file)
+            if (customModes[GeneratorOptionNames.SONGLAYOUT] != "Any"):
+                print("         Song Layout Mode: ", customModes[GeneratorOptionNames.SONGLAYOUT],file=spoiler_file)
+            if (customModes[GeneratorOptionNames.RANDOMITEM] != "Any"):
+                print("          Start Item Mode: ", customModes[GeneratorOptionNames.RANDOMITEM],file=spoiler_file)
+            if (customModes[GeneratorOptionNames.FDANYWHERE] != "Sometimes"):
+                print("         FD Anywhere Mode: ", customModes[GeneratorOptionNames.FDANYWHERE],file=spoiler_file)
+            if (customModes[GeneratorOptionNames.ERDUNGEON] != "Sometimes"):
+                print("   Dungeon Entrances Mode: ", customModes[GeneratorOptionNames.ERDUNGEON],file=spoiler_file)
             if (customModes["Small Keys"] != "Sometimes"):
                 print("          Small Keys Mode: ", customModes["Small Keys"],file=spoiler_file)
-            if (customModes["Main Density Mode"] != "Normal"):
-                print("        Main Density Mode: ", customModes["Main Density Mode"],file=spoiler_file)
+            if (customModes[GeneratorOptionNames.DENSITYMODE] != "Normal"):
+                print("        Main Density Mode: ", customModes[GeneratorOptionNames.DENSITYMODE],file=spoiler_file)
             if (NONZERO_CATEGORIES_MINIMUM != 7):
                 print("         Category Minimum: ", NONZERO_CATEGORIES_MINIMUM,file=spoiler_file)
             if (customModes["No Clock Town"]):
@@ -1209,14 +1079,14 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
             if (customModes["Sun's Song"]):
                 print("               Sun's Song: ", customModes["Sun's Song"],file=spoiler_file)
         print("=============================================",file=spoiler_file)
-        if customModes["Main Density Mode"] == "Light":
+        if customModes[GeneratorOptionNames.DENSITYMODE] == "Light":
             print(" ***        Light Mystery Active!        ***",file=spoiler_file)
             print("",file=spoiler_file)      
-        if customModes["Main Density Mode"] == "Super":
+        if customModes[GeneratorOptionNames.DENSITYMODE] == "Super":
             print(" ***        Super Mystery Active!        ***",file=spoiler_file)
             print("",file=spoiler_file)
         print("                Goal Mode: ", catStartingBossRemains[0],file=spoiler_file)
-        if (customModes["Direct to Credits"] or customModes["Goal Mode"] == "Five Fairy Hunt"):
+        if (customModes["Direct to Credits"] or customModes[GeneratorOptionNames.GOAL] == "Five Fairy Hunt"):
             print("                            (Direct to Credits)", file=spoiler_file)
         print("",file=spoiler_file)
         if catSongLayout[0] == "Moon Oath":
@@ -1226,7 +1096,7 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
         else:
             print("              Song Layout: ", catSongLayout[0],file=spoiler_file) 
         print("",file=spoiler_file)
-        if (customModes["Start Mode"] == "Default"):
+        if (customModes[GeneratorOptionNames.STARTGEAR] == "Default"):
             print("Starting Sword and Shield: ", catStartingSwordShield[0],file=spoiler_file)
         else:
             print("               Start Mode: ", catStartingSwordShield[0],file=spoiler_file)
@@ -1293,6 +1163,48 @@ def GenerateMysterySettings(inputFilename, customModes, outputSuffix="output"):
 
     return outputFilename
 
+# TEMP
+# Epona, FD, Interior + Grotto ER, Random Prices
+# temporaryListString = shuffleCheckStrings[(CategoryNames.BASELINE, ShuffleNames.BASE_CHECKS)]
+# temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.SHOPCHECKS, ShuffleNames.SHOP_C_THREE)])
+# temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.COWS, ShuffleNames.GENERIC_SHUFFLED)])
+# temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.HITSPOTS, ShuffleNames.HITS_SINGLE)])
+# temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.TOKENS, ShuffleNames.TOKENS_SSH)])
+# temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.CRATESANDBARRELS, ShuffleNames.GENERIC_SHUFFLED)])
+# temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.PALMTREES, ShuffleNames.GENERIC_SHUFFLED)])
+# temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.BUTTERFLYANDWELLFAIRIES, ShuffleNames.GENERIC_SHUFFLED)])
+# temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.LOOSERUPEESOVERWORLD, ShuffleNames.LOOSE_O_RB)])
+# temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.MUNDANES, ShuffleNames.GENERIC_SHUFFLED)])
+# print(temporaryListString)
+
+# TEMP
+# Songsanity, Sonata, Bow, Interior + Grotto + Dungeon ER, Small Keys, Shuffle Prices
+temporaryListString = shuffleCheckStrings[(CategoryNames.BASELINE, ShuffleNames.BASE_CHECKS)]
+temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.STRAYFAIRIES, ShuffleNames.STRAYS_FULL)])
+temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.SHOPCHECKS, ShuffleNames.SHOP_C_FULL)])
+temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.SOILS, ShuffleNames.GENERIC_SHUFFLED)])
+temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.PALMTREES, ShuffleNames.GENERIC_SHUFFLED)])
+temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.GOSSIPFAIRIES, ShuffleNames.GENERIC_SHUFFLED)])
+temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.LOOSERUPEESOVERWORLD, ShuffleNames.LOOSE_O_R)])
+temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.LOOSERUPEESTEMPLES, ShuffleNames.LOOSE_T_RBG)])
+temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.MUNDANES, ShuffleNames.GENERIC_SHUFFLED)])
+temporaryListString = AddStringToListString(temporaryListString, shuffleCheckStrings[(CategoryNames.SNOWBALLS, ShuffleNames.SNOW_SH)])
+print(temporaryListString)
+
+setupList = CreateSetupCategoryList()
+mainList = CreateMainCategoryList()
+ApplyWeights(setupList, mainList, OPTION_DEFAULTS)
+for s in setupList:
+    setupList[s].roll()
+    print(setupList[s].spoil())
+for m in mainList:
+    mainList[m].roll()
+    print(mainList[m].spoil())
+
+d = datetime.now(timezone.utc)
+print(f"{d.year}-{d.month:02}-{d.day:02}T{d.hour:02}-{d.minute:02}-{d.second:02}")
+#d.year d.month d.day d.hour d.minute d.second
+
 argParser = argparse.ArgumentParser(description="Randomly generates Mystery settings files for MMR.")
 argParser.add_argument("-n", dest="numberOfSettingsFiles",type=int,default=1,
                     help="create multiple settings/seeds at once")
@@ -1321,7 +1233,7 @@ optionRandomizerExe = args.randomizerExe
 optionWeightsFile = args.weightsFile
 optionOutputCount = args.numberOfSettingsFiles
 optionOutputMode = OutputModes.DESKTOPANDSEED if args.desktopOutput else (OutputModes.DESKTOP if args.desktopOutputNoSeed else OutputModes.WEB)
-optionCustomModes = MODE_DEFAULTS
+optionCustomModes = OPTION_DEFAULTS
 if optionWeightsFile != "0":
     with open(optionWeightsFile, 'r') as loadedWeightsFile:
         weightsFileDict = yaml.safe_load(loadedWeightsFile)
@@ -1337,16 +1249,28 @@ if (len(sys.argv) == 1 or (len(sys.argv) == 2 and args.guiDesktopMode)):
     optionOutputMode = guiResults[4]
     optionCustomModes = guiResults[5]
 
+try:
+    os.makedirs("output")
+except FileExistsError:
+    pass
+
 for i in range(optionOutputCount):
-    resultFilename = ''
-    consecutiveFailures = 0
-    while (resultFilename == ''):
-        resultFilename = GenerateMysterySettings(optionSettingsFile,optionCustomModes,(str)(i+1))
-        if (resultFilename == ''):
-            consecutiveFailures += 1
-            if (consecutiveFailures >= 10000):
-                print ("Exiting, couldn't meet category minimum after 10000 attempts")
-                sys.exit()
+    dest = "web" if optionOutputMode == OutputModes.WEB else "desktop"
+    d = datetime.now(timezone.utc)
+    timestamp = f"{d.year}-{d.month:02}-{d.day:02}T{d.hour:02}-{d.minute:02}-{d.second:02}"
+
+    outputFilename = "output\\Mystery_v6_0_0_" + dest + "_" + timestamp + ".json"
+    seedSettings: SettingsFile
+    if (optionOutputMode == OutputModes.WEB):
+        seedSettings = WebSettingsFile(optionSettingsFile, outputFilename)
+    else:
+        seedSettings = DesktopSettingsFile(optionSettingsFile, outputFilename)
+
+    seed = MysterySeed(seedSettings, optionCustomModes)
+    seed.build()
+    seed.write()
+    seed.spoil()
+    
     if (optionOutputMode == OutputModes.DESKTOPANDSEED):
-        mmrcl = optionRandomizerExe + " -outputpatch -spoiler -settings " + resultFilename
+        mmrcl = optionRandomizerExe + " -outputpatch -spoiler -settings " + outputFilename
         subprocess.call(mmrcl)

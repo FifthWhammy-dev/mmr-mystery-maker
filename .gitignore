@@ -1,5 +1,10 @@
 mysteryutils/__pycache__/MysteryMakerGUI.cpython-311.pyc
 mysteryutils/__pycache__/MysteryMakerGUI.cpython-312.pyc
-mysteryutils/Category.py
 output/
 mysteryutils/__pycache__/Definitions.cpython-312.pyc
+mysteryutils/__pycache__/__init__.cpython-312.pyc
+mysteryutils/__pycache__/Category.cpython-312.pyc
+mysteryutils/__pycache__/CategoryListGen.cpython-312.pyc
+mysteryutils/__pycache__/ListStringUtils.cpython-312.pyc
+mysteryutils/__pycache__/MysterySeed.cpython-312.pyc
+mysteryutils/__pycache__/SettingsFile.cpython-312.pyc
