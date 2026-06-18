@@ -278,7 +278,7 @@ class MysterySeed:
             if (usingCustomOptions):
                 print(" ***        CUSTOM OPTIONS ACTIVE!       *** ",file=spoiler_file)
                 for option in customOptions:
-                    print(f"{option:>28}: {self.options[option]}",file=spoiler_file)
+                    print(f"{option:>28}:  {self.options[option]}",file=spoiler_file)
             print("=============================================",file=spoiler_file)
             for s, sc in self.setupCategories.items():
                 print(sc.spoil(), file=spoiler_file)

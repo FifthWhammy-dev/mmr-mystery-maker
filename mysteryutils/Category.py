@@ -94,4 +94,4 @@ class Category:
         a = self.activeShuffle
         if a == "Off":
             a = "---"
-        return f"{self.categoryName:>28}: {a}"
+        return f"{self.categoryName:>28}:  {a}"
