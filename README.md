@@ -1,33 +1,27 @@
 # MMR Mystery Maker
 
 ## About 
-MMR Mystery Maker is a Python script (and now standalone .exe, thanks to [PyInstaller](https://pyinstaller.org/en/stable/index.html)) that generates semi-random "Mystery" settings files for [Majora's Mask Randomizer v1.16.0.12](https://github.com/ZoeyZolotova/mm-rando). 
+MMR Mystery Maker is a Python script (and now standalone .exe, thanks to [PyInstaller](https://pyinstaller.org/en/stable/index.html)) that generates semi-random "Mystery" settings files for [Majora's Mask Randomizer v2.0.0](https://github.com/ZoeyZolotova/mm-rando). 
 
-See the [Mystery Settings Document](https://docs.google.com/document/d/1Sty6gbtnH1n4etKx2ejit19MYtsMIVa08kPXt5aJQNY/edit?usp=sharing) and the [Category Weights and Hints spreadsheet](https://docs.google.com/spreadsheets/d/1chR1HI84BfIALG8FryDtHH8DhKTiASyuibOYxcwmvag/edit?usp=sharing) to learn more about of the Mystery settings. See the [changelog.md](https://github.com/FifthWhammy-dev/mmr-mystery-maker/blob/main/changelog.md) file for patch notes on the core settings, plus a listing of new generator options.
+See the [Mystery Settings Document](https://docs.google.com/document/d/12mhj69AdV0iKy1PaS5NGQe8uymU0GI4GfvuFm0e1h9A/edit?tab=t.0#heading=h.bvtowcexfe71) and the [Category Weights and Hints spreadsheet](https://docs.google.com/spreadsheets/d/19zn534gL0m5yOWUqYgzudsby1f7hX2CIR6Cu_eB1XWc/edit?gid=0#gid=0) to learn more about of the Mystery settings. See the [changelog.md](https://github.com/FifthWhammy-dev/mmr-mystery-maker/blob/main/changelog.md) file for patch notes on the core settings.
 
-The Mystery Maker script uses hard-coded categories and weights, applying them to an input JSON file to generate a new settings file. By default, the script then calls MMR.CLI.exe to generate a new seed using the settings.
+The Mystery Maker script uses hard-coded categories and weights, applying them to an input JSON file to generate a new settings file which can be uploaded to the [MMR 2.0 web generator](mmrandomizer.com).
 
 ## How to Use
 - Download the latest Mystery Maker release from the Releases section.
-- Extract MysteryMaker.exe and the .json files to the same folder as your MMR install. (You can run Mystery Maker elsewhere, but will have to manually select the base settings file and MMR.CLI.exe.)
-- Ensure your desired outputs are on in your MMR settings ("Patch .mmr" is recommended at minimum!), as that's how MMR.CLI.exe decides what to output. MMR will automatically apply your current outputs and cosmetic settings to seeds it generates; there's no need to manually save or create a new settings file.
-- Run MysteryMaker.exe and an options dialog will open. If it's in the same directory as MMR, you can just click Randomize in the options dialog to generate the seed.
+- Extract MysteryMaker.exe and the .json files to any folder.
+- Run MysteryMaker.exe and an options dialog will open.
+- Click "Make Mystery" to generate a settings file! By default, the core settings from the Mystery Settings Document are applied, but options are provided in the GUI if you wish.
 - When finished, check the "output" directory for your seed and Mystery spoiler.
 
 ### Command Line Options
-Command-line operation is available. Using any command-line option will bypass the options GUI and go straight to generation.
-
-New in v5.1: command-line operation can now use custom mode options from the GUI! To do this, save a .yml file from the Mystery Maker GUI with your desired generator options, then specify that file using **-w** on the command line.
+Command-line operation is available. Using any command-line option below will bypass the options GUI and go straight to generation.
 
 Current options (and their command-line equivalents):
 
 **Custom Base MMR Settings File (-i FILE, --input FILE)**: use FILE as the base settings file
 
-**Only Make Settings File (--settings-only)**: only generate a settings JSON and Mystery spoiler; don't make a seed using MMR.CLI.exe afterward
-
 **Number of Seeds (-n N)**: generate N seeds at a time; -n 5 would generate 5 seeds
-
-**Custom Path to MMR.CLI.exe (-r EXE, --randomizer-exe EXE)**: use EXE to create a seed after making the Mystery settings (useful if your MMR.CLI.exe in a different directory)
 
 **Custom Weights File (-w FILE, --weights-file FILE)**: load a .yml weights file to use different Mystery Maker generator options via the command line
 
