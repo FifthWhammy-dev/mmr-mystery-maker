@@ -133,7 +133,6 @@ class MysterySeed:
         enabledERs = []        
         if self.setupCategories[CategoryNames.ERINTERIOR].isActive():
             enabledERs.append("SimpleInteriors")
-            self.seed.addHintToTier("MaskAllNight", 1)
         if self.setupCategories[CategoryNames.ERGROTTO].isActive():
             enabledERs.append("Grottos")
         if self.setupCategories[CategoryNames.ERDUNGEON].isActive():
