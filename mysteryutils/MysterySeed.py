@@ -204,7 +204,7 @@ class MysterySeed:
                 random.shuffle(inactiveCategories)
                 for n in range(rerollBatchSize):
                     categoriesToRoll.append(inactiveCategories[0])
-                    inactiveCategories.remove(0)
+                    inactiveCategories.remove[0]
         
         # resolve separate roll for Single-House Tokens' spider house
         if self.mainCategories[CategoryNames.TOKENS].getActiveShuffle() == ShuffleNames.TOKENS_ONE:
