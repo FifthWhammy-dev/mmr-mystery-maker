@@ -1,36 +1,96 @@
 This changelog, covering Mystery Maker releases from Version 5.0 onward, is Markdown-formatted for better readability. Preceding Mystery Maker releases are discussed in the plaintext changelog.txt.
 
-# Mystery Maker release 5.2
+# Mystery Maker release 6.0
+This major Mystery Maker release not only adds support for MMR 2.0, but seeks to embrace its new possibilities for live racing as only Mystery can.
 
-**TODO!! This is in progress.**
+New 2.0 features making the leap to Mystery include Palm Trees, single-egg Baby Zoras, Minor Drops Sparkle, Grotto ER, and--most prominently--Simple Interiors ER. The design of the core settings has been altered significantly to accommodate these while keeping Mystery focused on providing a novel and enjoyable live racing experience.
 
-This minor Mystery Maker release makes final core settings adjustments for MMR 1.16, plus documentation and adjustments for additional generator options.
+These are *not* planned to be the final settings for Season 3 of the Mystery Tournament. Although the tournament settings are expected soon, Simple Interiors ER in particular merits further examination.
 
-Ideally, this will be the last significant Mystery Maker release targeting MMR 1.16. Mystery Maker Version 6.0 and onward will aim to support MMR 2.0!
+Mystery Maker now generates settings files which can be manually imported into the MMR 2.0 web app at **[mmrandomizer.com](mmrandomizer.com)**.
+
+## Core Settings Changes
+As a reminder, all changelog entries are relative to the previous releases of Mystery Maker, not necessarily to the Mystery Season 2 settings.
+
+### New Entrance Shuffles
+- **Simple Interiors ER** and **Grotto ER** are now possible in Mystery!
+- Both of these new entrance shuffles have weight 60. Furthermore, **at least one of the two will be active in each seed!**
+
+### Logic and Tricks
+- **Iceless Logic with FD** is no longer used.
+
+### Item and Check Pool
+- **Added Baby Zoras with *one egg*** to the base song check pool. The check is active in every seed using the Traditional song layout and is no longer always-hinted.
+- **Removed Skull Kid Song and Boss Blue Warp** from the song check pool. **Songsanity now removes all song checks from play when active.**
+- **Oath to Order** is now granted as a starting song by default, in addition to Soaring, Time, and Mystery's customary random starting song. Version 5 players, **the Moon Oath song layout does not return**: moon checks are again out of play in Mystery, and starting Oath no longer comes with any strings attached.
+- **Bomb Bag Purchase, Big Bomb Bag Purchase, and All-Night Mask Purchase are junked in all seeds.**
+- The two **overworld frogs** are added to the base check pool.
+- **Anju and Kafei** is now added to the base check pool in every seed, but **Gossip Stones is now always junked.** Anju and Kafei are always-hinted.
+- **The Chest Fairies in or requiring uninverted Stone Tower Temple are not in the base pool.** They can be added by the Extra Stray Fairies category.
+  - This actually occurred in Version 5, but was important enough to bear repeating here.
+
+### Hints
+- **Minor Item Sparkle** and **Detect Stray Fairies** are always on.
+- Mystery now uses **rotating always hints**. 4 or 5 Gossip slots will be devoted to these in each seed. Remember that in MMR 2.0, all always-hinted checks are eligible to receive items in every seed unless and until the allocated hint space is expended. The new always hint pool is:
+  - Anju and Kafei (plus any ribbon)
+  - Ranch Defense (plus any ribbon)
+  - Butler
+  - Boat Archery
+  - Goron Race
+  - Fisherman's Game
+  - Seahorses
+  - Escaping from Sakon's Hideout *(only if added by the Notebook Entries category)*
+- 3 Gossip slots are reserved for sometimes hints in each seed. New sometimes hints include Poe Hut, Gorman, Mountain Smithy Day 2, All-Night Mask Purchase *(Simple Interiors ER only)*, and Deliver the Pendant of Memories *(Notebook Entries only)*.
+- Added Town Archery as a backup hint, replacing Dog Race.
+
+### Category Reorganization
+- **Song Layout** can now only be **Traditional** (weight 65) or **Songsanity** (weight 35). Epona is much more likely to be the random starting song when Traditional is used (60 -> 90), and **song checks are now out of play when Songsanity is active**.
+- **Swordless Start** is removed (25 -> 0).
+- **FD Anywhere** is more likely (45 -> 60, plus when starting with FD).
+- **Dungeon ER** is more likely (50 -> 60).
+- The main category minimum is now 6 out of 16 (was 7 out of 17).
+- **New category: Palm Trees**. Roll into the palm trees in Great Bay Coast and Zora Cape!
+- **Removed category: Frogs** (was weight 25). The two overworld Frogs escape to join the base check pool and will now appear in every seed, but the two dungeon frogs and Frog Choir are no more.
+- **Removed category: Scoopsanity** (was weight 35).
+- **Stray Fairies** adds an intermediate shuffle: **Just Add Bubbles** (weight 30). This shuffles all dungeon Stray Fairy checks that are explicitly in bubbles, in addition to the usual core chest fairies. **All Stray Fairies** remains, but is much less likely (45 -> 15).
+- **Shopsanity**'s partial shuffle changes from Late Shopsanity to **Three-Item Shops**. This includes every remaining purchasable item in the Bomb Shop, Potion Shop, Goron Shop, and Zora Shop. It retains the same weight (25).
+- **Regional Gossip Fairies** still uses the set from Season 2. The list of checks is not impacted by the new ERs. Formally, the category is now defined to include Gossip Fairies that aren't in--*and cannot be in*--the Termina Field, Romani Ranch, or Milk Road regions. The category is more likely (45 -> 50).
+- **Overworld Loose Rupees** now **excludes the rupees from Butler Race Items and the two Termina Field guays**.
+- **Snowballs** has a new partial shuffle, replacing Version 5's Large Snowballs: **Snowhead Regions Only** (weight 20). This shuffles eligible non-owl snowballs in Path to Snowhead, Snowhead, and Snowhead Temple. Springtime is included. **Any-Day Snowballs** remains, but returns to its Season 2 weighting (20 -> 15).
+- **Potsanity** now uses only the **Temples and Side Dungeons** shuffle from Season 2 (that is, all pots in OSH, PF, IG, Shrine, Well, Castle, and the four temples). That shuffle is much more likely compared to Season 2 (20 -> 35), but **Full Potsanity is abolished** (was weight 10 in Season 2) alongside the directional scheme from Version 5.
+- **Notebook Entries** now excludes all entries that are alongside readily peekable base checks. These are the ribbons for Postman's Freedom, All-Night Mask Purchase, and all three Letter to Kafei conversation checks, plus Notebook Meeting: Kafei. Depositing the Letter to Kafei is still in play, though. The **Meetings Only** partial shuffle is more likely (10 -> 15).
+- Other categories have had some shuffle weights slightly adjusted:
+  - Soils (45 -> 40)
+  - single-rupee Hit Spots (35 -> 40)
+  - single-house Tokens (25 -> 30)
+  - Crates and Barrels (45 -> 50)
+  - Keaton Grass (25 -> 30)
+  - Photos, Sales, and Small Favors (40 -> 35)
 
 ## Generator Changes
-- Added generator_options.md to document generator options in detail.
-- Shortened generator tooltips.
+- **Mystery Maker has been *significantly* refactored under the hood!** This effort addressed technical debt that had built up over the past two years, paving the way for a clearer and more sustainable codebase.
+- The GUI now supports the MMR web app by default. Desktop support is still available, though not by default; use new command-line switches to access it.
+- To simplify Mystery Maker development and usage, some generator options have been removed, particularly those obsoleted by MMR 2.0. In general, generator options can now be applied independently of one another with fewer unexpected interactions. See generator_options.md for more. 
 
-### Goal Modes
-- Renamed **No Blitz 2** to **Random Blitz (0 or 1)**
-- Renamed **Two to Four Remains** to **Random Blitz (0, 1, or 2)**.
-- Moved **Any Three Remains** to below Remains Shuffle and Five Fairy Hunt.
-- Removed **Normal + Remains Shuffle** and **Grab Bag**.
+### Goal Tab
+- Added **Required Remains**, which sets remains needed for moon and Majora access. Applies to all win conditions!
+- Removed all Blitz options and most Long Goals. **Mask Hunt** remains.
+- Fairy Hunt now has a **Set Size** spinbox to alter how many fairies of each set are shuffled. **Required Remains** can be used to choose the desired number of sets to win.
+- Fairy Hunt and Mask Hunt no longer affect starting songs, WotHs, or foolishes.
+- Fairy Hunt no longer causes the Extra Stray Fairies category to be fully active by default. Extra Stray Fairies still decides which extra checks are in play, but the ineligible checks are junked instead of unshuffled.
 
-### Start Modes
-- Renamed **Start Difficulty** to **Starting Basic Gear**. Within **Starting Basic Gear**:
-  - Renamed the **Default** option to **Kokiri or Swordless**.
-  - Altered the **Fragile** option to no longer disable Crit Wiggle.
-  - Removed the **Cruel** option.
-- Added an **Any Non-Sword** option to **Starting Random Item**.
-- Added an **Off and Unshuffled** option to **FD Anywhere**.
+### Start Tab
+- Now has all start categories available to modify.
+- Added new Song Layout as a generator option exclusive: **Start with all songs**.
+- Added **Oath Start** and **Epona Start** toggles which each add their respective song as a bonus starting item (and unshuffle that song's vanilla song check).
+- Removed some options from **Starting Random Item**, **FD Anywhere**, and **Small Keys**.
+- Removed **Boss Keys**.
 
-### Density Modes
-- Renamed **Overworld Pots**' **Default** option to **Sometimes**.
-- Renamed **Scoopsanity**'s **Default** option to **Sometimes**.
-
-*Some housekeeping for the many generator options that have been added over the past 18 months.*
+### Checks Tab
+- Only the main density mode selection and the Category Minimum spinbox remain.
+- Light Mystery is removed.
+- Super Mystery now only affects main categories and no longer adds exclusive shuffles.
+- Added **Total Mystery**, which guarantees that all main categories will be active and use their largest shuffle! Total Mystery does not affect setup categories by default, but you're welcome to use the Setup tab for that.
 
 # Mystery Maker release 5.1.1
 This minor Mystery Maker release makes a core settings and FD legality change, plus some bug fixes and cleanup.

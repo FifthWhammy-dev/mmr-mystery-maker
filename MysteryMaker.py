@@ -1217,7 +1217,7 @@ argParser.add_argument("-w", "--weights-file", dest="weightsFile",default="0",
 argParser.add_argument("-d", "--desktop-output", dest="desktopOutput", action="store_true",
                     help="generate desktop settings instead of web settings, then make a seed with them using a local MMR CLI executable")
 argParser.add_argument("--desktop-output-no-seed", dest="desktopOutputNoSeed", action="store_true",
-                    help="generate desktop settings instead of web settings")
+                    help="generate desktop settings instead of web settings, but only make settings files")
 argParser.add_argument("--desktop-support-gui", dest="guiDesktopMode", action="store_true",
                     help="open the GUI, but with extra options for desktop MMR")
 argParser.add_argument("--version", dest="showVersion", action="store_true",
