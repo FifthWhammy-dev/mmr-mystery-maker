@@ -87,3 +87,7 @@ In Version 6, these density modes only impact main categories; they no longer ad
 This determines how many main categories must be active in the seed. When building settings files, Mystery Maker will reroll categories as needed until the category minimum is met. *6* is the default.
 
 See the Mystery Settings Document for an overview of the 16 main categories.
+
+### Exclude Checks
+
+This can remove checks from play by specifying an MMR item string. Checks in this string will be always junked if they are in the core check list and always unshuffled otherwise.

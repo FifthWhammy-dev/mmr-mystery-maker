@@ -91,6 +91,7 @@ As a reminder, all changelog entries are relative to the previous releases of My
 - Light Mystery is removed.
 - Super Mystery now only affects main categories and no longer adds exclusive shuffles.
 - Added **Total Mystery**, which guarantees that all main categories will be active and use their largest shuffle! Total Mystery does not affect setup categories by default, but you're welcome to use the Setup tab for that.
+- Added **Exclude Checks**, which allows removing checks from play by specifying an MMR item string.
 
 # Mystery Maker release 5.1.1
 This minor Mystery Maker release makes a core settings and FD legality change, plus some bug fixes and cleanup.

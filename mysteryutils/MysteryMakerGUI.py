@@ -35,6 +35,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
         startSmallKeysMode.set(OPTION_DEFAULTS[GeneratorOptionNames.SMALLKEYS])
         mainDensityMode.set(OPTION_DEFAULTS[GeneratorOptionNames.DENSITYMODE])
         densityCategoryMinimum.set(str(OPTION_DEFAULTS[GeneratorOptionNames.CATEGORYMINIMUM]))
+        excludeChecksMode.set(str(OPTION_DEFAULTS[GeneratorOptionNames.EXCLUDECHECKS]))
         resetButton.state(["disabled"])
 
     def guiLoadWeightsFile(*args):
@@ -77,7 +78,8 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
                 startDungeonERMode.get() == OPTION_DEFAULTS[GeneratorOptionNames.ERDUNGEON] and
                 startSmallKeysMode.get() == OPTION_DEFAULTS[GeneratorOptionNames.SMALLKEYS] and
                 mainDensityMode.get() == OPTION_DEFAULTS[GeneratorOptionNames.DENSITYMODE] and
-                densityCategoryMinimum.get() == str(OPTION_DEFAULTS[GeneratorOptionNames.CATEGORYMINIMUM]))
+                densityCategoryMinimum.get() == str(OPTION_DEFAULTS[GeneratorOptionNames.CATEGORYMINIMUM]) and
+                excludeChecksMode.get() == str(OPTION_DEFAULTS[GeneratorOptionNames.EXCLUDECHECKS]))
     
     def createSettingsDict(*args):
         cmSettings = dict()
@@ -96,6 +98,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
         cmSettings[str(GeneratorOptionNames.SMALLKEYS)] = startSmallKeysMode.get()
         cmSettings[str(GeneratorOptionNames.DENSITYMODE)] = mainDensityMode.get()
         cmSettings[str(GeneratorOptionNames.CATEGORYMINIMUM)] = int(densityCategoryMinimum.get())
+        cmSettings[str(GeneratorOptionNames.EXCLUDECHECKS)] = excludeChecksMode.get()
         
         return cmSettings
     
@@ -115,6 +118,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
         startSmallKeysMode.set(modesDict[GeneratorOptionNames.SMALLKEYS])
         mainDensityMode.set(modesDict[GeneratorOptionNames.DENSITYMODE])
         densityCategoryMinimum.set(str(modesDict[GeneratorOptionNames.CATEGORYMINIMUM]))
+        excludeChecksMode.set(modesDict[GeneratorOptionNames.EXCLUDECHECKS])
 
     def updateModeTabs(*args):                             
         if checkDefaults():
@@ -353,11 +357,13 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
     startDungeonER_tip = Hovertip(startDungeonER_combo, "Choose a Dungeon ER option.\nAffected entrances are WFT, SHT, GBT, and inverted STT.")
     startSmallKeys_tip = Hovertip(startSmallKeys_combo, "Choose a Small Keys option.")
 
-    # Density Modes pane
+    # Checks pane
     mainDensityMode = StringVar(value=OPTION_DEFAULTS[GeneratorOptionNames.DENSITYMODE])
     densityCategoryMinimum = StringVar(value=str(OPTION_DEFAULTS[GeneratorOptionNames.CATEGORYMINIMUM]))
+    excludeChecksMode = StringVar(value=str(OPTION_DEFAULTS[GeneratorOptionNames.EXCLUDECHECKS]))
     mainDensityMode.trace_add("write", updateModeTabs)
     densityCategoryMinimum.trace_add("write", updateModeTabs)
+    excludeChecksMode.trace_add("write", updateModeTabs)
     
     densityNormal_radio = ttk.Radiobutton(modeTabDensityMode, text="Normal", variable=mainDensityMode, value=DensityNames.NORMAL)
     densitySuper_radio = ttk.Radiobutton(modeTabDensityMode, text="Super Mystery", variable=mainDensityMode, value=DensityNames.SUPER)
@@ -365,17 +371,22 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
     densityCategoryMinimum_label = ttk.Label(modeTabDensityMode, text="Category Minimum: ")
     densityCategoryMinimum_spinbox = ttk.Spinbox(modeTabDensityMode, width=3, from_=0, to=16, textvariable=densityCategoryMinimum)
     densityCategoryMinimum_spinbox.state(["readonly"])
+    excludeChecks_label = ttk.Label(modeTabDensityMode, text="Exclude Checks: ")
+    excludeChecks_entry = ttk.Entry(modeTabDensityMode, width=70, textvariable=excludeChecksMode)
 
     densityNormal_radio.grid(column=1, row=1, sticky=(W,E))
     densitySuper_radio.grid(column=2, row=1, sticky=(W,E))
     densityTotal_radio.grid(column=3, row=1, sticky=(W,E))
     densityCategoryMinimum_label.grid(column=1, row=2, sticky=(W,E))
     densityCategoryMinimum_spinbox.grid(column=2, row=2, sticky=(W))
-
+    excludeChecks_label.grid(column=1, row=3, sticky=(W,E))
+    excludeChecks_entry.grid(column=2, columnspan=2, row=3, sticky=(W,E))
+    
     densityNormal_tip = Hovertip(densityNormal_radio, "Baseline appearance rates for all main categories.")
     densitySuper_tip = Hovertip(densitySuper_radio, "Dramatically increased appearance rates for all main categories.")
     densityTotal_tip = Hovertip(densityTotal_radio, "All main categories are fully in play!")
-    densityCategoryMinimum_tip = Hovertip(densityCategoryMinimum_spinbox,"Modifies the minimum number of active categories.\nMystery Maker will reroll until this minimum is met.")
+    densityCategoryMinimum_tip = Hovertip(densityCategoryMinimum_spinbox,"Modifies the minimum number of active categories. Mystery Maker will reroll in batches until this minimum is met.")
+    excludeChecks_tip = Hovertip(excludeChecks_entry, "MMR item string representing checks to exclude. These are guaranteed to be junked or unshuffled as appropriate.")
 
     for child in mainframe.winfo_children(): 
         child.grid_configure(padx=5, pady=5)

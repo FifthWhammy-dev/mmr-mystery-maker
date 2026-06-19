@@ -251,6 +251,12 @@ class MysterySeed:
         if self.mainCategories[CategoryNames.NOTEBOOKENTRIES].isActive():
             startList = AddStringToListString(startList, startItemStrings[ItemNames.ITEM_NOTEBOOK])
 
+        # apply the Excluded Checks string (junk Excluded Checks that are in the core check list, unshuffle Excluded Checks that aren't in the core check list)
+        baselineStringOverlap = GetListStringOverlap(shuffleCheckStrings[(CategoryNames.BASELINE, ShuffleNames.BASE_CHECKS)], self.options[GeneratorOptionNames.EXCLUDECHECKS])
+        excludeMinusBaselineStringOverlap = RemoveStringFromListString(self.options[GeneratorOptionNames.EXCLUDECHECKS], baselineStringOverlap)
+        junkList = AddStringToListString(junkList, baselineStringOverlap)
+        checkPool = RemoveStringFromListString(checkPool, excludeMinusBaselineStringOverlap)
+
         # restore item strings to settings files
         self.seed.setBasicSetting("CustomStartingItemListString", startList)
         self.seed.setBasicSetting("CustomItemListString", checkPool)
@@ -284,6 +290,7 @@ class MysterySeed:
             print("", file=spoiler_file)
             for m, mc in self.mainCategories.items():
                 print(mc.spoil(), file=spoiler_file)
+            
 
 
 

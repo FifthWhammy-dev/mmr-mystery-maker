@@ -34,6 +34,7 @@ class GeneratorOptionNames(StrEnum):
     SMALLKEYS = "Small Keys Choice"
     DENSITYMODE = "Density Mode"
     CATEGORYMINIMUM = "Category Minimum"
+    EXCLUDECHECKS = "Exclude Checks"
 
 class CategoryNames(StrEnum):
     BASELINE = "Base"
@@ -176,6 +177,7 @@ OPTION_DEFAULTS[GeneratorOptionNames.ERDUNGEON] = ShuffleNames.GENERIC_RANDOM
 OPTION_DEFAULTS[GeneratorOptionNames.SMALLKEYS] = ShuffleNames.GENERIC_RANDOM
 OPTION_DEFAULTS[GeneratorOptionNames.DENSITYMODE] = DensityNames.NORMAL
 OPTION_DEFAULTS[GeneratorOptionNames.CATEGORYMINIMUM] = 6
+OPTION_DEFAULTS[GeneratorOptionNames.EXCLUDECHECKS] = "-------------------------------------"
 
 # item strings for main category shuffles
 shuffleCheckStrings = {}

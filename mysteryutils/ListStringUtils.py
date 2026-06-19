@@ -42,7 +42,7 @@ def AddStringToListString(liststring, newstring):
             if newstringWords[i] == '':
                 newstringWords[i] = '0'
             liststringWords[i] = hex(int(liststringWords[i],16) |
-                                     int(newstringWords[i],16))[2:]
+                                 int(newstringWords[i],16))[2:]
             if liststringWords[i] == '0':
                 liststringWords[i] = ''
     return "-".join(liststringWords)
@@ -57,8 +57,8 @@ def RemoveStringFromListString(liststring, newstring):
             if newstringWords[i] == '':
                 newstringWords[i] = '0'
             liststringWords[i] = hex((int(liststringWords[i],16) ^
-                                     int(newstringWords[i],16)) &
-                                     int(liststringWords[i],16))[2:]
+                                    int(newstringWords[i],16)) &
+                                    int(liststringWords[i],16))[2:]
             if liststringWords[i] == '0':
                 liststringWords[i] = ''
     return "-".join(liststringWords)
@@ -75,3 +75,19 @@ def CheckStringInListString(liststring, newstring):
             if (int(liststringWords[i],16) | int(newstringWords[i],16)) != int(liststringWords[i],16):
                 return False
     return True
+
+def GetListStringOverlap(liststring, newstring) -> str:
+    liststringWords = liststring.split("-")
+    newstringWords = newstring.split("-")
+    resultstringWords = []
+    for i in range(min([len(liststringWords),len(newstringWords)])):
+        resultstringWords.append('')
+        if (liststringWords[i] != '' or newstringWords[i] != ''):
+            if liststringWords[i] == '':
+                liststringWords[i] = '0'
+            if newstringWords[i] == '':
+                newstringWords[i] = '0'
+            resultstringWords[i] = hex(int(liststringWords[i],16) & int(newstringWords[i],16))[2:]
+            if resultstringWords[i] == "0":
+                resultstringWords[i] = ''
+    return "-".join(resultstringWords)

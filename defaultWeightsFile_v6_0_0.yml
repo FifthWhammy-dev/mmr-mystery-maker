@@ -3,6 +3,7 @@ options:
   Category Minimum: 6
   Density Mode: Normal
   Dungeon ER Choice: Random
+  Exclude Checks: '-------------------------------------'
   FD Anywhere Choice: Random
   Fairy Set Size: 5
   Free Epona's Song: false
