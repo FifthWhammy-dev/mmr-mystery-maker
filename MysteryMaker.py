@@ -1,5 +1,3 @@
-import json
-import random
 import subprocess
 import argparse
 import os
@@ -8,7 +6,6 @@ import yaml
 from datetime import datetime, timezone
 from mysteryutils.MysteryMakerGUI import openOptionsGui
 from mysteryutils.Definitions import *
-from mysteryutils.CategoryListGen import CreateSetupCategoryList, CreateMainCategoryList, ApplyWeights
 from mysteryutils.ListStringUtils import *
 from mysteryutils.SettingsFile import SettingsFile, DesktopSettingsFile, WebSettingsFile
 from mysteryutils.MysterySeed import MysterySeed
@@ -16,7 +13,7 @@ from mysteryutils.MysterySeed import MysterySeed
 argParser = argparse.ArgumentParser(description="Randomly generates Mystery settings files for MMR.")
 argParser.add_argument("-n", dest="numberOfSettingsFiles",type=int,default=1,
                     help="create multiple settings/seeds at once")
-argParser.add_argument("-i", "--input", dest="inputFile",default="Mystery_Settings_base_v5_1_1.json",
+argParser.add_argument("-i", "--input", dest="inputFile",default=("Mystery_Settings_base_" + MYSTERY_MAKER_VERSION_FILENAME + ".json"),
                     help="base MMR settings file")
 argParser.add_argument("-r", "--randomizer-exe", dest="randomizerExe",default="MMR.CLI.exe",
                     help="custom MMR command-line executable, used only with --desktop-output")
@@ -63,7 +60,6 @@ except FileExistsError:
     pass
 
 for i in range(optionOutputCount):
-    print(i)
     dest = "web" if optionOutputMode == OutputModes.WEB else "desktop"
     d = datetime.now(timezone.utc)
     timestamp = f"{d.year}-{d.month:02}-{d.day:02}T{d.hour:02}-{d.minute:02}-{d.second:02}"
