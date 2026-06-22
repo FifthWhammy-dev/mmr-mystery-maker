@@ -1,5 +1,21 @@
 This changelog, covering Mystery Maker releases from Version 5.0 onward, is Markdown-formatted for better readability. Preceding Mystery Maker releases are discussed in the plaintext changelog.txt.
 
+# Mystery Maker release 6.0.1
+This minor Mystery Maker release makes some settings fixes.
+
+# Core Settings Changes
+
+### Item and Check Pool
+- **Skulltula tokens are no longer starting items.**
+
+*This late change was an attempt to keep the item pool cleaner, but made identifying token shuffles more difficult while creating odd behavior in seeds that didn't shuffle the token checks.*
+
+### Category Organization
+- **It's no longer guaranteed to have one of the new ERs (Simple Interiors and Grottos) in every seed.**
+
+*A desire to get the new ERs experienced more often for testing motivated this special rule. However, newcomers to Mystery may greatly appreciate seeds without any entrance shuffles, so it's important that those can still be officially possible Mystery seeds as Mystery seeks to attract and grow its audience for MMR 2.0. Hand-picking entrance shuffles may be preferable for testing-focused seeds anyway.*
+
+
 # Mystery Maker release 6.0
 This major Mystery Maker release not only adds support for MMR 2.0, but seeks to embrace its new possibilities for live racing as only Mystery can.
 

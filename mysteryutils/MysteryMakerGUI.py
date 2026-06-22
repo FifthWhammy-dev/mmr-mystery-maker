@@ -145,7 +145,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
         outputMode_combo.state(["readonly"])
         outputMode_tip = Hovertip(outputMode_combo, "The desired output. This release of Mystery Maker only supports MMR 2.0.")
 
-    baseSettingsFilePath = StringVar(value="Mystery_Settings_base_v6_0_0.json")
+    baseSettingsFilePath = StringVar(value=("Mystery_Settings_base_" + MYSTERY_MAKER_VERSION_FILENAME + ".json"))
     ttk.Label(mainframe, text="Custom base MMR settings file:").grid(column=1, row=3, sticky=E)
     baseSettingsFilePath_entry = ttk.Entry(mainframe, width=70, textvariable=baseSettingsFilePath)
     baseSettingsFilePath_entry.grid(column=2, row=3, columnspan=3, sticky=(W, E))

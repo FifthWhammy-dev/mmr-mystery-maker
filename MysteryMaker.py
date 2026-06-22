@@ -69,7 +69,7 @@ for i in range(optionOutputCount):
     timestamp = f"{d.year}-{d.month:02}-{d.day:02}T{d.hour:02}-{d.minute:02}-{d.second:02}"
     if optionOutputCount > 1:
         timestamp += f"S{i+1:0{len(str(optionOutputCount))}}"
-    outputFilename = "output\\Mystery_v6_0_0_" + dest + "_" + timestamp + ".json"
+    outputFilename = "output\\Mystery_" + MYSTERY_MAKER_VERSION_FILENAME + "_" + dest + "_" + timestamp + ".json"
     seedSettings: SettingsFile
     if (optionOutputMode == OutputModes.WEB):
         seedSettings = WebSettingsFile(optionSettingsFile, outputFilename)
