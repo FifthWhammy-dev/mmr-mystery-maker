@@ -71,7 +71,7 @@
     "EntranceMode": "Default",
     "EnemyMode": "Default",
     "CustomItemListString": "1800-------------------------40c-80b003f0-7f003800---3fffff-ffffffff-ffffffff-f0000000-7ffffdfa-7fffffff-ffffffff-ffffffff",
-    "CustomStartingItemListString": "20fff-ffffffff-ffffffff-ffffffff-fff1fbfe-5800000-",
+    "CustomStartingItemListString": "20fff-ffffffff-ffff0000--1fbfe-d800000-2",
     "RandomStartingItemGroups": [],
     "CustomJunkLocationsString": "------------------------------3e0000----2-80c00400-194f0201-9000f021",
     "TrapAmount": "None",
