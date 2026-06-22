@@ -100,14 +100,6 @@ class MysterySeed:
         if (self.setupCategories[CategoryNames.STARTINGITEM].getActiveShuffle() == ShuffleNames.ITEM_FD and
               self.options[GeneratorOptionNames.FDANYWHERE] != ShuffleNames.GENERIC_OFF):
             self.setupCategories[CategoryNames.FDANYWHERE].setActiveShuffle(ShuffleNames.FD_ON)
-
-        # resolve "new ER guarantee" if needed (and not prevented by options)
-        if (not self.setupCategories[CategoryNames.ERINTERIOR].isActive() and not self.setupCategories[CategoryNames.ERGROTTO].isActive() and
-              self.options[GeneratorOptionNames.ERINTERIOR] == ShuffleNames.GENERIC_RANDOM and self.options[GeneratorOptionNames.ERGROTTO] == ShuffleNames.GENERIC_RANDOM):
-            guaranteedERCandidates = [CategoryNames.ERINTERIOR, CategoryNames.ERGROTTO]
-            guaranteedERWeights = [self.setupCategories[CategoryNames.ERINTERIOR].getWeight(ShuffleNames.GENERIC_SHUFFLED),
-                                   self.setupCategories[CategoryNames.ERGROTTO].getWeight(ShuffleNames.GENERIC_SHUFFLED)]
-            self.setupCategories[random.choices(guaranteedERCandidates, guaranteedERWeights)[0]].setActiveShuffle(ShuffleNames.GENERIC_SHUFFLED)
         
         # apply setup categories
         match self.setupCategories[CategoryNames.SONGLAYOUT].getActiveShuffle():

@@ -66,8 +66,6 @@ These determine how each of Simple Interiors ER, Grotto ER, Dungeon ER, or Small
 - **Random**: This category is randomly off or active, per the default weights.
 - **Shuffled**: This category is guaranteed to be active.
 
-Version 6's special provision guaranteeing at least one of Simple Interiors ER or Grotto ER in every seed will *not* be applied if an option other than **Random** is used for either of those categories.
-
 ## Checks 
 
 This tab contains options that affect Mystery's main categories.
