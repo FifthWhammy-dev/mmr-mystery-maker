@@ -302,7 +302,6 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
     startInteriorsER_combo = ttk.Combobox(modeTabStartMode, textvariable=startInteriorsERMode, width=25)
     startInteriorsER_label = ttk.Label(modeTabStartMode, text="Simple Interiors ER: ")
     startInteriorsER_combo["values"] = (ShuffleNames.GENERIC_OFF,
-                                        ShuffleNames.GENERIC_RANDOM,
                                         ShuffleNames.GENERIC_SHUFFLED)
     startInteriorsER_combo.state(["readonly"])
     
