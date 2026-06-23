@@ -18,6 +18,9 @@ class MysterySeed:
         self.setupCategories: dict[str, Category] = {}
         self.mainCategories: dict[str, Category] = {}
 
+        self.mainCategoryCount = 0
+        self.rerollsUsed = 0
+
     def build(self):
         # build category lists
         self.setupCategories = CreateSetupCategoryList()
@@ -137,7 +140,7 @@ class MysterySeed:
             self.seed.removeHintFromTier("ItemIceArrow", 2)
             self.seed.addHintToTier("ItemIceArrow", 1)
         
-        # prepare active categories for rolling
+        # prepare active categories for rolling (the two-set categories only get represented once here)
         mainCategoryMinimum = self.options[GeneratorOptionNames.CATEGORYMINIMUM]
         if mainCategoryMinimum < 0:
             mainCategoryMinimum = 0
@@ -197,7 +200,10 @@ class MysterySeed:
                 for n in range(rerollBatchSize):
                     categoriesToRoll.append(inactiveCategories[0])
                     inactiveCategories.pop(0)
-        
+                self.rerollsUsed += 1
+
+        self.mainCategoryCount = len(activeCategories)
+
         # resolve separate roll for Single-House Tokens' spider house
         if self.mainCategories[CategoryNames.TOKENS].getActiveShuffle() == ShuffleNames.TOKENS_ONE:
             houseCandidates = [ShuffleNames.TOKENS_SSH,
@@ -278,10 +284,14 @@ class MysterySeed:
                     print(f"{option:>28}:  {self.options[option]}",file=spoiler_file)
             print("=============================================",file=spoiler_file)
             for s, sc in self.setupCategories.items():
-                print(sc.spoil(), file=spoiler_file)
+                if not sc.isHidden():
+                    print(sc.spoil(), file=spoiler_file)
             print("", file=spoiler_file)
             for m, mc in self.mainCategories.items():
-                print(mc.spoil(), file=spoiler_file)
+                if not sc.isHidden():
+                    print(mc.spoil(), file=spoiler_file)
+            print("---------------------------------------------",file=spoiler_file)
+            print(f"{"Main category count":>28}: {self.mainCategoryCount}",file=spoiler_file)
             
 
 

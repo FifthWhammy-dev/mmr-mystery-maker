@@ -34,13 +34,12 @@ class Shuffle:
         return self.itemString
 
 class Category:
-    
-    
     def __init__(self, name: str, description: str):
         self.categoryName = name
         self.description = description
         self.shuffles: dict[str, Shuffle] = {}
         self.activeShuffle = ShuffleNames.GENERIC_OFF
+        self.hidden = False
 
     def defineShuffle(self, newShuffle: Shuffle):
         self.shuffles[newShuffle.getName()] = newShuffle
@@ -63,6 +62,12 @@ class Category:
     
     def getWeight(self, shuffle: str) -> int:
         return self.shuffles[shuffle].getWeight()
+    
+    def setHidden(self, val: bool):
+        self.hidden = val
+    
+    def isHidden(self) -> bool:
+        return self.hidden
     
     def modifyWeight(self, shuffle: str, weightMod: int):
         self.shuffles[shuffle].modifyWeight(weightMod)
