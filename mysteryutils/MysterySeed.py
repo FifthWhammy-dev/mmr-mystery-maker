@@ -140,6 +140,8 @@ class MysterySeed:
             enabledERs.append("SimpleInteriors")
         if self.setupCategories[CategoryNames.ERGROTTO].isActive():
             enabledERs.append("Grottos")
+            self.seed.removeHintFromTier("MundaneItemDekuPlaygroundPurpleRupee", 2)
+            self.seed.addHintToTier("MundaneItemDekuPlaygroundPurpleRupee", 1)
         if self.setupCategories[CategoryNames.ERDUNGEON].isActive():
             enabledERs.append("DungeonEntrances")
         if len(enabledERs) > 0:

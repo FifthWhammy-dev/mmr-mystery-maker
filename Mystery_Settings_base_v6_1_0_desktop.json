@@ -132,7 +132,6 @@
       ],
       [
         "UpgradeGildedSword",
-        "HeartPiecePoeHut",
         "HeartPieceOceanSpiderHouse",
         "MaskCircusLeader",
         "ItemWellCowMilk",
@@ -166,7 +165,9 @@
         "NotebookMovingGorman",
         "NotebookPromiseKamaro",
         "NotebookSaveInvisibleSoldier",
-        "CollectableSwampSpiderHouseTreeRoomGossipFairy1"
+        "CollectableSwampSpiderHouseTreeRoomGossipFairy1",
+        "HeartPiecePoeHut",
+        "MundaneItemDekuPlaygroundPurpleRupee"
       ]
     ],
     "OverrideImportanceIndicatorTiers": [
