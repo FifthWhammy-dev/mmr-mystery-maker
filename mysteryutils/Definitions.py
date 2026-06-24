@@ -188,7 +188,7 @@ OPTION_DEFAULTS[GeneratorOptionNames.EXCLUDECHECKS] = "-------------------------
 shuffleCheckStrings = {}
 
 shuffleCheckStrings[(CategoryNames.BASELINE, ShuffleNames.BASE_CHECKS)] = "1800-------------------------40c-80b003f0-7f003800---3fffff-ffffffff-ffffffff-f0000000-7ffffdfa-7fffffff-ffffffff-ffffffff"
-shuffleCheckStrings[(CategoryNames.BASELINE, ShuffleNames.BASE_JUNKED)] = "------------------------------3e0000----2-80c00400-194f0201-9000f021"
+shuffleCheckStrings[(CategoryNames.BASELINE, ShuffleNames.BASE_JUNKED)] = "------------------------------3e0000----2-80800000-194f0201-8000f001"
 shuffleCheckStrings[(CategoryNames.BASELINE, ShuffleNames.BASE_REMAINS)] = "-----f00000--------------------------------"
 shuffleCheckStrings[(CategoryNames.BASELINE, ShuffleNames.BASE_DGFREWARDS)] = "-------------------------------------f000"
 
