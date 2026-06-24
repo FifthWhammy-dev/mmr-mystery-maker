@@ -1,4 +1,4 @@
-mystery_maker_version: v6.0.1
+mystery_maker_version: v6.1.0
 options:
   Category Minimum: 6
   Density Mode: Normal
@@ -11,7 +11,7 @@ options:
   Goal: Remains on Bosses
   Grottos ER Choice: Random
   Required Remains: 4
-  Simple Interiors ER Choice: Random
+  Simple Interiors ER Choice: Off
   Small Keys Choice: Random
   Song Layout Choice: Random
   Starting Basic Gear Choice: Kokiri

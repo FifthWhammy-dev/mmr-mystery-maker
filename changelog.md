@@ -1,5 +1,48 @@
 This changelog, covering Mystery Maker releases from Version 5.0 onward, is Markdown-formatted for better readability. Preceding Mystery Maker releases are discussed in the plaintext changelog.txt.
 
+# Mystery Maker release 6.1.0
+This Mystery Maker release removes Simple Interiors ER from the core settings. The shuffle retains available as a generator option.
+
+## Core Settings Changes
+
+### New Entrance Shuffles
+- **Simple Interiors ER removed (was weight 60).**
+
+*While featuring new MMR capabilities is a proud Mystery tradition, the core Mystery settings are still intended to produce seeds of suitable length, complexity, and reliability for live racing. Simple Interiors' fitness under all three of those criteria is in serious question in light of feedback, logical analysis, and actual play from multiple experienced Mystery players. It's uncertain that those concerns can be addressed in a way that Simple Interiors will work for Season 3, so our testing resources are best spent on other aspects of Mystery to ensure that the settings are ready.*
+
+*Simple Interiors is still available as a generator option in Mystery Maker. I encourage trying it out! Even if the shuffle is not tournament-viable yet, its seeds present a special experience.*
+
+### Item and Check Pool
+- **Bomb Bag Purchase**, **Big Bomb Bag Purchase**, and **All-Night Mask Purchase** are no longer junked. They are back in play in all seeds.
+
+*Simple Interiors' shuffling of the Bomb Shop and Curiosity Shop was the culprit for the junking of these checks.*
+
+### Hints
+- **Poe Hut** is now a backup hint instead of a sometimes hint.
+- **Deku Playground Any Day** is added to the backup hint list and promoted to a sometimes hint whenever Grotto ER is active.
+
+*Poe Hut's sometimes slot was owed to Simple Interiors being able to make it a Sphere 0 check. That's no longer an issue, so Deku Playground takes its place for now. While Loose Rupees can make that grotto dense and can require Deku, the Rupees are peekable without needing Deku.*
+
+*An aside: with the current hint lists as intended, it is again possible, but highly rare, for a Gossip Stone to get a backup hint.*
+
+### Main Categories
+- **Extra Stray Fairies:** All Stray Fairies is more likely. (15 -> 25)
+- **Loose Rupees: Temples:** Temple Reds is more likely. (30 -> 35)
+
+*Uninverted Stone Tower Temple being able to be almost anywhere meant that its checks became much more potent on average and the weights needed to compensate. With Simple Interiors gone, some reversion is in order, though the new Just Add Bubbles shuffle will remain as an option.*
+
+## Generator Changes
+- **Mystery spoiler files list the main category count again.**
+
+## Bug Fixes
+- **Fixed Starting Basic Gear generator option not actually doing anything.** Also renamed "Swordless" to "No sword or shield" to be clearer in the GUI. 
+- **Removed Bow and Epona's Song from the base settings files' start item strings.**
+- **Unjunked Anju and Kafei in the base settings files.**
+
+.
+
+.
+
 # Mystery Maker release 6.0.1
 This minor Mystery Maker release makes some settings fixes.
 
@@ -18,6 +61,9 @@ This minor Mystery Maker release makes some settings fixes.
 ## Generator Changes
 - Improved internal handling of version numbers.
 
+.
+
+.
 
 # Mystery Maker release 6.0
 This major Mystery Maker release not only adds support for MMR 2.0, but seeks to embrace its new possibilities for live racing as only Mystery can.

@@ -60,7 +60,7 @@ This determines whether Fierce Deity's Mask Anywhere is in effect in the seed. *
 
 ### Entrance Randomization and Small Keys
 
-These determine how each of Simple Interiors ER, Grotto ER, Dungeon ER, or Small Keys can be used in the seed. Options for each category are **Off**, **Random**, and **Shuffled**. (Small Keys uses **Shuffled within any temple** instead.)
+These determine how each of Simple Interiors ER, Grotto ER, Dungeon ER, or Small Keys can be used in the seed. Options are **Off**, **Random**, and **Shuffled**, but Simple Interiors uses only Off or Shuffled and Small Keys uses **Shuffled within any temple** instead of Shuffled.
 
 - **Off**: This category is guaranteed to be off.
 - **Random**: This category is randomly off or active, per the default weights.
