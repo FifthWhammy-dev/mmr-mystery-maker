@@ -20,6 +20,9 @@ def AddShuffleWithString(categoryList, categoryName, shuffleName):
     sh.setItemString(shuffleCheckStrings[(categoryName, shuffleName)])
     categoryList[categoryName].defineShuffle(sh)
 
+def HideCategoryByDefault(categoryList, categoryName):
+    categoryList[categoryName].setHidden(True)
+
 def CreateSetupCategoryList():
     setupList: dict[str, Category] = {}
     
@@ -52,10 +55,18 @@ def CreateSetupCategoryList():
     AddShuffle(setupList, CategoryNames.STARTINGSONG, ShuffleNames.SONG_STORMS)
     AddShuffle(setupList, CategoryNames.STARTINGSONG, ShuffleNames.SONG_ANYNONEPONA)
 
+    AddCategory(setupList, CategoryNames.STARTINGGEAR, "Which basic gear you start with.")
+    AddShuffle(setupList, CategoryNames.STARTINGGEAR, ShuffleNames.SG_STRONG)
+    AddShuffle(setupList, CategoryNames.STARTINGGEAR, ShuffleNames.SG_KOKIRI)
+    AddShuffle(setupList, CategoryNames.STARTINGGEAR, ShuffleNames.SG_SWORDLESS)
+    AddShuffle(setupList, CategoryNames.STARTINGGEAR, ShuffleNames.SG_FRAGILE)
+    HideCategoryByDefault(setupList, CategoryNames.STARTINGGEAR)
+
     AddCategory(setupList, CategoryNames.FDANYWHERE, "Whether FD Anywhere is on.")
     AddShuffle(setupList, CategoryNames.FDANYWHERE, ShuffleNames.FD_ON)
 
     AddSimpleCategory(setupList, CategoryNames.ERINTERIOR, "Whether Simple Interior entrances are shuffled.")
+    HideCategoryByDefault(setupList, CategoryNames.ERINTERIOR)
 
     AddSimpleCategory(setupList, CategoryNames.ERGROTTO, "Whether grotto entrances are shuffled.")
                                                       
@@ -150,6 +161,11 @@ def ApplyWeights(setupList, mainList, customOptions):
     elif (customOptions[GeneratorOptionNames.RANDOMITEM] != ShuffleNames.GENERIC_RANDOM):
         setupList[CategoryNames.STARTINGITEM].guaranteeShuffle(customOptions[GeneratorOptionNames.RANDOMITEM])
 
+    # Starting gear changes from option
+    if (customOptions[GeneratorOptionNames.STARTGEAR] != ShuffleNames.SG_KOKIRI):
+        setupList[CategoryNames.STARTINGGEAR].guaranteeShuffle(customOptions[GeneratorOptionNames.STARTGEAR])
+        setupList[CategoryNames.STARTINGGEAR].setHidden(False)
+
     # FD Anywhere changes from option
     if (customOptions[GeneratorOptionNames.FDANYWHERE] == ShuffleNames.GENERIC_OFF):
         setupList[CategoryNames.FDANYWHERE].zeroAllShuffles()
@@ -159,8 +175,9 @@ def ApplyWeights(setupList, mainList, customOptions):
         setupList[CategoryNames.FDANYWHERE].guaranteeShuffle(ShuffleNames.FD_ON)
     
     # ER changes from options
-    if (customOptions[GeneratorOptionNames.ERINTERIOR] != ShuffleNames.GENERIC_RANDOM):
+    if (customOptions[GeneratorOptionNames.ERINTERIOR] != ShuffleNames.GENERIC_OFF):
         setupList[CategoryNames.ERINTERIOR].guaranteeShuffle(customOptions[GeneratorOptionNames.ERINTERIOR])
+        setupList[CategoryNames.ERINTERIOR].setHidden(False)
 
     if (customOptions[GeneratorOptionNames.ERGROTTO] != ShuffleNames.GENERIC_RANDOM):
         setupList[CategoryNames.ERGROTTO].guaranteeShuffle(customOptions[GeneratorOptionNames.ERGROTTO])

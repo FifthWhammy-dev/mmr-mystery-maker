@@ -42,6 +42,7 @@ class CategoryNames(StrEnum):
     SONGLAYOUT = "Song Layout"
     STARTINGITEM = "Starting Item"
     STARTINGSONG = "Starting Song"
+    STARTINGGEAR = "Starting Basic Gear"
     FDANYWHERE = "Fierce Deity's Mask Anywhere"
     ERINTERIOR = "Entrances: Simple Interiors"
     ERGROTTO = "Entrances: Grottos"
@@ -79,7 +80,7 @@ class ShuffleNames(StrEnum):
     SL_ALL = "Start with all songs"
     SG_STRONG = "Strong"
     SG_KOKIRI = "Kokiri"
-    SG_SWORDLESS = "Swordless"
+    SG_SWORDLESS = "No sword or shield"
     SG_FRAGILE = "Fragile"
     ITEM_DEKU = "Deku Mask"
     ITEM_GORON = "Goron Mask"
@@ -156,6 +157,9 @@ class ItemNames(StrEnum):
     SONG_ALL = "All songs"
     ITEM_GFM = "Great Fairy's Mask"
     ITEM_NOTEBOOK = "Bombers' Notebook"
+    ITEM_DOUBLEDEF = "Double Defense"
+    ITEM_RAZORSWORD = "Razor Sword"
+    ITEM_SPINATTACK = "Spin Attack Upgrade"
 
 class CheckNames(StrEnum):
     BOSSBLUEWARP = "Boss Blue Warp"
@@ -189,6 +193,9 @@ shuffleCheckStrings[(CategoryNames.BASELINE, ShuffleNames.BASE_REMAINS)] = "----
 shuffleCheckStrings[(CategoryNames.BASELINE, ShuffleNames.BASE_DGFREWARDS)] = "-------------------------------------f000"
 
 shuffleCheckStrings[(CategoryNames.SONGLAYOUT, ShuffleNames.SL_TRADITIONAL)] = "----------------------------------3f8---"
+
+shuffleCheckStrings[(CategoryNames.STARTINGGEAR, ShuffleNames.SG_SWORDLESS)] = "------------------------------6000000-------"
+shuffleCheckStrings[(CategoryNames.STARTINGGEAR, ShuffleNames.SG_FRAGILE)] = "------------------------------1e000000-------"
 
 shuffleCheckStrings[(CategoryNames.STRAYFAIRIES, ShuffleNames.STRAYS_BUBBLES)] = "--------------------------b003fe-7f363db4----------"
 shuffleCheckStrings[(CategoryNames.STRAYFAIRIES, ShuffleNames.STRAYS_FULL)] = "--------------------------3fffffff-fffffffe----------"
@@ -262,6 +269,9 @@ startItemStrings[ItemNames.ITEM_BUNNY] = "-----100-"
 startItemStrings[ItemNames.ITEM_GFS] = "------8000"
 startItemStrings[ItemNames.ITEM_GFM] = "-----20-"
 startItemStrings[ItemNames.ITEM_NOTEBOOK] = "------400000"
+startItemStrings[ItemNames.ITEM_DOUBLEDEF] = "------4000"
+startItemStrings[ItemNames.ITEM_RAZORSWORD] = "----40000--800000"
+startItemStrings[ItemNames.ITEM_SPINATTACK] = "------1000"
 
 # Shuffle-to-start-item conversion
 shuffleNameToItemName = {}
@@ -330,6 +340,10 @@ categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGITEM] = {ShuffleNames
                                                                     ShuffleNames.ITEM_GFS: 5}
 categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGSONG] = {ShuffleNames.SONG_EPONA: 90,
                                                                     ShuffleNames.SONG_ANYNONEPONA: 10}
+categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGGEAR] = {ShuffleNames.SG_STRONG: 0,
+                                                                    ShuffleNames.SG_KOKIRI: 100,
+                                                                    ShuffleNames.SG_SWORDLESS: 0,
+                                                                    ShuffleNames.SG_FRAGILE: 0}
 categoryWeights[DensityNames.NORMAL][CategoryNames.FDANYWHERE] = {ShuffleNames.FD_ON: 60}
 categoryWeights[DensityNames.NORMAL][CategoryNames.ERINTERIOR] = {ShuffleNames.GENERIC_SHUFFLED: 0}
 categoryWeights[DensityNames.NORMAL][CategoryNames.ERGROTTO] = {ShuffleNames.GENERIC_SHUFFLED: 60}
@@ -368,6 +382,7 @@ categoryWeights[DensityNames.SUPER] = {}
 categoryWeights[DensityNames.SUPER][CategoryNames.SONGLAYOUT] = categoryWeights[DensityNames.NORMAL][CategoryNames.SONGLAYOUT]
 categoryWeights[DensityNames.SUPER][CategoryNames.STARTINGITEM] = categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGITEM]
 categoryWeights[DensityNames.SUPER][CategoryNames.STARTINGSONG] = categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGSONG]
+categoryWeights[DensityNames.SUPER][CategoryNames.STARTINGGEAR] = categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGGEAR]
 categoryWeights[DensityNames.SUPER][CategoryNames.FDANYWHERE] = categoryWeights[DensityNames.NORMAL][CategoryNames.FDANYWHERE]
 categoryWeights[DensityNames.SUPER][CategoryNames.ERINTERIOR] = categoryWeights[DensityNames.NORMAL][CategoryNames.ERINTERIOR]
 categoryWeights[DensityNames.SUPER][CategoryNames.ERGROTTO] = categoryWeights[DensityNames.NORMAL][CategoryNames.ERGROTTO]
@@ -406,6 +421,7 @@ categoryWeights[DensityNames.TOTAL] = {}
 categoryWeights[DensityNames.TOTAL][CategoryNames.SONGLAYOUT] = categoryWeights[DensityNames.NORMAL][CategoryNames.SONGLAYOUT]
 categoryWeights[DensityNames.TOTAL][CategoryNames.STARTINGITEM] = categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGITEM]
 categoryWeights[DensityNames.TOTAL][CategoryNames.STARTINGSONG] = categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGSONG]
+categoryWeights[DensityNames.TOTAL][CategoryNames.STARTINGGEAR] = categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGGEAR]
 categoryWeights[DensityNames.TOTAL][CategoryNames.FDANYWHERE] = categoryWeights[DensityNames.NORMAL][CategoryNames.FDANYWHERE]
 categoryWeights[DensityNames.TOTAL][CategoryNames.ERINTERIOR] = categoryWeights[DensityNames.NORMAL][CategoryNames.ERINTERIOR]
 categoryWeights[DensityNames.TOTAL][CategoryNames.ERGROTTO] = categoryWeights[DensityNames.NORMAL][CategoryNames.ERGROTTO]

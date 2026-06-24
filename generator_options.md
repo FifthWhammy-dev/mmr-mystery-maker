@@ -42,7 +42,7 @@ This determines what sword, shield, and hearts the player starts with, plus rela
 
 - **Strong**: The player starts with Razor Sword, Hero's Shield, Spin Attack Mastery, and Double Defense.
 - **Kokiri**: The player starts with Kokiri Sword and Hero's Shield.
-- **Swordless**: The player starts with no sword or shield. They are instead added to the item pool.
+- **No sword or shield**: The player starts with no sword or shield. They are instead added to the item pool.
 - **Fragile**: The player starts with no sword or shield and with only one heart. The missing starting items, including two Heart Containers, are added to the item pool.
 
 ### Starting Random Item

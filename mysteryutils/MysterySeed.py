@@ -118,6 +118,16 @@ class MysterySeed:
         if self.setupCategories[CategoryNames.STARTINGITEM].getActiveShuffle() != ShuffleNames.GENERIC_OFF:
             itemToAdd = shuffleNameToItemName[self.setupCategories[CategoryNames.STARTINGITEM].getActiveShuffle()]
             startList = AddStringToListString(startList, startItemStrings[itemToAdd])
+
+        match self.setupCategories[CategoryNames.STARTINGGEAR].getActiveShuffle():
+            case ShuffleNames.SG_STRONG:
+                startList = AddStringToListString(startList, startItemStrings[ItemNames.ITEM_DOUBLEDEF])
+                startList = AddStringToListString(startList, startItemStrings[ItemNames.ITEM_RAZORSWORD])
+                startList = AddStringToListString(startList, startItemStrings[ItemNames.ITEM_SPINATTACK])
+            case ShuffleNames.SG_SWORDLESS:
+                checkPool = AddStringToListString(checkPool, shuffleCheckStrings[(CategoryNames.STARTINGGEAR, ShuffleNames.SG_SWORDLESS)])
+            case ShuffleNames.SG_FRAGILE:
+                checkPool = AddStringToListString(checkPool, shuffleCheckStrings[(CategoryNames.STARTINGGEAR, ShuffleNames.SG_FRAGILE)])
         
         songToAdd = shuffleNameToItemName[self.setupCategories[CategoryNames.STARTINGSONG].getActiveShuffle()]
         startList = AddStringToListString(startList, startItemStrings[songToAdd])
