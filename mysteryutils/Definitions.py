@@ -1,7 +1,7 @@
 from enum import StrEnum
 
-MYSTERY_MAKER_VERSION = "v6.1.0"
-MYSTERY_MAKER_VERSION_FILENAME = "v6_1_0"
+MYSTERY_MAKER_VERSION = "v6.1.1"
+MYSTERY_MAKER_VERSION_FILENAME = "v6_1_1"
 
 class OutputModes(StrEnum):
     WEB = "Web Settings"
