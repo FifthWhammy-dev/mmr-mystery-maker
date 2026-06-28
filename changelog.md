@@ -4,13 +4,17 @@ This changelog, covering Mystery Maker releases from Version 5.0 onward, is Mark
 This Mystery Maker release fixes bugs, including a significant Songsanity mishap.
 
 ## Bug Fixes
-- **Songsanity** now junks song checks instead of unshuffling them.
+- **Songsanity now junks song checks instead of unshuffling them.**
 
 *In practice, this meant that Songsanity seeds kept the songs (except for Healing) vanilla instead of shuffling them throughout all checks, which was not the intent!*
 
-- **Escaping from Sakon's Hideout** is now only present in the always hint list when Full Notebook Entries is actually on.
+- Hints are now only included in the output settings file's hint list when their checks are in play. 
 
-*In some cases, MMR 2.0's new hint tier limit system appears to count Escaping from Sakon's Hideout toward the always hint limit even when the check is not shuffled. This was resulting in non-Full Notebook seeds sometimes receiving an extra sometimes hint. Adding the check to the hint list only when needed should allow Mystery Maker to work around the problem.*
+*MMR 2.0's new hint tier limit system appears to behave erratically, often resulting in fewer always hints than expected, or in one case ignoring the always and backup hint tiers altogether and replacing them with junk hints. Mystery Maker now handles all conditional hints manually in an effort to address the problem.*
+
+.
+
+.
 
 # Mystery Maker release 6.1.0
 This Mystery Maker release removes Simple Interiors ER from the core settings. The shuffle retains available as a generator option.

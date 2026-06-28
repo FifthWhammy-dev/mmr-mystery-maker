@@ -124,20 +124,12 @@
         "MaskScents",
         "MaskRomani",
         "MaskCouple",
-        "NotebookSaveTheCows",
-        "NotebookProtectMilkDelivery",
-        "NotebookUniteAnjuAndKafei",
         "HeartPieceFishermanGame"
       ],
       [
         "UpgradeGildedSword",
         "HeartPieceOceanSpiderHouse",
-        "MaskCircusLeader",
-        "ItemWellCowMilk",
-        "CollectibleStrayFairySnowhead2",
-        "CollectableRomaniRanchSoftSoil1",
-        "NotebookDeliverPendant",
-        "NotebookMovingGorman"
+        "MaskCircusLeader"
       ],
       [
         "ItemIceArrow",
@@ -154,17 +146,7 @@
         "ChestWellLeftPurpleRupee",
         "HeartPieceBank",
         "CollectibleStrayFairyWoodfall12",
-        "CollectibleStrayFairyStoneTower7",		
-        "MundaneItemKotakeMushroomSaleRedRupee",
-        "MundaneItemCuriosityShopPurpleRupee",
-        "NotebookMeetShiro",
-        "NotebookPromiseAnjuDelivery",
-        "NotebookDeliverLetterToMama",
-        "NotebookGrogsThanks",
-        "NotebookMovingGorman",
-        "NotebookPromiseKamaro",
-        "NotebookSaveInvisibleSoldier",
-        "CollectableSwampSpiderHouseTreeRoomGossipFairy1",
+        "CollectibleStrayFairyStoneTower7",
         "HeartPiecePoeHut",
         "MundaneItemDekuPlaygroundPurpleRupee"
       ]
