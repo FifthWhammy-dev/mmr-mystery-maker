@@ -108,7 +108,7 @@ class MysterySeed:
         match self.setupCategories[CategoryNames.SONGLAYOUT].getActiveShuffle():
             case ShuffleNames.SL_SANITY:
                 self.seed.setBasicSetting("AddSongs", True)
-                checkPool = RemoveStringFromListString(checkPool, shuffleCheckStrings[(CategoryNames.SONGLAYOUT, ShuffleNames.SL_TRADITIONAL)])
+                junkList = AddStringToListString(checkPool, shuffleCheckStrings[(CategoryNames.SONGLAYOUT, ShuffleNames.SL_TRADITIONAL)])
                 self.seed.setBasicSetting("OverrideNumberOfRequiredGossipHints", self.seed.getBasicSetting("OverrideNumberOfRequiredGossipHints") + 1)
                 self.seed.setHintTierSize(0, self.seed.getHintTierSize(0) - 1)
             case ShuffleNames.SL_ALL:
