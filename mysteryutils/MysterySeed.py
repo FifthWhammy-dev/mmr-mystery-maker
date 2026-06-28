@@ -230,6 +230,7 @@ class MysterySeed:
         
         if self.mainCategories[CategoryNames.STRAYFAIRIES].isActive():
             self.seed.setBasicSetting("StrayFairyMode", "Default")
+            self.seed.addHintToTier("CollectibleStrayFairySnowhead2", 1)  # Snowhead Temple Ceiling Bubble
 
         # special handling of Stray Fairies for Fairy Hunt: always shuffle dungeon strays, but junk inactive checks
         if self.options[GeneratorOptionNames.GOAL] == GoalNames.FAIRYHUNT:
@@ -247,6 +248,12 @@ class MysterySeed:
             case ShuffleNames.SHOP_P_RANDOM:
                 self.seed.setBasicSetting("PriceMode", "Purchases")
                 self.seed.setBasicSetting("FillWallet", True)
+
+        if self.mainCategories[CategoryNames.SOILS].isActive():
+            self.seed.addHintToTier("CollectableRomaniRanchSoftSoil1", 1)
+
+        if self.mainCategories[CategoryNames.COWS].isActive():
+            self.seed.addHintToTier("ItemWellCowMilk", 1)      
         
         if (self.mainCategories[CategoryNames.TOKENS].getActiveShuffle() == ShuffleNames.TOKENS_OSH or
               self.mainCategories[CategoryNames.TOKENS].getActiveShuffle() == ShuffleNames.TOKENS_BOTH):
@@ -255,13 +262,31 @@ class MysterySeed:
         if self.mainCategories[CategoryNames.BUTTERFLYANDWELLFAIRIES].isActive() or self.mainCategories[CategoryNames.POTS].isActive():
             self.seed.removeHintFromTier("ChestWellLeftPurpleRupee", 2)
         
+        if self.mainCategories[CategoryNames.GOSSIPFAIRIES].isActive():
+            self.seed.addHintToTier("CollectableSwampSpiderHouseTreeRoomGossipFairy1", 2)
+        
         if self.mainCategories[CategoryNames.POTS].isActive():
             self.seed.removeHintFromTier("CollectibleStrayFairyStoneTower7", 2)  # Inverted Stone Tower Temple Wizzrobe
+
+        if self.mainCategories[CategoryNames.MUNDANES].isActive():
+            self.seed.addHintToTier("MundaneItemKotakeMushroomSaleRedRupee", 2)
+            self.seed.addHintToTier("MundaneItemCuriosityShopPurpleRupee", 2)
         
         if self.mainCategories[CategoryNames.NOTEBOOKENTRIES].isActive():
             startList = AddStringToListString(startList, startItemStrings[ItemNames.ITEM_NOTEBOOK])
+            self.seed.addHintToTier("NotebookMeetShiro", 2)
             if self.mainCategories[CategoryNames.NOTEBOOKENTRIES].getActiveShuffle() == ShuffleNames.NOTE_FULL:
                 self.seed.addHintToTier("NotebookEscapeFromSakonSHideout", 0)
+                self.seed.addHintToTier("NotebookSaveTheCows", 0)
+                self.seed.addHintToTier("NotebookProtectMilkDelivery", 0)
+                self.seed.addHintToTier("NotebookUniteAnjuAndKafei", 0)
+                self.seed.addHintToTier("NotebookDeliverPendant", 1)
+                self.seed.addHintToTier("NotebookMovingGorman", 1)
+                self.seed.addHintToTier("NotebookPromiseAnjuDelivery", 2)
+                self.seed.addHintToTier("NotebookDeliverLetterToMama", 2)
+                self.seed.addHintToTier("NotebookGrogsThanks", 2)
+                self.seed.addHintToTier("NotebookPromiseKamaro", 2)
+                self.seed.addHintToTier("NotebookSaveInvisibleSoldier", 2)
 
         # apply the Excluded Checks string (junk Excluded Checks that are in the core check list, unshuffle Excluded Checks that aren't in the core check list)
         baselineStringOverlap = GetListStringOverlap(shuffleCheckStrings[(CategoryNames.BASELINE, ShuffleNames.BASE_CHECKS)], self.options[GeneratorOptionNames.EXCLUDECHECKS])
