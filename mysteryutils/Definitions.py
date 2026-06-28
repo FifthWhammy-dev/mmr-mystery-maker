@@ -97,7 +97,7 @@ class ShuffleNames(StrEnum):
     SONG_EPONA = "Epona's Song"
     SONG_SONATA = "Sonata of Awakening"
     SONG_LULLABY = "Goron Lullaby"
-    SONG_NEWWAVE = "New Wave Bossa Nove"
+    SONG_NEWWAVE = "New Wave Bossa Nova"
     SONG_ELEGY = "Elegy of Emptiness"
     SONG_HEALING = "Song of Healing"
     SONG_STORMS = "Song of Storms"
