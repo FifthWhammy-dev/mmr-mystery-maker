@@ -260,6 +260,8 @@ class MysterySeed:
         
         if self.mainCategories[CategoryNames.NOTEBOOKENTRIES].isActive():
             startList = AddStringToListString(startList, startItemStrings[ItemNames.ITEM_NOTEBOOK])
+            if self.mainCategories[CategoryNames.NOTEBOOKENTRIES].getActiveShuffle() == ShuffleNames.NOTE_FULL:
+                self.seed.addHintToTier("NotebookEscapeFromSakonSHideout", 0)
 
         # apply the Excluded Checks string (junk Excluded Checks that are in the core check list, unshuffle Excluded Checks that aren't in the core check list)
         baselineStringOverlap = GetListStringOverlap(shuffleCheckStrings[(CategoryNames.BASELINE, ShuffleNames.BASE_CHECKS)], self.options[GeneratorOptionNames.EXCLUDECHECKS])
