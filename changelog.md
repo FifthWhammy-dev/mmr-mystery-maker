@@ -10,7 +10,7 @@ This Mystery Maker release fixes bugs, including a significant Songsanity mishap
 
 - Hints are now only included in the output settings file's hint list when their checks are in play. 
 
-*MMR 2.0's new hint tier limit system appears to behave erratically, often resulting in fewer always hints than expected, or in one case ignoring the always and backup hint tiers altogether and replacing them with junk hints. Mystery Maker now handles all conditional hints manually in an effort to address the problem.*
+*MMR 2.0's new hint tier limit system often resulted in fewer always hints than expected, likely because the Mystery base settings files were including most possible hints in their hint lists, even those that weren't applicable to every seed (e.g. Notebook Entries hints when they weren't shuffled). Mystery Maker now handles all conditional hints manually in accordance with actually active categories in an effort to address the problem.*
 
 .
 
