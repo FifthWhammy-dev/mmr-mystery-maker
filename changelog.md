@@ -3,15 +3,27 @@ This changelog, covering Mystery Maker releases from Version 5.0 onward, is Mark
 # Mystery Maker release 6.2.0
 This Mystery Maker release makes balancing changes and fixes bugs following Version 6 testing.
 
-These are intended to be the last major settings design changes before Season 3 of the Mystery Tournament! As competitive play approaches, Mystery Maker releases will strive to avoid altering the core settings, barring major community demand or critical fixes. This is *especially* true while the tourney is ongoing.
+This release is an intended candidate for Season 3 of the Mystery Tournament! As competitive play approaches, Mystery Maker releases will strive to avoid altering the core settings, barring major community demand or critical fixes. This is *especially* true while the tourney is ongoing.
 
 ## Core Settings Changes
 
+### Item and Check Pool
+- **Oath to Order is no longer granted as an extra starting song by default.**  It is again shuffled. The song check pool will remain the same, as an extra dungeon song will be granted instead! See **Setup Categories** below for more.
+
+### Hints
+- **The Oath hint is available** as Oath is back in the song pool.
+
 ### Setup Categories
+- **Starting Random Song now grants *two* starting songs**. The first keeps the same weights as before (i.e. anything but Oath, favoring Epona), and the second is always a dungeon song. The Mystery spoiler will list the second song as an "Extra Dungeon Song".
 - **Small Keys Within Any Temple** is less likely (40 -> 35).
 
+## Generator Changes
+- Renamed bonus-song toggles.
+
 ## Bug Fixes
-- **Small Keys Within Any Temple** now is applied properly when active.
+- Small Keys Within Any Temple now is applied properly when active.
+- Fixed Oath handling in base settings files.
+- Removed Simple Interiors from the Super Mystery category spreadsheet.
 
 # Mystery Maker release 6.1.1
 This Mystery Maker release fixes bugs, including a significant Songsanity mishap.

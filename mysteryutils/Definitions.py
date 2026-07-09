@@ -25,7 +25,7 @@ class GeneratorOptionNames(StrEnum):
     GOALFAIRYSET = "Fairy Set Size"
     STARTGEAR = "Starting Basic Gear Choice"
     SONGLAYOUT = "Song Layout Choice"
-    FREEOATH = "Free Oath to Order"
+    FREEDUNGEONSONG = "Free Dungeon Song"
     FREEEPONA = "Free Epona's Song"
     RANDOMITEM = "Starting Item Choice"
     FDANYWHERE = "FD Anywhere Choice"
@@ -42,6 +42,7 @@ class CategoryNames(StrEnum):
     SONGLAYOUT = "Song Layout"
     STARTINGITEM = "Starting Item"
     STARTINGSONG = "Starting Song"
+    FREEDUNGEONSONG = "Extra Dungeon Song"
     STARTINGGEAR = "Starting Basic Gear"
     FDANYWHERE = "Fierce Deity's Mask Anywhere"
     ERINTERIOR = "Entrances: Simple Interiors"
@@ -102,6 +103,7 @@ class ShuffleNames(StrEnum):
     SONG_HEALING = "Song of Healing"
     SONG_STORMS = "Song of Storms"
     SONG_ANYNONEPONA = "Any song but Epona"
+    SONG_ANYDUNGEON = "Any dungeon song"
     SONG_ALL = "All songs"
     FD_STARTING = "Only when starting"
     FD_ON = "On"
@@ -172,7 +174,7 @@ OPTION_DEFAULTS[GeneratorOptionNames.GOALREMAINS] = 4
 OPTION_DEFAULTS[GeneratorOptionNames.GOALFAIRYSET] = 5
 OPTION_DEFAULTS[GeneratorOptionNames.STARTGEAR] = ShuffleNames.SG_KOKIRI
 OPTION_DEFAULTS[GeneratorOptionNames.SONGLAYOUT] = ShuffleNames.GENERIC_RANDOM
-OPTION_DEFAULTS[GeneratorOptionNames.FREEOATH] = True
+OPTION_DEFAULTS[GeneratorOptionNames.FREEDUNGEONSONG] = True
 OPTION_DEFAULTS[GeneratorOptionNames.FREEEPONA] = False
 OPTION_DEFAULTS[GeneratorOptionNames.RANDOMITEM] = ShuffleNames.GENERIC_RANDOM
 OPTION_DEFAULTS[GeneratorOptionNames.FDANYWHERE] = ShuffleNames.GENERIC_RANDOM
@@ -340,6 +342,7 @@ categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGITEM] = {ShuffleNames
                                                                     ShuffleNames.ITEM_GFS: 5}
 categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGSONG] = {ShuffleNames.SONG_EPONA: 90,
                                                                     ShuffleNames.SONG_ANYNONEPONA: 10}
+categoryWeights[DensityNames.NORMAL][CategoryNames.FREEDUNGEONSONG] = {ShuffleNames.SONG_ANYDUNGEON: 0}
 categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGGEAR] = {ShuffleNames.SG_STRONG: 0,
                                                                     ShuffleNames.SG_KOKIRI: 100,
                                                                     ShuffleNames.SG_SWORDLESS: 0,
@@ -382,6 +385,7 @@ categoryWeights[DensityNames.SUPER] = {}
 categoryWeights[DensityNames.SUPER][CategoryNames.SONGLAYOUT] = categoryWeights[DensityNames.NORMAL][CategoryNames.SONGLAYOUT]
 categoryWeights[DensityNames.SUPER][CategoryNames.STARTINGITEM] = categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGITEM]
 categoryWeights[DensityNames.SUPER][CategoryNames.STARTINGSONG] = categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGSONG]
+categoryWeights[DensityNames.SUPER][CategoryNames.FREEDUNGEONSONG] = categoryWeights[DensityNames.NORMAL][CategoryNames.FREEDUNGEONSONG]
 categoryWeights[DensityNames.SUPER][CategoryNames.STARTINGGEAR] = categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGGEAR]
 categoryWeights[DensityNames.SUPER][CategoryNames.FDANYWHERE] = categoryWeights[DensityNames.NORMAL][CategoryNames.FDANYWHERE]
 categoryWeights[DensityNames.SUPER][CategoryNames.ERINTERIOR] = categoryWeights[DensityNames.NORMAL][CategoryNames.ERINTERIOR]
@@ -421,6 +425,7 @@ categoryWeights[DensityNames.TOTAL] = {}
 categoryWeights[DensityNames.TOTAL][CategoryNames.SONGLAYOUT] = categoryWeights[DensityNames.NORMAL][CategoryNames.SONGLAYOUT]
 categoryWeights[DensityNames.TOTAL][CategoryNames.STARTINGITEM] = categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGITEM]
 categoryWeights[DensityNames.TOTAL][CategoryNames.STARTINGSONG] = categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGSONG]
+categoryWeights[DensityNames.TOTAL][CategoryNames.FREEDUNGEONSONG] = categoryWeights[DensityNames.NORMAL][CategoryNames.FREEDUNGEONSONG]
 categoryWeights[DensityNames.TOTAL][CategoryNames.STARTINGGEAR] = categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGGEAR]
 categoryWeights[DensityNames.TOTAL][CategoryNames.FDANYWHERE] = categoryWeights[DensityNames.NORMAL][CategoryNames.FDANYWHERE]
 categoryWeights[DensityNames.TOTAL][CategoryNames.ERINTERIOR] = categoryWeights[DensityNames.NORMAL][CategoryNames.ERINTERIOR]

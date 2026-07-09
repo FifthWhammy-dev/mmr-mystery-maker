@@ -25,7 +25,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
         goalFairyHuntSetSize.set(str(OPTION_DEFAULTS[GeneratorOptionNames.GOALFAIRYSET]))
         startDifficultyMode.set(OPTION_DEFAULTS[GeneratorOptionNames.STARTGEAR])
         startSongLayoutMode.set(OPTION_DEFAULTS[GeneratorOptionNames.SONGLAYOUT])
-        startFreeOathMode.set("1" if OPTION_DEFAULTS[GeneratorOptionNames.FREEOATH] else "0")
+        startFreeDungeonSongMode.set("1" if OPTION_DEFAULTS[GeneratorOptionNames.FREEDUNGEONSONG] else "0")
         startFreeEponaMode.set("1" if OPTION_DEFAULTS[GeneratorOptionNames.FREEEPONA] else "0")
         startRandomItemMode.set(OPTION_DEFAULTS[GeneratorOptionNames.RANDOMITEM])
         startFDAnywhereMode.set(OPTION_DEFAULTS[GeneratorOptionNames.FDANYWHERE])
@@ -68,7 +68,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
                 goalRequiredRemains.get() == str(OPTION_DEFAULTS[GeneratorOptionNames.GOALREMAINS]) and
                 goalFairyHuntSetSize.get() == str(OPTION_DEFAULTS[GeneratorOptionNames.GOALFAIRYSET]) and
                 startDifficultyMode.get() == OPTION_DEFAULTS[GeneratorOptionNames.STARTGEAR] and
-                startFreeOathMode.get() == ("1" if OPTION_DEFAULTS[GeneratorOptionNames.FREEOATH] else "0") and
+                startFreeDungeonSongMode.get() == ("1" if OPTION_DEFAULTS[GeneratorOptionNames.FREEDUNGEONSONG] else "0") and
                 startFreeEponaMode.get() == ("1" if OPTION_DEFAULTS[GeneratorOptionNames.FREEEPONA] else "0") and
                 startRandomItemMode.get() == OPTION_DEFAULTS[GeneratorOptionNames.RANDOMITEM] and
                 startSongLayoutMode.get() == OPTION_DEFAULTS[GeneratorOptionNames.SONGLAYOUT] and
@@ -88,7 +88,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
         cmSettings[str(GeneratorOptionNames.GOALFAIRYSET)] = int(goalFairyHuntSetSize.get())
         cmSettings[str(GeneratorOptionNames.STARTGEAR)] = startDifficultyMode.get()
         cmSettings[str(GeneratorOptionNames.SONGLAYOUT)] = startSongLayoutMode.get()
-        cmSettings[str(GeneratorOptionNames.FREEOATH)] = (startFreeOathMode.get() == "1")
+        cmSettings[str(GeneratorOptionNames.FREEDUNGEONSONG)] = (startFreeDungeonSongMode.get() == "1")
         cmSettings[str(GeneratorOptionNames.FREEEPONA)] = (startFreeEponaMode.get() == "1")
         cmSettings[str(GeneratorOptionNames.RANDOMITEM)] = startRandomItemMode.get()
         cmSettings[str(GeneratorOptionNames.FDANYWHERE)] = startFDAnywhereMode.get()
@@ -108,7 +108,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
         goalFairyHuntSetSize.set(str(modesDict[GeneratorOptionNames.GOALFAIRYSET]))
         startDifficultyMode.set(modesDict[GeneratorOptionNames.STARTGEAR])
         startSongLayoutMode.set(modesDict[GeneratorOptionNames.SONGLAYOUT])
-        startFreeOathMode.set("1" if modesDict[GeneratorOptionNames.FREEOATH] else "0")
+        startFreeDungeonSongMode.set("1" if modesDict[GeneratorOptionNames.FREEDUNGEONSONG] else "0")
         startFreeEponaMode.set("1" if modesDict[GeneratorOptionNames.FREEEPONA] else "0")
         startRandomItemMode.set(modesDict[GeneratorOptionNames.RANDOMITEM])
         startFDAnywhereMode.set(modesDict[GeneratorOptionNames.FDANYWHERE])
@@ -235,7 +235,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
 
     # Start Modes pane
     startSongLayoutMode = StringVar(value=OPTION_DEFAULTS[GeneratorOptionNames.SONGLAYOUT])
-    startFreeOathMode = StringVar(value=("1" if OPTION_DEFAULTS[GeneratorOptionNames.FREEOATH] else "0"))
+    startFreeDungeonSongMode = StringVar(value=("1" if OPTION_DEFAULTS[GeneratorOptionNames.FREEDUNGEONSONG] else "0"))
     startFreeEponaMode = StringVar(value=("0" if OPTION_DEFAULTS[GeneratorOptionNames.FREEEPONA] else "0"))
     startDifficultyMode = StringVar(value=OPTION_DEFAULTS[GeneratorOptionNames.STARTGEAR])
     startRandomItemMode = StringVar(value=OPTION_DEFAULTS[GeneratorOptionNames.RANDOMITEM])
@@ -246,7 +246,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
     startSmallKeysMode = StringVar(value=OPTION_DEFAULTS[GeneratorOptionNames.SMALLKEYS])
 
     startSongLayoutMode.trace_add("write", updateModeTabs)
-    startFreeOathMode.trace_add("write", updateModeTabs)
+    startFreeDungeonSongMode.trace_add("write", updateModeTabs)
     startFreeEponaMode.trace_add("write", updateModeTabs)
     startDifficultyMode.trace_add("write", updateModeTabs)
     startRandomItemMode.trace_add("write", updateModeTabs)
@@ -261,9 +261,9 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
     startSongLayout_combo["values"] = (ShuffleNames.GENERIC_RANDOM, ShuffleNames.SL_TRADITIONAL, ShuffleNames.SL_SANITY, ShuffleNames.SL_ALL)
     startSongLayout_combo.state(["readonly"])
     
-    startFreeOath_check = ttk.Checkbutton(modeTabStartMode, text="Oath Start", variable=startFreeOathMode)
-    
-    startFreeEpona_check = ttk.Checkbutton(modeTabStartMode, text="Epona Start", variable=startFreeEponaMode)
+    startFreeEpona_check = ttk.Checkbutton(modeTabStartMode, text="Free Epona", variable=startFreeEponaMode)
+
+    startFreeDungeonSong_check = ttk.Checkbutton(modeTabStartMode, text="Free Dungeon Song", variable=startFreeDungeonSongMode)
     
     startDifficulty_label = ttk.Label(modeTabStartMode, text="Starting Basic Gear:    ")
     startDifficulty_combo = ttk.Combobox(modeTabStartMode, textvariable=startDifficultyMode)
@@ -328,8 +328,8 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
     
     startSongLayout_label.grid(column=1, row=1, sticky=(W,E))
     startSongLayout_combo.grid(column=2, row=1, sticky=(W,E))
-    startFreeOath_check.grid(column=1, row=2, sticky=(W,E))
-    startFreeEpona_check.grid(column=2, row=2, sticky=(W,E))
+    startFreeEpona_check.grid(column=1, row=2, sticky=(W,E))
+    startFreeDungeonSong_check.grid(column=2, row=2, sticky=(W,E))
     startDifficulty_label.grid(column=1, row=3, sticky=(W,E))
     startDifficulty_combo.grid(column=2, row=3, sticky=(W,E))
     startRandomItem_label.grid(column=1, row=4, sticky=(W,E))
@@ -346,8 +346,8 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
     startSmallKeys_combo.grid(column=2, row=6, sticky=(W,E))
     
     startSongLayout_tip = Hovertip(startSongLayout_combo, "Choose a song layout.")
-    startFreeOath_tip = Hovertip(startFreeOath_check, "Also start with Oath to Order. Boss Blue Warp is junked.")
-    startFreeEpona_tip = Hovertip(startFreeEpona_check, "Also start with Epona's Song. Romani's Game is junked.")
+    startFreeEpona_tip = Hovertip(startFreeEpona_check, "Also start with Epona's Song. Romani's Game is unshuffled.")
+    startFreeDungeonSong_tip = Hovertip(startFreeDungeonSong_check, "Also start with a random free dungeon song. Boss Blue Warp is junked.")
     startDifficulty_tip = Hovertip(startDifficulty_combo, "Choose how the starting sword, shield, and hearts are handled.")
     startRandomItem_tip = Hovertip(startRandomItem_combo, "Choose a starting item option.")
     startFDAnywhere_tip = Hovertip(startFDAnywhere_combo, "Choose a Fierce Deity's Mask Anywhere option.")

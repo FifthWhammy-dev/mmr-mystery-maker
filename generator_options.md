@@ -34,7 +34,7 @@ This tab affects the player's starting state and allows specifying the possible 
 
 This determines the Song Layout for the seed. Song Layout is discussed in the Mystery Settings Document. This can be set to **Random**, **Traditional**, **Songsanity**, or **Start with all songs**, the last of which is exclusively available as a generator option. True to its name, it grants all songs and unshuffles all song checks.
 
-Toggles for **Oath Start** and **Epona Start** are also available. These each grant the corresponding song at start (in addition to the usual random song) and unshuffle the related song check (Boss Blue Warp or Romani's Game, respectively). Using **Epona Start** guarantees that the random starting song will not be Epona. These toggles have no effect if **Start with all songs** is being used.
+Toggles for **Free Dungeon Song** and **Free Epona** are also available. Free Dungeon Song junks Boss Blue Warp and grants a random dungeon song; Free Epona unshuffles Romani's Game respectively and grants Epona's song. This is in addition to the starting random song, which will not duplicate any bonus song granted this way. These toggles have no effect if **Start with all songs** is being used.
 
 ### Starting Basic Gear
 

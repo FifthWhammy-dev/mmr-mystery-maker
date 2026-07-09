@@ -68,10 +68,9 @@ class MysterySeed:
             case GoalNames.MASKHUNT:
                 self.seed.setBasicSetting("VictoryMode", self.seed.getBasicSetting("VictoryMode") + ", NonTransformationMasks")
 
-        # Free Oath option
-        if self.options[GeneratorOptionNames.FREEOATH] and self.options[GeneratorOptionNames.SONGLAYOUT] != ShuffleNames.SL_ALL:
-            startList = AddStringToListString(startList, startItemStrings[ItemNames.SONG_OATH])
-            checkPool = RemoveStringFromListString(checkPool, singleCheckStrings[CheckNames.BOSSBLUEWARP])
+        # Free Dungeon Song option
+        if self.options[GeneratorOptionNames.FREEDUNGEONSONG] and self.options[GeneratorOptionNames.SONGLAYOUT] != ShuffleNames.SL_ALL:
+            junkList = AddStringToListString(junkList, singleCheckStrings[CheckNames.BOSSBLUEWARP])
         
         # Free Epona option
         if self.options[GeneratorOptionNames.FREEEPONA] and self.options[GeneratorOptionNames.SONGLAYOUT] != ShuffleNames.SL_ALL:
@@ -98,6 +97,18 @@ class MysterySeed:
                               ShuffleNames.SONG_STORMS]
             selectedSong = random.choice(songCandidates)
             self.setupCategories[CategoryNames.STARTINGSONG].setActiveShuffle(selectedSong)
+
+        # resolve separate roll for extra dungeon song
+        if self.setupCategories[CategoryNames.FREEDUNGEONSONG].getActiveShuffle() == ShuffleNames.SONG_ANYDUNGEON:
+            songCandidates = [ShuffleNames.SONG_SONATA,
+                              ShuffleNames.SONG_LULLABY,
+                              ShuffleNames.SONG_NEWWAVE,
+                              ShuffleNames.SONG_ELEGY]
+            firstSong = self.setupCategories[CategoryNames.STARTINGSONG].getActiveShuffle()
+            if firstSong in songCandidates:
+                songCandidates.remove(firstSong)
+            selectedDungeonSong = random.choice(songCandidates)
+            self.setupCategories[CategoryNames.FREEDUNGEONSONG].setActiveShuffle(selectedDungeonSong)
         
         # resolve FD Anywhere guarantee for a starting FD (if not prevented by option)
         if (self.setupCategories[CategoryNames.STARTINGITEM].getActiveShuffle() == ShuffleNames.ITEM_FD and
@@ -131,6 +142,10 @@ class MysterySeed:
         
         songToAdd = shuffleNameToItemName[self.setupCategories[CategoryNames.STARTINGSONG].getActiveShuffle()]
         startList = AddStringToListString(startList, startItemStrings[songToAdd])
+
+        if self.setupCategories[CategoryNames.FREEDUNGEONSONG].isActive():
+            dungeonSongToAdd = shuffleNameToItemName[self.setupCategories[CategoryNames.FREEDUNGEONSONG].getActiveShuffle()]
+            startList = AddStringToListString(startList, startItemStrings[dungeonSongToAdd])
 
         if self.setupCategories[CategoryNames.FDANYWHERE].isActive():
             self.seed.setBasicSetting("AllowFierceDeityAnywhere", True)

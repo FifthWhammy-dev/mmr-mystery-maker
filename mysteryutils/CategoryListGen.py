@@ -55,6 +55,14 @@ def CreateSetupCategoryList():
     AddShuffle(setupList, CategoryNames.STARTINGSONG, ShuffleNames.SONG_STORMS)
     AddShuffle(setupList, CategoryNames.STARTINGSONG, ShuffleNames.SONG_ANYNONEPONA)
 
+    AddCategory(setupList, CategoryNames.FREEDUNGEONSONG, "Which extra dungeon song you start with.")
+    AddShuffle(setupList, CategoryNames.FREEDUNGEONSONG, ShuffleNames.SONG_EPONA)
+    AddShuffle(setupList, CategoryNames.FREEDUNGEONSONG, ShuffleNames.SONG_SONATA)
+    AddShuffle(setupList, CategoryNames.FREEDUNGEONSONG, ShuffleNames.SONG_LULLABY)
+    AddShuffle(setupList, CategoryNames.FREEDUNGEONSONG, ShuffleNames.SONG_NEWWAVE)
+    AddShuffle(setupList, CategoryNames.FREEDUNGEONSONG, ShuffleNames.SONG_ANYDUNGEON)
+    HideCategoryByDefault(setupList, CategoryNames.FREEDUNGEONSONG)
+
     AddCategory(setupList, CategoryNames.STARTINGGEAR, "Which basic gear you start with.")
     AddShuffle(setupList, CategoryNames.STARTINGGEAR, ShuffleNames.SG_STRONG)
     AddShuffle(setupList, CategoryNames.STARTINGGEAR, ShuffleNames.SG_KOKIRI)
@@ -160,6 +168,11 @@ def ApplyWeights(setupList, mainList, customOptions):
         setupList[CategoryNames.STARTINGITEM].zeroAllShuffles()
     elif (customOptions[GeneratorOptionNames.RANDOMITEM] != ShuffleNames.GENERIC_RANDOM):
         setupList[CategoryNames.STARTINGITEM].guaranteeShuffle(customOptions[GeneratorOptionNames.RANDOMITEM])
+
+    # Extra dungeon song changes from option
+    if (customOptions[GeneratorOptionNames.FREEDUNGEONSONG]):
+        setupList[CategoryNames.FREEDUNGEONSONG].guaranteeShuffle(ShuffleNames.SONG_ANYDUNGEON)
+        setupList[CategoryNames.FREEDUNGEONSONG].setHidden(False)
 
     # Starting gear changes from option
     if (customOptions[GeneratorOptionNames.STARTGEAR] != ShuffleNames.SG_KOKIRI):
