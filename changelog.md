@@ -12,13 +12,20 @@ This release is an intended candidate for Season 3 of the Mystery Tournament! As
 
 ### Hints
 - **The Oath hint is available** as Oath is back in the song pool.
+- Grog will no longer be backup-hinted when Bremen Mask is a starting item.
 
 ### Setup Categories
 - **Starting Random Song now grants *two* starting songs**. The first keeps the same weights as before (i.e. anything but Oath, favoring Epona), and the second is always a dungeon song. The Mystery spoiler will list the second song as an "Extra Dungeon Song".
+- **Starting Random Item**:
+  - New option: **Non-Transformation Mask Bingo!** This will pick any one row or column of non-transformation masks on the mask subscreen and grant *all* of them as starting items! Each row or column is equally likely to be chosen. Total weight is 25.
+  - Great Fairy's Sword, Blast Mask, and Bunny Hood are no longer available as separate options (were each weight 5). Blast Mask and Bunny Hood remain available via Mask Bingo.
+  - Adult's Wallet is less likely (10 -> 5).
+  - Empty Bottle is less likely (10 -> 5).
 - **Small Keys Within Any Temple** is less likely (40 -> 35).
 
 ## Generator Changes
 - Renamed bonus-song toggles.
+- Added all Mask Bingo possibilities to Starting Random Item while retaining the category's retired options.
 
 ## Bug Fixes
 - Small Keys Within Any Temple now is applied properly when active.

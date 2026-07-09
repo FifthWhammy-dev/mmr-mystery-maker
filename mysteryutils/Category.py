@@ -36,6 +36,7 @@ class Shuffle:
 class Category:
     def __init__(self, name: str, description: str):
         self.categoryName = name
+        self.spoilerLogName = name
         self.description = description
         self.shuffles: dict[str, Shuffle] = {}
         self.activeShuffle = ShuffleNames.GENERIC_OFF
@@ -95,8 +96,11 @@ class Category:
             rollWeights.append(w)
         self.activeShuffle = random.choices(rollShuffles, rollWeights)[0]
 
+    def setSpoilerLogName(self, newName: str):
+        self.spoilerLogName = newName
+
     def spoil(self) -> str:
         a = self.activeShuffle
         if a == "Off":
             a = "---"
-        return f"{self.categoryName:>28}:  {a}"
+        return f"{self.spoilerLogName:>28}:  {a}"

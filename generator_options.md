@@ -47,7 +47,7 @@ This determines what sword, shield, and hearts the player starts with, plus rela
 
 ### Starting Random Item
 
-This determines what the player's additional starting non-song item can be. This can be set to **Random**, **Off**, or any of the possible items from this setup category.
+This determines what the player's additional starting non-song item(s) can be. This can be set to **Random**, **Off**, or any of the possible items from this setup category, including all possible **Mask Bingo** options and retired items from previous Mystery releases.
 
 ### FD Anywhere
 

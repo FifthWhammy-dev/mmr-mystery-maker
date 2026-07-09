@@ -87,6 +87,21 @@ class MysterySeed:
                 self.setupCategories[CategoryNames.STARTINGSONG].modifyWeight(ShuffleNames.SONG_EPONA, -30)
                 self.setupCategories[CategoryNames.STARTINGSONG].modifyWeight(ShuffleNames.SONG_ANYNONEPONA, 30)
 
+        # resolve separate roll for non-transformation mask bingo
+        if self.setupCategories[CategoryNames.STARTINGITEM].getActiveShuffle() == ShuffleNames.ITEM_NTM_BINGO:
+            bingoCandidates = [ShuffleNames.ITEM_NTM_R1,
+                               ShuffleNames.ITEM_NTM_R2,
+                               ShuffleNames.ITEM_NTM_R3,
+                               ShuffleNames.ITEM_NTM_R4,
+                               ShuffleNames.ITEM_NTM_C1,
+                               ShuffleNames.ITEM_NTM_C2,
+                               ShuffleNames.ITEM_NTM_C3,
+                               ShuffleNames.ITEM_NTM_C4,
+                               ShuffleNames.ITEM_NTM_C5]
+            selectedBingo = random.choice(bingoCandidates)
+            self.setupCategories[CategoryNames.STARTINGITEM].setActiveShuffle(selectedBingo)
+            self.setupCategories[CategoryNames.STARTINGITEM].setSpoilerLogName(CategoryNames.STARTINGITEMPLURAL)
+        
         # resolve separate roll for non-Epona starting song
         if self.setupCategories[CategoryNames.STARTINGSONG].getActiveShuffle() == ShuffleNames.SONG_ANYNONEPONA:
             songCandidates = [ShuffleNames.SONG_SONATA,
@@ -303,6 +318,12 @@ class MysterySeed:
                 self.seed.addHintToTier("NotebookPromiseKamaro", 2)
                 self.seed.addHintToTier("NotebookSaveInvisibleSoldier", 2)
 
+        # hint cancellation from Mask Bingo
+        if (self.setupCategories[CategoryNames.STARTINGITEM].getActiveShuffle() == ShuffleNames.ITEM_NTM_R2 or 
+            self.setupCategories[CategoryNames.STARTINGITEM].getActiveShuffle() == ShuffleNames.ITEM_NTM_C2): # Bremen Mask
+                self.seed.removeHintFromTier("MaskBunnyHood", 2)       # Grog
+                self.seed.removeHintFromTier("NotebookGrogsThanks", 2) # Grog ribbon
+        
         # apply the Excluded Checks string (junk Excluded Checks that are in the core check list, unshuffle Excluded Checks that aren't in the core check list)
         baselineStringOverlap = GetListStringOverlap(shuffleCheckStrings[(CategoryNames.BASELINE, ShuffleNames.BASE_CHECKS)], self.options[GeneratorOptionNames.EXCLUDECHECKS])
         excludeMinusBaselineStringOverlap = RemoveStringFromListString(self.options[GeneratorOptionNames.EXCLUDECHECKS], baselineStringOverlap)

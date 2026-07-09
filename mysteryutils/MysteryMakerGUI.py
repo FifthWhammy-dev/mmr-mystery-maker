@@ -288,7 +288,17 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
                                        ShuffleNames.ITEM_WALLET,
                                        ShuffleNames.ITEM_BOTTLE,
                                        ShuffleNames.ITEM_BUNNY,
-                                       ShuffleNames.ITEM_GFS)
+                                       ShuffleNames.ITEM_GFS,
+                                       ShuffleNames.ITEM_NTM_BINGO,
+                                       ShuffleNames.ITEM_NTM_R1,
+                                       ShuffleNames.ITEM_NTM_R2,
+                                       ShuffleNames.ITEM_NTM_R3,
+                                       ShuffleNames.ITEM_NTM_R4,
+                                       ShuffleNames.ITEM_NTM_C1,
+                                       ShuffleNames.ITEM_NTM_C2,
+                                       ShuffleNames.ITEM_NTM_C3,
+                                       ShuffleNames.ITEM_NTM_C4,
+                                       ShuffleNames.ITEM_NTM_C5)
     startRandomItem_combo.state(["readonly"])
     
     startFDAnywhere_label = ttk.Label(modeTabStartMode, text="FD Anywhere:    ")

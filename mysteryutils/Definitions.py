@@ -41,6 +41,7 @@ class CategoryNames(StrEnum):
     BASELINE = "Base"
     SONGLAYOUT = "Song Layout"
     STARTINGITEM = "Starting Item"
+    STARTINGITEMPLURAL = "Starting Items"
     STARTINGSONG = "Starting Song"
     FREEDUNGEONSONG = "Extra Dungeon Song"
     STARTINGGEAR = "Starting Basic Gear"
@@ -95,6 +96,16 @@ class ShuffleNames(StrEnum):
     ITEM_BOTTLE = "Empty Bottle"
     ITEM_BUNNY = "Bunny Hood"
     ITEM_GFS = "Great Fairy's Sword"
+    ITEM_NTM_BINGO = "Mask Bingo"
+    ITEM_NTM_R1 = "Mask Bingo -- Row 1"
+    ITEM_NTM_R2 = "Mask Bingo -- Row 2"
+    ITEM_NTM_R3 = "Mask Bingo -- Row 3"
+    ITEM_NTM_R4 = "Mask Bingo -- Row 4"
+    ITEM_NTM_C1 = "Mask Bingo -- Column 1"
+    ITEM_NTM_C2 = "Mask Bingo -- Column 2"
+    ITEM_NTM_C3 = "Mask Bingo -- Column 3"
+    ITEM_NTM_C4 = "Mask Bingo -- Column 4"
+    ITEM_NTM_C5 = "Mask Bingo -- Column 5"
     SONG_EPONA = "Epona's Song"
     SONG_SONATA = "Sonata of Awakening"
     SONG_LULLABY = "Goron Lullaby"
@@ -162,6 +173,15 @@ class ItemNames(StrEnum):
     ITEM_DOUBLEDEF = "Double Defense"
     ITEM_RAZORSWORD = "Razor Sword"
     ITEM_SPINATTACK = "Spin Attack Upgrade"
+    ITEM_NTM_R1 = "Non-Transformation Mask Bingo -- Row 1"
+    ITEM_NTM_R2 = "Non-Transformation Mask Bingo -- Row 2"
+    ITEM_NTM_R3 = "Non-Transformation Mask Bingo -- Row 3"
+    ITEM_NTM_R4 = "Non-Transformation Mask Bingo -- Row 4"
+    ITEM_NTM_C1 = "Non-Transformation Mask Bingo -- Column 1"
+    ITEM_NTM_C2 = "Non-Transformation Mask Bingo -- Column 2"
+    ITEM_NTM_C3 = "Non-Transformation Mask Bingo -- Column 3"
+    ITEM_NTM_C4 = "Non-Transformation Mask Bingo -- Column 4"
+    ITEM_NTM_C5 = "Non-Transformation Mask Bingo -- Column 5"
 
 class CheckNames(StrEnum):
     BOSSBLUEWARP = "Boss Blue Warp"
@@ -274,6 +294,15 @@ startItemStrings[ItemNames.ITEM_NOTEBOOK] = "------400000"
 startItemStrings[ItemNames.ITEM_DOUBLEDEF] = "------4000"
 startItemStrings[ItemNames.ITEM_RAZORSWORD] = "----40000--800000"
 startItemStrings[ItemNames.ITEM_SPINATTACK] = "------1000"
+startItemStrings[ItemNames.ITEM_NTM_R1] = "-----3e-"
+startItemStrings[ItemNames.ITEM_NTM_R2] = "-----7c0-"
+startItemStrings[ItemNames.ITEM_NTM_R3] = "-----f800-"
+startItemStrings[ItemNames.ITEM_NTM_R4] = "-----1f0000-"
+startItemStrings[ItemNames.ITEM_NTM_C1] = "-----10842-"
+startItemStrings[ItemNames.ITEM_NTM_C2] = "-----21084-"
+startItemStrings[ItemNames.ITEM_NTM_C3] = "-----42108-"
+startItemStrings[ItemNames.ITEM_NTM_C4] = "-----84210-"
+startItemStrings[ItemNames.ITEM_NTM_C5] = "-----108420-"
 
 # Shuffle-to-start-item conversion
 shuffleNameToItemName = {}
@@ -297,6 +326,15 @@ shuffleNameToItemName[ShuffleNames.ITEM_WALLET] = ItemNames.ITEM_WALLET
 shuffleNameToItemName[ShuffleNames.ITEM_BOTTLE] = ItemNames.ITEM_BOTTLE
 shuffleNameToItemName[ShuffleNames.ITEM_BUNNY] = ItemNames.ITEM_BUNNY
 shuffleNameToItemName[ShuffleNames.ITEM_GFS] = ItemNames.ITEM_GFS
+shuffleNameToItemName[ShuffleNames.ITEM_NTM_R1] = ItemNames.ITEM_NTM_R1
+shuffleNameToItemName[ShuffleNames.ITEM_NTM_R2] = ItemNames.ITEM_NTM_R2
+shuffleNameToItemName[ShuffleNames.ITEM_NTM_R3] = ItemNames.ITEM_NTM_R3
+shuffleNameToItemName[ShuffleNames.ITEM_NTM_R4] = ItemNames.ITEM_NTM_R4
+shuffleNameToItemName[ShuffleNames.ITEM_NTM_C1] = ItemNames.ITEM_NTM_C1
+shuffleNameToItemName[ShuffleNames.ITEM_NTM_C2] = ItemNames.ITEM_NTM_C2
+shuffleNameToItemName[ShuffleNames.ITEM_NTM_C3] = ItemNames.ITEM_NTM_C3
+shuffleNameToItemName[ShuffleNames.ITEM_NTM_C4] = ItemNames.ITEM_NTM_C4
+shuffleNameToItemName[ShuffleNames.ITEM_NTM_C5] = ItemNames.ITEM_NTM_C5
 
 # Single check strings
 singleCheckStrings = {}
@@ -335,11 +373,12 @@ categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGITEM] = {ShuffleNames
                                                                     ShuffleNames.ITEM_BOW: 10,
                                                                     ShuffleNames.ITEM_HOOK: 10,
                                                                     ShuffleNames.ITEM_BOMBS: 5,
-                                                                    ShuffleNames.ITEM_BLAST: 5,
-                                                                    ShuffleNames.ITEM_WALLET: 10,
-                                                                    ShuffleNames.ITEM_BOTTLE: 10,
-                                                                    ShuffleNames.ITEM_BUNNY: 5,
-                                                                    ShuffleNames.ITEM_GFS: 5}
+                                                                    ShuffleNames.ITEM_BLAST: 0,
+                                                                    ShuffleNames.ITEM_WALLET: 5,
+                                                                    ShuffleNames.ITEM_BOTTLE: 5,
+                                                                    ShuffleNames.ITEM_BUNNY: 0,
+                                                                    ShuffleNames.ITEM_GFS: 0,
+                                                                    ShuffleNames.ITEM_NTM_BINGO: 25}
 categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGSONG] = {ShuffleNames.SONG_EPONA: 90,
                                                                     ShuffleNames.SONG_ANYNONEPONA: 10}
 categoryWeights[DensityNames.NORMAL][CategoryNames.FREEDUNGEONSONG] = {ShuffleNames.SONG_ANYDUNGEON: 0}
