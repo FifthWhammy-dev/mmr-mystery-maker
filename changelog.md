@@ -1,5 +1,18 @@
 This changelog, covering Mystery Maker releases from Version 5.0 onward, is Markdown-formatted for better readability. Preceding Mystery Maker releases are discussed in the plaintext changelog.txt.
 
+# Mystery Maker release 6.2.0
+This Mystery Maker release makes balancing changes and fixes bugs following Version 6 testing.
+
+These are intended to be the last major settings design changes before Season 3 of the Mystery Tournament! As competitive play approaches, Mystery Maker releases will strive to avoid altering the core settings, barring major community demand or critical fixes. This is *especially* true while the tourney is ongoing.
+
+## Core Settings Changes
+
+### Setup Categories
+- **Small Keys Within Any Temple** is less likely (40 -> 35).
+
+## Bug Fixes
+- **Small Keys Within Any Temple** now is applied properly when active.
+
 # Mystery Maker release 6.1.1
 This Mystery Maker release fixes bugs, including a significant Songsanity mishap.
 
@@ -173,6 +186,10 @@ As a reminder, all changelog entries are relative to the previous releases of My
 - Super Mystery now only affects main categories and no longer adds exclusive shuffles.
 - Added **Total Mystery**, which guarantees that all main categories will be active and use their largest shuffle! Total Mystery does not affect setup categories by default, but you're welcome to use the Setup tab for that.
 - Added **Exclude Checks**, which allows removing checks from play by specifying an MMR item string.
+
+.
+
+.
 
 # Mystery Maker release 5.1.1
 This minor Mystery Maker release makes a core settings and FD legality change, plus some bug fixes and cleanup.

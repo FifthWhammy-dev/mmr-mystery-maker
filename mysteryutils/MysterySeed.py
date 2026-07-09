@@ -148,7 +148,7 @@ class MysterySeed:
             self.seed.setBasicSetting("EntranceMode", ", ".join(enabledERs))
         
         if self.setupCategories[CategoryNames.SMALLKEYS].getActiveShuffle() == ShuffleNames.SM_KEYS_TEMPLES:
-            self.seed.setBasicSetting("SmallKeyMode", "DoorsOpen, KeepWithinTemples, KeepThroughTime")
+            self.seed.setBasicSetting("SmallKeyMode", "KeepWithinTemples, KeepThroughTime")
             self.seed.removeHintFromTier("ItemIceArrow", 2)
             self.seed.addHintToTier("ItemIceArrow", 1)
         
