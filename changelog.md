@@ -12,7 +12,7 @@ This Mystery Maker release makes balancing changes and fixes bugs following Vers
 
 *Multiple test seeds have featured a cow grotto in Twin Islands Ice Grotto that failed to function as expected. All butterfly fairies there were stuck being vanilla even when the settings files had chosen to shuffle them, and cows were giving different items from what was marked in the spoiler log (e.g. a Keaton Mask when the spoiler log mentioned a rupee).*
 
-*As no other problems have been found with Grotto ER, I am electing to keep that shuffle in play in the hopes a fix can be found before Season 3 begins. In the meantime, Grotto ER will disable Cowsanity and junk cow grottos when active. (Without the cow grottos, the only ways to confirm that Cowsanity was off would require either Goron Mask + Powder Keg or a visit to Beneath the Well. In some seeds that will not be a reasonable expectation to make of runners!)  
+*As no other problems have been found with Grotto ER, I am electing to keep that shuffle in play in the hopes a fix can be found before Season 3 begins. In the meantime, Grotto ER will disable Cowsanity and junk cow grottos when active. Without the cow grottos, the only ways to confirm that Cowsanity was off would require either Goron Mask + Powder Keg or a visit to Beneath the Well. In some seeds that will not be a reasonable expectation to make of runners!*  
 
 *Should MMR be updated with a fix, this decision will be revisited promptly, so long as competition has not yet begun.*
 
@@ -47,6 +47,17 @@ This Mystery Maker release makes balancing changes and fixes bugs following Vers
   - Three-Item Shops is no longer an available shuffle. Full Shopsanity is unchanged.
 - **Cowsanity** is more likely in seeds without Grotto ER (45 -> 60) but disabled entirely in seeds with Grotto ER (45 -> 0).
 - **Butterfly and Well Fairies** has its two cow grotto butterfly fairies junked when active in seeds with Grotto ER.
+- Other categories have had some shuffle weights adjusted:
+  - Soils (40 -> 35)
+  - Crates and Barrels (50 -> 45)
+  - Palm Trees (50 -> 60)
+  - Regional Gossip Fairies (50 -> 45)
+  - Temple Red Rupees (35 -> 40)
+  - Temple Red, Blue, and Green Rupees (20 -> 25)
+
+*The Bubble Fairies partial shuffle added complexity to identifying the Stray Fairies category, given that the only way to distinguish between Just Add Bubbles and All Stray Fairies was to recall the state of the Clock Town Stray Fairy. While a similar scenario already existed in Season 2 for Stone Tower Temple flip fairies if STT was your first temple--and the Clock Town Stray Fairy has always been a key Mystery tell!--Bubble Fairies did have the side effect of pulling dungeon density further away from Stone Tower Temple. This was further pronounced by the absence of the uninverted STT chest fairies. A weaker Stone Tower Temple was desirable during the Simple Interiors tests, but not so much now, and removing the Bubble Fairies partial shuffle should help out STT some while reducing category complexity.*
+
+*Similarly, Simple Interiors necessitated the move from Late Shopsanity to Three-Item Shops, but once the highly ambitious entrance shuffle did not pan out, the presence of Potion Shop and Bomb Shop caused partial Shopsanity to further strengthen Clock Town and Southern Swamp, while dulling one of the few selling points of the northern winter in Mystery. The hit to Milk Bar--a pair of checks with traditional tournament pedigree!--was also keenly felt in the wake of Sound Check's promotion to sometimes.*
 
 ### Hints
 - **The Oath hint is available** as Oath is back in the song pool.
@@ -69,6 +80,7 @@ This Mystery Maker release makes balancing changes and fixes bugs following Vers
 - Renamed bonus-song toggles.
 - Added all Mask Bingo possibilities to Starting Random Item while retaining the category's retired options.
 - Added Disable Shuffled Cow Grottos toggle. It's on by default and applies the cow grotto bug workaround detailed above.
+- Adjusted some Super Mystery weights.
 
 ## Bug Fixes
 - Small Keys Within Any Temple now is applied properly when active.

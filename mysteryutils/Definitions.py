@@ -402,22 +402,22 @@ categoryWeights[DensityNames.NORMAL][CategoryNames.SHOPCHECKS] = {ShuffleNames.S
                                                                   ShuffleNames.SHOP_C_FULL: 25}
 categoryWeights[DensityNames.NORMAL][CategoryNames.SHOPPRICES] = {ShuffleNames.SHOP_P_SHUFFLE: 20,
                                                                   ShuffleNames.SHOP_P_RANDOM: 20}
-categoryWeights[DensityNames.NORMAL][CategoryNames.SOILS] = {ShuffleNames.GENERIC_SHUFFLED: 40}
+categoryWeights[DensityNames.NORMAL][CategoryNames.SOILS] = {ShuffleNames.GENERIC_SHUFFLED: 35}
 categoryWeights[DensityNames.NORMAL][CategoryNames.COWS] = {ShuffleNames.GENERIC_SHUFFLED: 45}
 categoryWeights[DensityNames.NORMAL][CategoryNames.HITSPOTS] = {ShuffleNames.HITS_SINGLE: 40}
 categoryWeights[DensityNames.NORMAL][CategoryNames.TOKENS] = {ShuffleNames.TOKENS_ONE: 30,
                                                               ShuffleNames.TOKENS_BOTH: 5}
-categoryWeights[DensityNames.NORMAL][CategoryNames.CRATESANDBARRELS] = {ShuffleNames.GENERIC_SHUFFLED: 50}
+categoryWeights[DensityNames.NORMAL][CategoryNames.CRATESANDBARRELS] = {ShuffleNames.GENERIC_SHUFFLED: 45}
 categoryWeights[DensityNames.NORMAL][CategoryNames.KEATONGRASS] = {ShuffleNames.KEATON_ODD: 30,
                                                                    ShuffleNames.KEATON_FULL: 5}
-categoryWeights[DensityNames.NORMAL][CategoryNames.PALMTREES] = {ShuffleNames.GENERIC_SHUFFLED: 50}
+categoryWeights[DensityNames.NORMAL][CategoryNames.PALMTREES] = {ShuffleNames.GENERIC_SHUFFLED: 60}
 categoryWeights[DensityNames.NORMAL][CategoryNames.BUTTERFLYANDWELLFAIRIES] = {ShuffleNames.GENERIC_SHUFFLED: 40}
-categoryWeights[DensityNames.NORMAL][CategoryNames.GOSSIPFAIRIES] = {ShuffleNames.GENERIC_SHUFFLED: 50}
+categoryWeights[DensityNames.NORMAL][CategoryNames.GOSSIPFAIRIES] = {ShuffleNames.GENERIC_SHUFFLED: 45}
 categoryWeights[DensityNames.NORMAL][CategoryNames.LOOSERUPEESOVERWORLD] = {ShuffleNames.LOOSE_O_R: 15,
                                                                             ShuffleNames.LOOSE_O_RB: 20,
                                                                             ShuffleNames.LOOSE_O_RBG: 15}
-categoryWeights[DensityNames.NORMAL][CategoryNames.LOOSERUPEESTEMPLES] = {ShuffleNames.LOOSE_T_R: 35,
-                                                                          ShuffleNames.LOOSE_T_RBG: 20}
+categoryWeights[DensityNames.NORMAL][CategoryNames.LOOSERUPEESTEMPLES] = {ShuffleNames.LOOSE_T_R: 40,
+                                                                          ShuffleNames.LOOSE_T_RBG: 25}
 categoryWeights[DensityNames.NORMAL][CategoryNames.SNOWBALLS] = {ShuffleNames.SNOW_SH: 20,
                                                                  ShuffleNames.SNOW_ANY: 15}
 categoryWeights[DensityNames.NORMAL][CategoryNames.POTS] = {ShuffleNames.POTS_TWED: 35}
