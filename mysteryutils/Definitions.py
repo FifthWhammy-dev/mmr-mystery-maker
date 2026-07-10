@@ -123,6 +123,7 @@ class ShuffleNames(StrEnum):
     STRAYS_BUBBLES = "Just add bubbles"
     STRAYS_FULL = "All Stray Fairies"
     SHOP_C_THREE = "Three-item shops"
+    SHOP_C_LATE = "Late shops"
     SHOP_C_FULL = "Almost all purchases"
     SHOP_P_SHUFFLE = "Shuffled prices"
     SHOP_P_RANDOM = "Random prices"
@@ -229,6 +230,7 @@ shuffleCheckStrings[(CategoryNames.STRAYFAIRIES, ShuffleNames.FAIRY_HUNT_INVERTE
 shuffleCheckStrings[(CategoryNames.STRAYFAIRIES, ShuffleNames.FAIRY_HUNT_INVERTED_STRAYS_CORE)] = "--------------------------3f4ffc0f-80ffc7fc----------"
 
 shuffleCheckStrings[(CategoryNames.SHOPCHECKS, ShuffleNames.SHOP_C_THREE)] = "---------------------------------3ff80----"
+shuffleCheckStrings[(CategoryNames.SHOPCHECKS, ShuffleNames.SHOP_C_LATE)] = "-------------------------3--------3f000----"
 shuffleCheckStrings[(CategoryNames.SHOPCHECKS, ShuffleNames.SHOP_C_FULL)] = "-------------------------b03--------3ffff-80000000---"
 
 shuffleCheckStrings[(CategoryNames.SOILS, ShuffleNames.GENERIC_SHUFFLED)] = "-----------7ff-f0000000-------------------------"
@@ -397,7 +399,7 @@ categoryWeights[DensityNames.NORMAL][CategoryNames.ERDUNGEON] = {ShuffleNames.GE
 categoryWeights[DensityNames.NORMAL][CategoryNames.SMALLKEYS] = {ShuffleNames.SM_KEYS_TEMPLES: 35}
 categoryWeights[DensityNames.NORMAL][CategoryNames.STRAYFAIRIES] = {ShuffleNames.STRAYS_BUBBLES: 30,
                                                                     ShuffleNames.STRAYS_FULL: 25}
-categoryWeights[DensityNames.NORMAL][CategoryNames.SHOPCHECKS] = {ShuffleNames.SHOP_C_THREE: 25,
+categoryWeights[DensityNames.NORMAL][CategoryNames.SHOPCHECKS] = {ShuffleNames.SHOP_C_LATE: 30,
                                                                   ShuffleNames.SHOP_C_FULL: 25}
 categoryWeights[DensityNames.NORMAL][CategoryNames.SHOPPRICES] = {ShuffleNames.SHOP_P_SHUFFLE: 20,
                                                                   ShuffleNames.SHOP_P_RANDOM: 20}
@@ -437,7 +439,7 @@ categoryWeights[DensityNames.SUPER][CategoryNames.ERDUNGEON] = categoryWeights[D
 categoryWeights[DensityNames.SUPER][CategoryNames.SMALLKEYS] = categoryWeights[DensityNames.NORMAL][CategoryNames.SMALLKEYS]
 categoryWeights[DensityNames.SUPER][CategoryNames.STRAYFAIRIES] = {ShuffleNames.STRAYS_BUBBLES: 40,
                                                                     ShuffleNames.STRAYS_FULL: 30}
-categoryWeights[DensityNames.SUPER][CategoryNames.SHOPCHECKS] = {ShuffleNames.SHOP_C_THREE: 40,
+categoryWeights[DensityNames.SUPER][CategoryNames.SHOPCHECKS] = {ShuffleNames.SHOP_C_LATE: 45,
                                                                   ShuffleNames.SHOP_C_FULL: 40}
 categoryWeights[DensityNames.SUPER][CategoryNames.SHOPPRICES] = {ShuffleNames.SHOP_P_SHUFFLE: 30,
                                                                   ShuffleNames.SHOP_P_RANDOM: 25}

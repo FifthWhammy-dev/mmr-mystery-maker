@@ -240,6 +240,9 @@ class MysterySeed:
                         case ShuffleNames.SHOP_C_THREE:
                             self.mainCategories[CategoryNames.SHOPPRICES].modifyWeight(ShuffleNames.SHOP_P_SHUFFLE, 15)
                             self.mainCategories[CategoryNames.SHOPPRICES].modifyWeight(ShuffleNames.SHOP_P_RANDOM, 5)
+                        case ShuffleNames.SHOP_C_LATE:
+                            self.mainCategories[CategoryNames.SHOPPRICES].modifyWeight(ShuffleNames.SHOP_P_SHUFFLE, 15)
+                            self.mainCategories[CategoryNames.SHOPPRICES].modifyWeight(ShuffleNames.SHOP_P_RANDOM, 5)
                         case ShuffleNames.SHOP_C_FULL:
                             self.mainCategories[CategoryNames.SHOPPRICES].modifyWeight(ShuffleNames.SHOP_P_SHUFFLE, 30)
                             self.mainCategories[CategoryNames.SHOPPRICES].modifyWeight(ShuffleNames.SHOP_P_RANDOM, 10)

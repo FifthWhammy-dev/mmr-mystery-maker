@@ -105,6 +105,7 @@ def CreateMainCategoryList():
 
     AddCategory(mainList, CategoryNames.SHOPCHECKS, "Items for sale in shops and by merchants.")
     AddShuffleWithString(mainList, CategoryNames.SHOPCHECKS, ShuffleNames.SHOP_C_THREE)
+    AddShuffleWithString(mainList, CategoryNames.SHOPCHECKS, ShuffleNames.SHOP_C_LATE)
     AddShuffleWithString(mainList, CategoryNames.SHOPCHECKS, ShuffleNames.SHOP_C_FULL)
 
     AddCategory(mainList, CategoryNames.SHOPPRICES, "Prices of items for sale.")
