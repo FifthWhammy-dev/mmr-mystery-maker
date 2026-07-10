@@ -17,10 +17,6 @@ This release is an intended candidate for Season 3 of the Mystery Tournament! As
 ### Item and Check Pool
 - **Oath to Order is no longer granted as an extra starting song by default.**  It is again shuffled. The song check pool will remain the same, as an extra dungeon song will be granted instead! See **Setup Categories** below for more.
 
-### Hints
-- **The Oath hint is available** as Oath is back in the song pool.
-- Grog will no longer be backup-hinted when Bremen Mask is a starting item.
-
 ### Setup Categories
 - **Starting Random Song now grants *two* starting songs**. The first keeps the same weights as before (i.e. anything but Oath, favoring Epona), and the second is always a dungeon song. The Mystery spoiler will list the second song as an "Extra Dungeon Song".
 - **Starting Random Item**:
@@ -34,6 +30,20 @@ This release is an intended candidate for Season 3 of the Mystery Tournament! As
 - **Cowsanity** is more likely in seeds without Grotto ER (45 -> 60) but disabled entirely in seeds with Grotto ER (45 -> 0).
 - **Butterfly and Well Fairies** has its two cow grotto butterfly fairies junked when active in seeds with Grotto ER.
 
+### Hints
+- **The Oath hint is available** as Oath is back in the song pool.
+- **Added Dampe Digging to the rotating always hint list.**
+- Added **Mirror Shield Chest** as a sometimes hint.
+- Changed **Midnight Meeting** hinting: it's now usually a sometimes hint, except when Full Notebook Entries is active (in which case Midnight Meeting is backup-hinted) or when Kafei's Mask is a starting item (in which case Midnight Meeting is unhinted).
+- **Deku Playground Any Day** is no longer made a sometimes hint by Grotto ER. It's now a backup hint in all seeds.
+- Added Mountain Smithy Day 1 and Inverted Stone Tower Temple Updraft Frozen Eye as backup hints.
+- Removed Inverted Stone Tower Temple Wizzrobe from the backup hint list.
+- Grog will no longer be backup-hinted when Bremen Mask is a starting item.
+
+*The text hint on the Dampe Digging grave doesn't fully help with ambiguous trade items or side masks. It's a very time-consuming and ToD-constrained check that only synergizes with one other category now, yet it has flexible requirements beyond the Captain's Hat. MMR 2.0's new rotating always hint handling allows for expanding the list with minimal harm to the practical appearance rates of its checks, and Dampe Digging merits a spot. (Beaver Race is not quite at that point.)*
+
+*Sometimes-hinting Deku Playground neutralized one of Grotto ER's bigger impacts a little bit too often. The check also has the potential to be comboed with the Playground's Loose Rupees. Meanwhile, the sometimes hint list is being expanded to maintain its variety in light of weight drops to most of the sometimes-hint-adding categories. (And the potential for starting Gibdo Mask!)*
+
 ## Generator Changes
 - Renamed bonus-song toggles.
 - Added all Mask Bingo possibilities to Starting Random Item while retaining the category's retired options.
@@ -41,6 +51,7 @@ This release is an intended candidate for Season 3 of the Mystery Tournament! As
 
 ## Bug Fixes
 - Small Keys Within Any Temple now is applied properly when active.
+- Town Archery now is being backup-hinted properly.
 - Fixed Oath handling in base settings files.
 - Removed Simple Interiors from the Super Mystery category spreadsheet.
 

@@ -119,25 +119,27 @@
       [
         "ItemBottleAliens",
         "ItemBottleGoronRace",
+        "ItemBottleDampe",
         "HeartPieceBoatArchery",
         "HeartPieceSeaHorse",
+        "HeartPieceFishermanGame",
         "MaskScents",
         "MaskRomani",
-        "MaskCouple",
-        "HeartPieceFishermanGame"
+        "MaskCouple"
       ],
       [
         "UpgradeGildedSword",
         "HeartPieceOceanSpiderHouse",
-        "MaskCircusLeader"
+        "MaskCircusLeader",
+        "UpgradeMirrorShield",
+        "TradeItemKafeiLetter"
       ],
       [
         "ItemIceArrow",
         "ItemBottleMadameAroma",
-        "UpgradeMirrorShield",
+        "UpgradeRazorSword",
         "UpgradeBigQuiver",
         "UpgradeBiggestQuiver",
-        "TradeItemKafeiLetter",
         "MaskStone",
         "MaskBunnyHood",
         "MaskKamaro",
@@ -146,7 +148,7 @@
         "ChestWellLeftPurpleRupee",
         "HeartPieceBank",
         "CollectibleStrayFairyWoodfall12",
-        "CollectibleStrayFairyStoneTower7",
+        "CollectibleStrayFairyStoneTower9",
         "HeartPiecePoeHut",
         "MundaneItemDekuPlaygroundPurpleRupee"
       ]

@@ -170,8 +170,6 @@ class MysterySeed:
             enabledERs.append("SimpleInteriors")
         if self.setupCategories[CategoryNames.ERGROTTO].isActive():
             enabledERs.append("Grottos")
-            self.seed.removeHintFromTier("MundaneItemDekuPlaygroundPurpleRupee", 2)
-            self.seed.addHintToTier("MundaneItemDekuPlaygroundPurpleRupee", 1)
         if self.setupCategories[CategoryNames.ERDUNGEON].isActive():
             enabledERs.append("DungeonEntrances")
         if len(enabledERs) > 0:
@@ -316,9 +314,6 @@ class MysterySeed:
         if self.mainCategories[CategoryNames.GOSSIPFAIRIES].isActive():
             self.seed.addHintToTier("CollectableSwampSpiderHouseTreeRoomGossipFairy1", 2)
         
-        if self.mainCategories[CategoryNames.POTS].isActive():
-            self.seed.removeHintFromTier("CollectibleStrayFairyStoneTower7", 2)  # Inverted Stone Tower Temple Wizzrobe
-
         if self.mainCategories[CategoryNames.MUNDANES].isActive():
             self.seed.addHintToTier("MundaneItemKotakeMushroomSaleRedRupee", 2)
             self.seed.addHintToTier("MundaneItemCuriosityShopPurpleRupee", 2)
@@ -333,6 +328,8 @@ class MysterySeed:
                 self.seed.addHintToTier("NotebookUniteAnjuAndKafei", 0)
                 self.seed.addHintToTier("NotebookDeliverPendant", 1)
                 self.seed.addHintToTier("NotebookMovingGorman", 1)
+                self.seed.removeHintFromTier("TradeItemKafeiLetter", 1)
+                self.seed.addHintToTier("TradeItemKafeiLetter", 2)
                 self.seed.addHintToTier("NotebookPromiseAnjuDelivery", 2)
                 self.seed.addHintToTier("NotebookDeliverLetterToMama", 2)
                 self.seed.addHintToTier("NotebookGrogsThanks", 2)
@@ -344,6 +341,14 @@ class MysterySeed:
             self.setupCategories[CategoryNames.STARTINGITEM].getActiveShuffle() == ShuffleNames.ITEM_NTM_C2): # Bremen Mask
                 self.seed.removeHintFromTier("MaskBunnyHood", 2)       # Grog
                 self.seed.removeHintFromTier("NotebookGrogsThanks", 2) # Grog ribbon
+
+        if (self.setupCategories[CategoryNames.STARTINGITEM].getActiveShuffle() == ShuffleNames.ITEM_NTM_R3 or 
+            self.setupCategories[CategoryNames.STARTINGITEM].getActiveShuffle() == ShuffleNames.ITEM_NTM_C3): # Kafei's Mask
+                if self.mainCategories[CategoryNames.NOTEBOOKENTRIES].getActiveShuffle() == ShuffleNames.NOTE_FULL:
+                    self.seed.removeHintFromTier("TradeItemKafeiLetter", 2)
+                    self.seed.removeHintFromTier("NotebookPromiseAnjuDelivery", 2)
+                else:
+                    self.seed.removeHintFromTier("TradeItemKafeiLetter", 1)
         
         # apply the Excluded Checks string (junk Excluded Checks that are in the core check list, unshuffle Excluded Checks that aren't in the core check list)
         baselineStringOverlap = GetListStringOverlap(shuffleCheckStrings[(CategoryNames.BASELINE, ShuffleNames.BASE_CHECKS)], self.options[GeneratorOptionNames.EXCLUDECHECKS])
