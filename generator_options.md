@@ -66,6 +66,8 @@ These determine how each of Simple Interiors ER, Grotto ER, Dungeon ER, or Small
 - **Random**: This category is randomly off or active, per the default weights.
 - **Shuffled**: This category is guaranteed to be active.
 
+**Disable Shuffled Cow Grottos** is on by default in order to avoid problems with Twin Islands Ice cow grottos. This toggle disables the Cows category and junks cow grotto butterfly fairies when Grotto ER is on (but makes Cows more likely when Grotto ER is off).
+
 ## Checks 
 
 This tab contains options that affect Mystery's main categories.

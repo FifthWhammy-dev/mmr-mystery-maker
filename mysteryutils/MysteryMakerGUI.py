@@ -33,6 +33,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
         startGrottosERMode.set(OPTION_DEFAULTS[GeneratorOptionNames.ERGROTTO])
         startDungeonERMode.set(OPTION_DEFAULTS[GeneratorOptionNames.ERDUNGEON])
         startSmallKeysMode.set(OPTION_DEFAULTS[GeneratorOptionNames.SMALLKEYS])
+        startCowGrottoFixMode.set(OPTION_DEFAULTS[GeneratorOptionNames.COWGROTTOFIX])
         mainDensityMode.set(OPTION_DEFAULTS[GeneratorOptionNames.DENSITYMODE])
         densityCategoryMinimum.set(str(OPTION_DEFAULTS[GeneratorOptionNames.CATEGORYMINIMUM]))
         excludeChecksMode.set(str(OPTION_DEFAULTS[GeneratorOptionNames.EXCLUDECHECKS]))
@@ -77,6 +78,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
                 startGrottosERMode.get() == OPTION_DEFAULTS[GeneratorOptionNames.ERGROTTO] and
                 startDungeonERMode.get() == OPTION_DEFAULTS[GeneratorOptionNames.ERDUNGEON] and
                 startSmallKeysMode.get() == OPTION_DEFAULTS[GeneratorOptionNames.SMALLKEYS] and
+                startCowGrottoFixMode.get() == ("1" if OPTION_DEFAULTS[GeneratorOptionNames.COWGROTTOFIX] else "0") and
                 mainDensityMode.get() == OPTION_DEFAULTS[GeneratorOptionNames.DENSITYMODE] and
                 densityCategoryMinimum.get() == str(OPTION_DEFAULTS[GeneratorOptionNames.CATEGORYMINIMUM]) and
                 excludeChecksMode.get() == str(OPTION_DEFAULTS[GeneratorOptionNames.EXCLUDECHECKS]))
@@ -96,6 +98,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
         cmSettings[str(GeneratorOptionNames.ERGROTTO)] = startGrottosERMode.get()
         cmSettings[str(GeneratorOptionNames.ERDUNGEON)] = startDungeonERMode.get()
         cmSettings[str(GeneratorOptionNames.SMALLKEYS)] = startSmallKeysMode.get()
+        cmSettings[str(GeneratorOptionNames.COWGROTTOFIX)] = (startCowGrottoFixMode.get() == "1")
         cmSettings[str(GeneratorOptionNames.DENSITYMODE)] = mainDensityMode.get()
         cmSettings[str(GeneratorOptionNames.CATEGORYMINIMUM)] = int(densityCategoryMinimum.get())
         cmSettings[str(GeneratorOptionNames.EXCLUDECHECKS)] = excludeChecksMode.get()
@@ -116,6 +119,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
         startGrottosERMode.set(modesDict[GeneratorOptionNames.ERGROTTO])
         startDungeonERMode.set(modesDict[GeneratorOptionNames.ERDUNGEON])
         startSmallKeysMode.set(modesDict[GeneratorOptionNames.SMALLKEYS])
+        startCowGrottoFixMode.set("1" if modesDict[GeneratorOptionNames.COWGROTTOFIX] else "0")
         mainDensityMode.set(modesDict[GeneratorOptionNames.DENSITYMODE])
         densityCategoryMinimum.set(str(modesDict[GeneratorOptionNames.CATEGORYMINIMUM]))
         excludeChecksMode.set(modesDict[GeneratorOptionNames.EXCLUDECHECKS])
@@ -236,7 +240,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
     # Start Modes pane
     startSongLayoutMode = StringVar(value=OPTION_DEFAULTS[GeneratorOptionNames.SONGLAYOUT])
     startFreeDungeonSongMode = StringVar(value=("1" if OPTION_DEFAULTS[GeneratorOptionNames.FREEDUNGEONSONG] else "0"))
-    startFreeEponaMode = StringVar(value=("0" if OPTION_DEFAULTS[GeneratorOptionNames.FREEEPONA] else "0"))
+    startFreeEponaMode = StringVar(value=("1" if OPTION_DEFAULTS[GeneratorOptionNames.FREEEPONA] else "0"))
     startDifficultyMode = StringVar(value=OPTION_DEFAULTS[GeneratorOptionNames.STARTGEAR])
     startRandomItemMode = StringVar(value=OPTION_DEFAULTS[GeneratorOptionNames.RANDOMITEM])
     startFDAnywhereMode = StringVar(value=OPTION_DEFAULTS[GeneratorOptionNames.FDANYWHERE])
@@ -244,6 +248,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
     startGrottosERMode = StringVar(value=OPTION_DEFAULTS[GeneratorOptionNames.ERGROTTO])
     startDungeonERMode = StringVar(value=OPTION_DEFAULTS[GeneratorOptionNames.ERDUNGEON])
     startSmallKeysMode = StringVar(value=OPTION_DEFAULTS[GeneratorOptionNames.SMALLKEYS])
+    startCowGrottoFixMode = StringVar(value=("1" if OPTION_DEFAULTS[GeneratorOptionNames.COWGROTTOFIX] else "0"))
 
     startSongLayoutMode.trace_add("write", updateModeTabs)
     startFreeDungeonSongMode.trace_add("write", updateModeTabs)
@@ -255,6 +260,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
     startGrottosERMode.trace_add("write", updateModeTabs)
     startDungeonERMode.trace_add("write", updateModeTabs)
     startSmallKeysMode.trace_add("write", updateModeTabs)
+    startCowGrottoFixMode.trace_add("write", updateModeTabs)
     
     startSongLayout_label = ttk.Label(modeTabStartMode, text="Song Layout:    ")
     startSongLayout_combo = ttk.Combobox(modeTabStartMode, textvariable=startSongLayoutMode)
@@ -335,6 +341,8 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
                                       ShuffleNames.GENERIC_RANDOM,
                                       ShuffleNames.SM_KEYS_TEMPLES)
     startSmallKeys_combo.state(["readonly"])  
+
+    startCowGrottoFix_check = ttk.Checkbutton(modeTabStartMode, text="Disable Shuffled Cow Grottos", variable=startFreeDungeonSongMode)
     
     startSongLayout_label.grid(column=1, row=1, sticky=(W,E))
     startSongLayout_combo.grid(column=2, row=1, sticky=(W,E))
@@ -346,15 +354,16 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
     startRandomItem_combo.grid(column=2, row=4, sticky=(W,E))
     startFDAnywhere_label.grid(column=1, row=5, sticky=(W,E))
     startFDAnywhere_combo.grid(column=2, row=5, sticky=(W,E))
-    startInteriorsER_label.grid(column=3, row=3, sticky=(W,E))
-    startInteriorsER_combo.grid(column=4, row=3, sticky=(W,E))
-    startGrottosER_label.grid(column=3, row=4, sticky=(W,E))
-    startGrottosER_combo.grid(column=4, row=4, sticky=(W,E))
-    startDungeonER_label.grid(column=3, row=5, sticky=(W,E))
-    startDungeonER_combo.grid(column=4, row=5, sticky=(W,E))
+    startDungeonER_label.grid(column=3, row=3, sticky=(W,E))
+    startDungeonER_combo.grid(column=4, row=3, sticky=(W,E))
+    startInteriorsER_label.grid(column=3, row=4, sticky=(W,E))
+    startInteriorsER_combo.grid(column=4, row=4, sticky=(W,E))
+    startGrottosER_label.grid(column=3, row=5, sticky=(W,E))
+    startGrottosER_combo.grid(column=4, row=5, sticky=(W,E))
     startSmallKeys_label.grid(column=1, row=6, sticky=(W,E))
     startSmallKeys_combo.grid(column=2, row=6, sticky=(W,E))
-    
+    startCowGrottoFix_check.grid(column=3, row=6, columnspan=2, sticky=(W,E))
+
     startSongLayout_tip = Hovertip(startSongLayout_combo, "Choose a song layout.")
     startFreeEpona_tip = Hovertip(startFreeEpona_check, "Also start with Epona's Song. Romani's Game is unshuffled.")
     startFreeDungeonSong_tip = Hovertip(startFreeDungeonSong_check, "Also start with a random free dungeon song. Boss Blue Warp is junked.")
@@ -365,6 +374,7 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
     startGrottosER_tip = Hovertip(startGrottosER_combo, "Choose a Grottos ER option.")
     startDungeonER_tip = Hovertip(startDungeonER_combo, "Choose a Dungeon ER option.\nAffected entrances are WFT, SHT, GBT, and inverted STT.")
     startSmallKeys_tip = Hovertip(startSmallKeys_combo, "Choose a Small Keys option.")
+    startCowGrottoFix_tip = Hovertip(startCowGrottoFix_check, "Junks cow grotto butterflies and disables the Cows category when Grotto ER is on,\navoiding an MMR bug with Twin Islands Ice Grotto.\nAs compensation, Cows is more likely when Grotto ER is off.")
 
     # Checks pane
     mainDensityMode = StringVar(value=OPTION_DEFAULTS[GeneratorOptionNames.DENSITYMODE])

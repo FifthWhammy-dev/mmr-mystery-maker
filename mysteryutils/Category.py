@@ -53,6 +53,13 @@ class Category:
     
     def isActive(self) -> bool:
         return self.activeShuffle != ShuffleNames.GENERIC_OFF
+    
+    def canBeActive(self) -> bool:
+        for s in self.shuffles:
+            if self.shuffles[s].getWeight() > 0:
+                return True
+        
+        return False
         
     def setWeights(self, weightDict: dict[str, int]):
         for s in weightDict:

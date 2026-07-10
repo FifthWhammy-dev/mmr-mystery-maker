@@ -181,30 +181,51 @@ class MysterySeed:
             self.seed.setBasicSetting("SmallKeyMode", "KeepWithinTemples, KeepThroughTime")
             self.seed.removeHintFromTier("ItemIceArrow", 2)
             self.seed.addHintToTier("ItemIceArrow", 1)
+
+        if self.options[GeneratorOptionNames.COWGROTTOFIX]:
+            if self.setupCategories[CategoryNames.ERGROTTO].isActive():
+                junkList = AddStringToListString(junkList, shuffleCheckStrings[(CategoryNames.BUTTERFLYANDWELLFAIRIES, ShuffleNames.BUTTERFLYWELL_COWS)])
+                self.mainCategories[CategoryNames.COWS].zeroAllShuffles()
+                self.mainCategories[CategoryNames.COWS].setHidden(True)
+            else:
+                self.mainCategories[CategoryNames.COWS].modifyWeight(ShuffleNames.GENERIC_SHUFFLED, 15)
         
         # prepare active categories for rolling (the two-set categories only get represented once here)
+        possibleMainCategories = [CategoryNames.STRAYFAIRIES,
+                                  CategoryNames.SHOPCHECKS,
+                                  CategoryNames.SOILS,
+                                  CategoryNames.COWS,
+                                  CategoryNames.HITSPOTS,
+                                  CategoryNames.TOKENS,
+                                  CategoryNames.CRATESANDBARRELS,
+                                  CategoryNames.KEATONGRASS,
+                                  CategoryNames.PALMTREES,
+                                  CategoryNames.BUTTERFLYANDWELLFAIRIES,
+                                  CategoryNames.GOSSIPFAIRIES,
+                                  CategoryNames.LOOSERUPEESOVERWORLD,
+                                  CategoryNames.SNOWBALLS,
+                                  CategoryNames.POTS,
+                                  CategoryNames.MUNDANES,
+                                  CategoryNames.NOTEBOOKENTRIES]
+        categoriesToRoll = []
+        for c in possibleMainCategories:
+            if self.mainCategories[c].canBeActive():
+                categoriesToRoll.append(c)
+            elif (c == CategoryNames.SHOPCHECKS and 
+                  self.mainCategories[CategoryNames.SHOPPRICES].canBeActive()):
+                categoriesToRoll.append(c)
+            elif (c == CategoryNames.LOOSERUPEESOVERWORLD and 
+                  self.mainCategories[CategoryNames.LOOSERUPEESTEMPLES].canBeActive()):
+                categoriesToRoll.append(c)
+
         mainCategoryMinimum = self.options[GeneratorOptionNames.CATEGORYMINIMUM]
+        mainCategoryMaximum = len(categoriesToRoll)
         if mainCategoryMinimum < 0:
             mainCategoryMinimum = 0
-        if mainCategoryMinimum > 16:
-            mainCategoryMinimum = 16
-        rerollBatchSize = max((16 - mainCategoryMinimum) // 2, 1)
-        categoriesToRoll = [CategoryNames.STRAYFAIRIES,
-                            CategoryNames.SHOPCHECKS,
-                            CategoryNames.SOILS,
-                            CategoryNames.COWS,
-                            CategoryNames.HITSPOTS,
-                            CategoryNames.TOKENS,
-                            CategoryNames.CRATESANDBARRELS,
-                            CategoryNames.KEATONGRASS,
-                            CategoryNames.PALMTREES,
-                            CategoryNames.BUTTERFLYANDWELLFAIRIES,
-                            CategoryNames.GOSSIPFAIRIES,
-                            CategoryNames.LOOSERUPEESOVERWORLD,
-                            CategoryNames.SNOWBALLS,
-                            CategoryNames.POTS,
-                            CategoryNames.MUNDANES,
-                            CategoryNames.NOTEBOOKENTRIES]
+        if mainCategoryMinimum > mainCategoryMaximum:
+            mainCategoryMinimum = mainCategoryMaximum
+        rerollBatchSize = max((mainCategoryMaximum - mainCategoryMinimum) // 2, 1)
+
         inactiveCategories = []
         activeCategories = []
 
@@ -363,7 +384,7 @@ class MysterySeed:
                     print(sc.spoil(), file=spoiler_file)
             print("", file=spoiler_file)
             for m, mc in self.mainCategories.items():
-                if not sc.isHidden():
+                if not mc.isHidden():
                     print(mc.spoil(), file=spoiler_file)
             print("---------------------------------------------",file=spoiler_file)
             print(f"{"Main category count":>28}: {self.mainCategoryCount}",file=spoiler_file)

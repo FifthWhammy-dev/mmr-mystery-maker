@@ -33,6 +33,7 @@ class GeneratorOptionNames(StrEnum):
     ERGROTTO = "Grottos ER Choice"
     ERDUNGEON = "Dungeon ER Choice"
     SMALLKEYS = "Small Keys Choice"
+    COWGROTTOFIX = "Junk Shuffled Cow Grottos"
     DENSITYMODE = "Density Mode"
     CATEGORYMINIMUM = "Category Minimum"
     EXCLUDECHECKS = "Exclude Checks"
@@ -145,6 +146,7 @@ class ShuffleNames(StrEnum):
     FAIRY_HUNT_FULL_DUNGEON_STRAYS = "Dungeon strays"
     FAIRY_HUNT_INVERTED_STRAYS_CORE = "Dungeon strays other than the core set"
     FAIRY_HUNT_INVERTED_STRAYS_BUBBLES = "Dungeon strays other than the core set and bubbles"
+    BUTTERFLYWELL_COWS = "Cow grotto butterflies"
 
 class ItemNames(StrEnum):
     ITEM_DEKU = "Deku Mask"
@@ -202,6 +204,7 @@ OPTION_DEFAULTS[GeneratorOptionNames.ERINTERIOR] = ShuffleNames.GENERIC_OFF
 OPTION_DEFAULTS[GeneratorOptionNames.ERGROTTO] = ShuffleNames.GENERIC_RANDOM
 OPTION_DEFAULTS[GeneratorOptionNames.ERDUNGEON] = ShuffleNames.GENERIC_RANDOM
 OPTION_DEFAULTS[GeneratorOptionNames.SMALLKEYS] = ShuffleNames.GENERIC_RANDOM
+OPTION_DEFAULTS[GeneratorOptionNames.COWGROTTOFIX] = True
 OPTION_DEFAULTS[GeneratorOptionNames.DENSITYMODE] = DensityNames.NORMAL
 OPTION_DEFAULTS[GeneratorOptionNames.CATEGORYMINIMUM] = 6
 OPTION_DEFAULTS[GeneratorOptionNames.EXCLUDECHECKS] = "-------------------------------------"
@@ -246,6 +249,7 @@ shuffleCheckStrings[(CategoryNames.KEATONGRASS, ShuffleNames.KEATON_FULL)] = "--
 shuffleCheckStrings[(CategoryNames.PALMTREES, ShuffleNames.GENERIC_SHUFFLED)] = "1fe00000-------------------------------------"
 
 shuffleCheckStrings[(CategoryNames.BUTTERFLYANDWELLFAIRIES, ShuffleNames.GENERIC_SHUFFLED)] = "1fe000-1fe00000------------------------------------"
+shuffleCheckStrings[(CategoryNames.BUTTERFLYANDWELLFAIRIES, ShuffleNames.BUTTERFLYWELL_COWS)] = "-3000000------------------------------------"
 
 shuffleCheckStrings[(CategoryNames.GOSSIPFAIRIES, ShuffleNames.GENERIC_SHUFFLED)] = "-100000-31f7400-----------------------------------"
 
