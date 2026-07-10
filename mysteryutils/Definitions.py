@@ -397,8 +397,7 @@ categoryWeights[DensityNames.NORMAL][CategoryNames.ERINTERIOR] = {ShuffleNames.G
 categoryWeights[DensityNames.NORMAL][CategoryNames.ERGROTTO] = {ShuffleNames.GENERIC_SHUFFLED: 60}
 categoryWeights[DensityNames.NORMAL][CategoryNames.ERDUNGEON] = {ShuffleNames.GENERIC_SHUFFLED: 60}
 categoryWeights[DensityNames.NORMAL][CategoryNames.SMALLKEYS] = {ShuffleNames.SM_KEYS_TEMPLES: 35}
-categoryWeights[DensityNames.NORMAL][CategoryNames.STRAYFAIRIES] = {ShuffleNames.STRAYS_BUBBLES: 30,
-                                                                    ShuffleNames.STRAYS_FULL: 25}
+categoryWeights[DensityNames.NORMAL][CategoryNames.STRAYFAIRIES] = {ShuffleNames.STRAYS_FULL: 40}
 categoryWeights[DensityNames.NORMAL][CategoryNames.SHOPCHECKS] = {ShuffleNames.SHOP_C_LATE: 30,
                                                                   ShuffleNames.SHOP_C_FULL: 25}
 categoryWeights[DensityNames.NORMAL][CategoryNames.SHOPPRICES] = {ShuffleNames.SHOP_P_SHUFFLE: 20,
@@ -437,8 +436,7 @@ categoryWeights[DensityNames.SUPER][CategoryNames.ERINTERIOR] = categoryWeights[
 categoryWeights[DensityNames.SUPER][CategoryNames.ERGROTTO] = categoryWeights[DensityNames.NORMAL][CategoryNames.ERGROTTO]
 categoryWeights[DensityNames.SUPER][CategoryNames.ERDUNGEON] = categoryWeights[DensityNames.NORMAL][CategoryNames.ERDUNGEON]
 categoryWeights[DensityNames.SUPER][CategoryNames.SMALLKEYS] = categoryWeights[DensityNames.NORMAL][CategoryNames.SMALLKEYS]
-categoryWeights[DensityNames.SUPER][CategoryNames.STRAYFAIRIES] = {ShuffleNames.STRAYS_BUBBLES: 40,
-                                                                    ShuffleNames.STRAYS_FULL: 30}
+categoryWeights[DensityNames.SUPER][CategoryNames.STRAYFAIRIES] = {ShuffleNames.STRAYS_FULL: 70}
 categoryWeights[DensityNames.SUPER][CategoryNames.SHOPCHECKS] = {ShuffleNames.SHOP_C_LATE: 45,
                                                                   ShuffleNames.SHOP_C_FULL: 40}
 categoryWeights[DensityNames.SUPER][CategoryNames.SHOPPRICES] = {ShuffleNames.SHOP_P_SHUFFLE: 30,

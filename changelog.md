@@ -16,8 +16,16 @@ This Mystery Maker release makes balancing changes and fixes bugs following Vers
 
 *Should MMR be updated with a fix, this decision will be revisited promptly, so long as competition has not yet begun.*
 
+### Logic and Tricks
+- **Path to Snowhead as FD** and **Climb Stone Tower as FD** are added to the trick list.
+
+*At its core, Mystery has always been a game of observation and deduction revolving around a vastly increased pool of checks. All those categories and shuffles take up a lot of Mystery's complexity budget, so other tournaments are better positioned to tweak the classical racing trick list...but FD tricks do fall under Mystery's jurisdiction.*
+
+*Of the FD tricks from Season 2, Path to Snowhead as FD and Climb Stone Tower as FD have the most potential for novel scenarios while still remaining reasonable to execute and route. They return for Season 3.*
+
 ### Item and Check Pool
 - **Oath to Order is no longer granted as an extra starting song by default.**  It is again shuffled. The song check pool will remain the same, as an extra dungeon song will be granted instead! See **Setup Categories** below for more.
+- **Uninverted Stone Tower Temple's Chest Fairies, except for Death Armos, are again on by default.** Now all Chest Fairies except for the two Stone Tower Temple "flip fairies" are on in every seed.
 
 ### Setup Categories
 - **Starting Random Song now grants *two* starting songs**. The first keeps the same weights as before (i.e. anything but Oath, favoring Epona), and the second is always a dungeon song. The Mystery spoiler will list the second song as an "Extra Dungeon Song".
@@ -29,14 +37,14 @@ This Mystery Maker release makes balancing changes and fixes bugs following Vers
 - **Small Keys Within Any Temple** is less likely (40 -> 35).
 - **Fierce Deity's Mask Anywhere** has been reworked. Continue reading below.
 
-### Logic and Tricks
-- **Path to Snowhead as FD** and **Climb Stone Tower as FD** are added to the trick list.
-
-*At its core, Mystery has always been a game of observation and deduction revolving around a vastly increased pool of checks. All those categories and shuffles take up a lot of Mystery's complexity budget, so other tournaments are better positioned to tweak the classical racing trick list...but FD tricks do fall under Mystery's jurisdiction.*
-
-*Of the FD tricks from Season 2, Path to Snowhead as FD and Climb Stone Tower as FD have the most potential for novel scenarios while still remaining reasonable to execute and route. They return for Season 3.*
-
 ### Main Categories
+- **Extra Stray Fairies:**
+  - Just Add Bubbles is no longer an available shuffle (was 35).
+  - **All Stray Fairies** is more likely (25 -> 40).
+- **Shopsanity Checks:**
+  - Returning from Season 2, **Late Shopsanity** is again the partial Shopsanity shuffle, fully replacing Three-Item Shops. It consists of Goron Shop, Zora Shop, and Milk Bar Purchases, all of which are not innately part of Sphere 0.
+  - **Late Shopsanity** is more likely than Three-Item Shops was (25 -> 30). It increases price shuffles/randomization weights just as Three-Item Shops did (+15 to price shuffle, +5 to price rando).
+  - Three-Item Shops is no longer an available shuffle. Full Shopsanity is unchanged.
 - **Cowsanity** is more likely in seeds without Grotto ER (45 -> 60) but disabled entirely in seeds with Grotto ER (45 -> 0).
 - **Butterfly and Well Fairies** has its two cow grotto butterfly fairies junked when active in seeds with Grotto ER.
 
