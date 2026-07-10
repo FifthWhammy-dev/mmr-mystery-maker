@@ -199,7 +199,7 @@ OPTION_DEFAULTS[GeneratorOptionNames.SONGLAYOUT] = ShuffleNames.GENERIC_RANDOM
 OPTION_DEFAULTS[GeneratorOptionNames.FREEDUNGEONSONG] = True
 OPTION_DEFAULTS[GeneratorOptionNames.FREEEPONA] = False
 OPTION_DEFAULTS[GeneratorOptionNames.RANDOMITEM] = ShuffleNames.GENERIC_RANDOM
-OPTION_DEFAULTS[GeneratorOptionNames.FDANYWHERE] = ShuffleNames.GENERIC_RANDOM
+OPTION_DEFAULTS[GeneratorOptionNames.FDANYWHERE] = ShuffleNames.FD_ON
 OPTION_DEFAULTS[GeneratorOptionNames.ERINTERIOR] = ShuffleNames.GENERIC_OFF
 OPTION_DEFAULTS[GeneratorOptionNames.ERGROTTO] = ShuffleNames.GENERIC_RANDOM
 OPTION_DEFAULTS[GeneratorOptionNames.ERDUNGEON] = ShuffleNames.GENERIC_RANDOM
@@ -390,7 +390,7 @@ categoryWeights[DensityNames.NORMAL][CategoryNames.STARTINGGEAR] = {ShuffleNames
                                                                     ShuffleNames.SG_KOKIRI: 100,
                                                                     ShuffleNames.SG_SWORDLESS: 0,
                                                                     ShuffleNames.SG_FRAGILE: 0}
-categoryWeights[DensityNames.NORMAL][CategoryNames.FDANYWHERE] = {ShuffleNames.FD_ON: 60}
+categoryWeights[DensityNames.NORMAL][CategoryNames.FDANYWHERE] = {ShuffleNames.FD_ON: 100}
 categoryWeights[DensityNames.NORMAL][CategoryNames.ERINTERIOR] = {ShuffleNames.GENERIC_SHUFFLED: 0}
 categoryWeights[DensityNames.NORMAL][CategoryNames.ERGROTTO] = {ShuffleNames.GENERIC_SHUFFLED: 60}
 categoryWeights[DensityNames.NORMAL][CategoryNames.ERDUNGEON] = {ShuffleNames.GENERIC_SHUFFLED: 60}

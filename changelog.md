@@ -1,9 +1,9 @@
 This changelog, covering Mystery Maker releases from Version 5.0 onward, is Markdown-formatted for better readability. Preceding Mystery Maker releases are discussed in the plaintext changelog.txt.
 
 # Mystery Maker release 6.2.0
-This Mystery Maker release makes balancing changes and fixes bugs following Version 6 testing.
+This Mystery Maker release makes balancing changes and fixes bugs following Version 6 testing. Though there are a couple of surprises--do read closely!
 
-This release is an intended candidate for Season 3 of the Mystery Tournament! As competitive play approaches, Mystery Maker releases will strive to avoid altering the core settings, barring major community demand or critical fixes. This is *especially* true while the tourney is ongoing.
+**This release is an intended candidate for Season 3 of the Mystery Tournament!** As competitive play approaches, Mystery Maker releases will strive to avoid unneeded major changes to the core settings (with the exception of the cow grotto shuffle problem). This is *especially* true while the tourney is ongoing.
 
 ## Core Settings Changes
 
@@ -12,7 +12,9 @@ This release is an intended candidate for Season 3 of the Mystery Tournament! As
 
 *Multiple test seeds have featured a cow grotto in Twin Islands Ice Grotto that failed to function as expected. All butterfly fairies there were stuck being vanilla even when the settings files had chosen to shuffle them, and cows were giving different items from what was marked in the spoiler log (e.g. a Keaton Mask when the spoiler log mentioned a rupee).*
 
-*As no other problems have been found with Grotto ER, I am electing to keep that shuffle in play in the hopes a fix can be found before Season 3 begins. In the meantime, Grotto ER will disable Cowsanity and junk cow grottos when active. (Without the cow grottos, the only ways to confirm that Cowsanity was off would require either Goron Mask + Powder Keg or a visit to Beneath the Well. In some seeds that will not be a reasonable expectation to make of runners!)  Should circumstances change, this decision will be revisited promptly, so long as competition has not yet begun.*
+*As no other problems have been found with Grotto ER, I am electing to keep that shuffle in play in the hopes a fix can be found before Season 3 begins. In the meantime, Grotto ER will disable Cowsanity and junk cow grottos when active. (Without the cow grottos, the only ways to confirm that Cowsanity was off would require either Goron Mask + Powder Keg or a visit to Beneath the Well. In some seeds that will not be a reasonable expectation to make of runners!)  
+
+*Should MMR be updated with a fix, this decision will be revisited promptly, so long as competition has not yet begun.*
 
 ### Item and Check Pool
 - **Oath to Order is no longer granted as an extra starting song by default.**  It is again shuffled. The song check pool will remain the same, as an extra dungeon song will be granted instead! See **Setup Categories** below for more.
@@ -25,6 +27,14 @@ This release is an intended candidate for Season 3 of the Mystery Tournament! As
   - Adult's Wallet is less likely (10 -> 5).
   - Empty Bottle is less likely (10 -> 5).
 - **Small Keys Within Any Temple** is less likely (40 -> 35).
+- **Fierce Deity's Mask Anywhere** has been reworked. Continue reading below.
+
+### Logic and Tricks
+- **Path to Snowhead as FD** and **Climb Stone Tower as FD** are added to the trick list.
+
+*At its core, Mystery has always been a game of observation and deduction revolving around a vastly increased pool of checks. All those categories and shuffles take up a lot of Mystery's complexity budget, so other tournaments are better positioned to tweak the classical racing trick list...but FD tricks do fall under Mystery's jurisdiction.*
+
+*Of the FD tricks from Season 2, Path to Snowhead as FD and Climb Stone Tower as FD have the most potential for novel scenarios while still remaining reasonable to execute and route. They return for Season 3.*
 
 ### Main Categories
 - **Cowsanity** is more likely in seeds without Grotto ER (45 -> 60) but disabled entirely in seeds with Grotto ER (45 -> 0).
@@ -43,6 +53,9 @@ This release is an intended candidate for Season 3 of the Mystery Tournament! As
 *The text hint on the Dampe Digging grave doesn't fully help with ambiguous trade items or side masks. It's a very time-consuming and ToD-constrained check that only synergizes with one other category now, yet it has flexible requirements beyond the Captain's Hat. MMR 2.0's new rotating always hint handling allows for expanding the list with minimal harm to the practical appearance rates of its checks, and Dampe Digging merits a spot. (Beaver Race is not quite at that point.)*
 
 *Sometimes-hinting Deku Playground neutralized one of Grotto ER's bigger impacts a little bit too often. The check also has the potential to be comboed with the Playground's Loose Rupees. Meanwhile, the sometimes hint list is being expanded to maintain its variety in light of weight drops to most of the sometimes-hint-adding categories. (And the potential for starting Gibdo Mask!)*
+
+### Fierce Deity's Mask Anywhere
+- **Fierce Deity's Mask Anywhere** is on in ***ALL*** seeds.
 
 ## Generator Changes
 - Renamed bonus-song toggles.

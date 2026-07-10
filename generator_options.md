@@ -51,11 +51,10 @@ This determines what the player's additional starting non-song item(s) can be. T
 
 ### FD Anywhere
 
-This determines whether Fierce Deity's Mask Anywhere is in effect in the seed. **Random** is the default.
+This determines whether Fierce Deity's Mask Anywhere is in effect in the seed. **On** is the default.
 
 - **Off**: FD Anywhere is never on.
 - **Only When Starting**: FD Anywhere is only on when starting with the Fierce Deity's Mask.
-- **Random**: FD Anywhere is always on when starting with the Fierce Deity's Mask, and is sometimes on otherwise, as specified in the default weights.
 - **On**: FD Anywhere is always on. 
 
 ### Entrance Randomization and Small Keys

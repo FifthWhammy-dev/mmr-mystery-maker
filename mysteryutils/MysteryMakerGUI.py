@@ -311,7 +311,6 @@ def openOptionsGui(version_string: str, show_desktop_options: bool):
     startFDAnywhere_combo = ttk.Combobox(modeTabStartMode, textvariable=startFDAnywhereMode, width=25)
     startFDAnywhere_combo["values"] = (ShuffleNames.GENERIC_OFF,
                                        ShuffleNames.FD_STARTING,
-                                       ShuffleNames.GENERIC_RANDOM,
                                        ShuffleNames.FD_ON)
     startFDAnywhere_combo.state(["readonly"])
     

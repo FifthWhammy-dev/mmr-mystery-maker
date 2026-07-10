@@ -82,6 +82,7 @@ def CreateSetupCategoryList():
 
     AddCategory(setupList, CategoryNames.FDANYWHERE, "Whether FD Anywhere is on.")
     AddShuffle(setupList, CategoryNames.FDANYWHERE, ShuffleNames.FD_ON)
+    HideCategoryByDefault(setupList, CategoryNames.FDANYWHERE)
 
     AddSimpleCategory(setupList, CategoryNames.ERINTERIOR, "Whether Simple Interior entrances are shuffled.")
     HideCategoryByDefault(setupList, CategoryNames.ERINTERIOR)
@@ -192,8 +193,10 @@ def ApplyWeights(setupList, mainList, customOptions):
     # FD Anywhere changes from option
     if (customOptions[GeneratorOptionNames.FDANYWHERE] == ShuffleNames.GENERIC_OFF):
         setupList[CategoryNames.FDANYWHERE].zeroAllShuffles()
+        setupList[CategoryNames.FDANYWHERE].setHidden(False)
     elif (customOptions[GeneratorOptionNames.FDANYWHERE] == ShuffleNames.FD_STARTING):
         setupList[CategoryNames.FDANYWHERE].zeroAllShuffles()
+        setupList[CategoryNames.FDANYWHERE].setHidden(False)
     elif (customOptions[GeneratorOptionNames.FDANYWHERE] == ShuffleNames.FD_ON):
         setupList[CategoryNames.FDANYWHERE].guaranteeShuffle(ShuffleNames.FD_ON)
     
