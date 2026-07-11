@@ -23,9 +23,16 @@ This Mystery Maker release makes balancing changes and fixes bugs following Vers
 
 *Of the FD tricks from Season 2, Path to Snowhead as FD and Climb Stone Tower as FD have the most potential for novel scenarios while still remaining reasonable to execute and route. They return for Season 3.*
 
+### Fierce Deity's Mask Anywhere
+- **Fierce Deity's Mask Anywhere** is now on in ***ALL*** seeds.
+
+*Initial testing has shown that Version 6 Mystery is the most dense and challenging iteration yet, due to the removal of Blitz, the refinement and weighting of categories, and the addition of new shuffles and exceptions. As Mystery's demands grow, so too must its allowances, and FD Anywhere happens to be both at once. It's a fitting signature addition to the Mystery Tournament, and featuring it consistently will encourage runners to wield it well.*
+
 ### Item and Check Pool
 - **Oath to Order is no longer granted as an extra starting song by default.**  It is again shuffled. The song check pool will remain the same, as an extra dungeon song will be granted instead! See **Setup Categories** below for more.
 - **Uninverted Stone Tower Temple's Chest Fairies, except for Death Armos, are again on by default.** Now all Chest Fairies except for the two Stone Tower Temple "flip fairies" are on in every seed.
+
+*Version 6's move from Skull Kid Song to single-egg Baby Zoras made one song harder to reach, which made dungeons harder to reach as a result. Many test seeds kept the player entirely out of dungeons until well into the second half of the run. Replacing the free Oath to Order with a free dungeon song should hopefully spur earlier dungeon play, alongside returning Chest Fairies to uSTT.*
 
 ### Setup Categories
 - **Starting Random Song now grants *two* starting songs**. The first keeps the same weights as before (i.e. anything but Oath, favoring Epona), and the second is always a dungeon song. The Mystery spoiler will list the second song as an "Extra Dungeon Song".
@@ -35,7 +42,9 @@ This Mystery Maker release makes balancing changes and fixes bugs following Vers
   - Adult's Wallet is less likely (10 -> 5).
   - Empty Bottle is less likely (10 -> 5).
 - **Small Keys Within Any Temple** is less likely (40 -> 35).
-- **Fierce Deity's Mask Anywhere** has been reworked. Continue reading below.
+- Fierce Deity's Mask Anywhere isn't a setup category anymore, as it's always on.
+
+*Non-Transformation Bingo is the second big surprise of this release! It replaces or enhances some of the lower-impact starting item options, aiming to add new wrinkles to the early game without being overpowering.*
 
 ### Main Categories
 - **Extra Stray Fairies:**
@@ -73,9 +82,6 @@ This Mystery Maker release makes balancing changes and fixes bugs following Vers
 
 *Sometimes-hinting Deku Playground neutralized one of Grotto ER's bigger impacts a little bit too often. The check also has the potential to be comboed with the Playground's Loose Rupees. Meanwhile, the sometimes hint list is being expanded to maintain its variety in light of weight drops to most of the sometimes-hint-adding categories. (And the potential for starting Gibdo Mask!)*
 
-### Fierce Deity's Mask Anywhere
-- **Fierce Deity's Mask Anywhere** is on in ***ALL*** seeds.
-
 ## Generator Changes
 - Renamed bonus-song toggles.
 - Added all Mask Bingo possibilities to Starting Random Item while retaining the category's retired options.
@@ -87,6 +93,10 @@ This Mystery Maker release makes balancing changes and fixes bugs following Vers
 - Town Archery now is being backup-hinted properly.
 - Fixed Oath handling in base settings files.
 - Removed Simple Interiors from the Super Mystery category spreadsheet.
+
+.
+
+.
 
 # Mystery Maker release 6.1.1
 This Mystery Maker release fixes bugs, including a significant Songsanity mishap.

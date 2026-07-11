@@ -1,17 +1,18 @@
-mystery_maker_version: v6.1.1
+mystery_maker_version: v6.2.0
 options:
   Category Minimum: 6
   Density Mode: Normal
   Dungeon ER Choice: Random
   Exclude Checks: '-------------------------------------'
-  FD Anywhere Choice: Random
+  FD Anywhere Choice: 'On'
   Fairy Set Size: 5
+  Free Dungeon Song: true
   Free Epona's Song: false
-  Free Oath to Order: true
   Goal: Remains on Bosses
   Grottos ER Choice: Random
+  Junk Shuffled Cow Grottos: true
   Required Remains: 4
-  Simple Interiors ER Choice: Off
+  Simple Interiors ER Choice: 'Off'
   Small Keys Choice: Random
   Song Layout Choice: Random
   Starting Basic Gear Choice: Kokiri

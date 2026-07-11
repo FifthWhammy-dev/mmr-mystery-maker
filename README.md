@@ -3,7 +3,7 @@
 ## About 
 MMR Mystery Maker is a Python script (and now standalone .exe, thanks to [PyInstaller](https://pyinstaller.org/en/stable/index.html)) that generates semi-random "Mystery" settings files for [Majora's Mask Randomizer v2.0.0](https://github.com/ZoeyZolotova/mm-rando). 
 
-See the [Mystery Settings Document](https://docs.google.com/document/d/12mhj69AdV0iKy1PaS5NGQe8uymU0GI4GfvuFm0e1h9A/edit?tab=t.0#heading=h.bvtowcexfe71) and the [Category Weights and Hints spreadsheet](https://docs.google.com/spreadsheets/d/19zn534gL0m5yOWUqYgzudsby1f7hX2CIR6Cu_eB1XWc/edit?gid=0#gid=0) to learn more about of the Mystery settings. See the [changelog.md](https://github.com/FifthWhammy-dev/mmr-mystery-maker/blob/main/changelog.md) file for patch notes on the core settings.
+See the [Mystery Settings Document](https://docs.google.com/document/d/1nmUfmgIVg_QE0gBXbzKHuJvbSApMy80OQ81A-kJuE6Y/edit?usp=sharing) and the [Categories and Hints spreadsheet](https://docs.google.com/spreadsheets/d/1KC0fWYnIos2LB1rBzdjzHxXCn45uNtAR96nkvUDphmU/edit?usp=sharing) to learn more about Mystery settings. See the [changelog.md](https://github.com/FifthWhammy-dev/mmr-mystery-maker/blob/main/changelog.md) file for patch notes on the core settings.
 
 The Mystery Maker script uses hard-coded categories and weights, applying them to an input JSON file to generate a new settings file which can be uploaded to the [MMR 2.0 web generator](mmrandomizer.com).
 
@@ -12,7 +12,8 @@ The Mystery Maker script uses hard-coded categories and weights, applying them t
 - Extract MysteryMaker.exe and the .json files to any folder.
 - Run MysteryMaker.exe and an options dialog will open.
 - Click "Make Mystery" to generate a settings file! By default, the core settings from the Mystery Settings Document are applied, but options are provided in the GUI if you wish.
-- When finished, check the "output" directory for your seed and Mystery spoiler.
+- When finished, check the "output" directory for your settings file and Mystery spoiler.
+- Use the settings file in the MMR web generator using the Import and Load buttons.
 
 ### Command Line Options
 Command-line operation is available. Using any command-line option below will bypass the options GUI and go straight to generation.
