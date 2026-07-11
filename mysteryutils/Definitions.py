@@ -226,8 +226,8 @@ shuffleCheckStrings[(CategoryNames.STARTINGGEAR, ShuffleNames.SG_FRAGILE)] = "--
 shuffleCheckStrings[(CategoryNames.STRAYFAIRIES, ShuffleNames.STRAYS_BUBBLES)] = "--------------------------b003fe-7f363db4----------"
 shuffleCheckStrings[(CategoryNames.STRAYFAIRIES, ShuffleNames.STRAYS_FULL)] = "--------------------------3fffffff-fffffffe----------"
 shuffleCheckStrings[(CategoryNames.STRAYFAIRIES, ShuffleNames.FAIRY_HUNT_FULL_DUNGEON_STRAYS)] = "--------------------------3fffffff-fffffffc----------"
-shuffleCheckStrings[(CategoryNames.STRAYFAIRIES, ShuffleNames.FAIRY_HUNT_INVERTED_STRAYS_BUBBLES)] = "--------------------------3f4ffc01-80c9c248----------"
-shuffleCheckStrings[(CategoryNames.STRAYFAIRIES, ShuffleNames.FAIRY_HUNT_INVERTED_STRAYS_CORE)] = "--------------------------3f4ffc0f-80ffc7fc----------"
+shuffleCheckStrings[(CategoryNames.STRAYFAIRIES, ShuffleNames.FAIRY_HUNT_INVERTED_STRAYS_BUBBLES)] = "--------------------------447c01-80c9c248----------"
+shuffleCheckStrings[(CategoryNames.STRAYFAIRIES, ShuffleNames.FAIRY_HUNT_INVERTED_STRAYS_CORE)] = "--------------------------447c0f-80ffc7fc----------"
 
 shuffleCheckStrings[(CategoryNames.SHOPCHECKS, ShuffleNames.SHOP_C_THREE)] = "---------------------------------3ff80----"
 shuffleCheckStrings[(CategoryNames.SHOPCHECKS, ShuffleNames.SHOP_C_LATE)] = "-------------------------3--------3f000----"
